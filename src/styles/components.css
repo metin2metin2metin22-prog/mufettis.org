@@ -1,31 +1,32 @@
 /* MUFETTIS.ORG DESIGN SYSTEM & HIGH-CONTRAST EDITORIAL COMPONENTS */
 
-/* 1. Mufettis Note Callout Box */
+/* 1. Mufettis Note Callout Box (Sınav Püf Noktaları, Mevzuat Notları) */
 .mufettis-note {
-  margin: 1.75rem 0;
-  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+  padding: 1.35rem 1.6rem;
   border-radius: 1rem;
   border-left-width: 5px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
+  position: relative;
 }
 
 html:not(.dark) .mufettis-note {
   background-color: #f0f7ff !important;
   border-left-color: #0284c7 !important;
-  border-top: 1px solid #e0effe;
-  border-right: 1px solid #e0effe;
-  border-bottom: 1px solid #e0effe;
+  border-top: 1px solid #e0effe !important;
+  border-right: 1px solid #e0effe !important;
+  border-bottom: 1px solid #e0effe !important;
   color: #0f172a !important;
 }
 
 html.dark .mufettis-note {
-  background-color: #0c1e33 !important;
+  background-color: #0b1e33 !important;
   border-left-color: #38bdf8 !important;
-  border-top: 1px solid #162c46;
-  border-right: 1px solid #162c46;
-  border-bottom: 1px solid #162c46;
-  color: #f1f5f9 !important;
+  border-top: 1px solid #162c46 !important;
+  border-right: 1px solid #162c46 !important;
+  border-bottom: 1px solid #162c46 !important;
+  color: #f8fafc !important;
 }
 
 html:not(.dark) .mufettis-note p,
@@ -37,20 +38,27 @@ html:not(.dark) .mufettis-note div {
 html.dark .mufettis-note p,
 html.dark .mufettis-note span,
 html.dark .mufettis-note div {
-  color: #f1f5f9 !important;
+  color: #f8fafc !important;
 }
 
 html.dark .mufettis-note strong {
   color: #38bdf8 !important;
 }
 
+/* Ensure typography plugin rules do not override callouts */
+.prose .mufettis-note p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: inherit !important;
+}
+
 /* 2. Hafıza Çivisi & Püf Nokta (Service Box) */
 .mufettis-service {
-  margin: 1.75rem 0;
-  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+  padding: 1.35rem 1.6rem;
   border-radius: 1.25rem;
   border-width: 2px;
-  box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.1);
+  box-shadow: 0 4px 12px -2px rgba(245, 158, 11, 0.12);
   transition: all 0.2s ease;
 }
 
@@ -87,11 +95,11 @@ html.dark .mufettis-service div {
 
 /* 3. Müfettiş İnceleme Paneli & Feature Box */
 .mufettis-box {
-  margin: 2rem 0;
+  margin: 2.25rem 0;
   border-radius: 1.25rem;
   overflow: hidden;
   border-width: 2px;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.08);
 }
 
 html:not(.dark) .mufettis-box {
@@ -107,7 +115,7 @@ html.dark .mufettis-box {
 .mufettis-box-header {
   background: linear-gradient(90deg, #0b2b46 0%, #103a60 50%, #071d30 100%) !important;
   color: #ffffff !important;
-  padding: 0.875rem 1.5rem;
+  padding: 0.9rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -142,11 +150,11 @@ html.dark .mufettis-box-body li {
 
 /* 4. Warning / Alert Box */
 .mufettis-warning {
-  margin: 1.75rem 0;
-  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+  padding: 1.35rem 1.6rem;
   border-radius: 1rem;
   border-left-width: 5px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.08);
 }
 
 html:not(.dark) .mufettis-warning {
@@ -181,8 +189,8 @@ html.dark .mufettis-warning div {
 
 /* 5. Success / Answer Box */
 .mufettis-success {
-  margin: 1.75rem 0;
-  padding: 1.25rem 1.5rem;
+  margin: 2rem 0;
+  padding: 1.35rem 1.6rem;
   border-radius: 1rem;
   border-left-width: 5px;
 }
@@ -217,7 +225,37 @@ html.dark .mufettis-success div {
   color: #d1fae5 !important;
 }
 
-/* 6. Academic Highlighter */
+/* 6. Blockquote High-Contrast Editorial Styling */
+.prose blockquote {
+  border-left-width: 4px !important;
+  padding: 1.15rem 1.5rem !important;
+  margin: 2rem 0 !important;
+  border-radius: 0 1rem 1rem 0 !important;
+  font-style: italic;
+  position: relative;
+}
+
+html:not(.dark) .prose blockquote {
+  background-color: #f8fafc !important;
+  border-left-color: #0284c7 !important;
+  color: #1e293b !important;
+}
+
+html.dark .prose blockquote {
+  background-color: #0c1827 !important;
+  border-left-color: #38bdf8 !important;
+  color: #f1f5f9 !important;
+}
+
+html:not(.dark) .prose blockquote p {
+  color: #1e293b !important;
+}
+
+html.dark .prose blockquote p {
+  color: #f1f5f9 !important;
+}
+
+/* 7. Academic Highlighter */
 .mufettis-mark {
   background-color: #fef08a !important;
   color: #713f12 !important;
@@ -233,7 +271,7 @@ html.dark .mufettis-mark {
   border-bottom-color: #ca8a04 !important;
 }
 
-/* 7. Quiz & Solution Card High-Contrast Support */
+/* 8. Quiz & Solution Card High-Contrast Support */
 html.dark .interactive-quiz-card {
   background-color: #0c1827 !important;
   border-color: #1e3a5f !important;
@@ -255,7 +293,7 @@ html.dark .solution-card strong {
   color: #38bdf8 !important;
 }
 
-/* 8. Clean Print Stylesheet */
+/* 9. Clean Print Stylesheet */
 @media print {
   header, footer, #floating-exam-hud, #toc-card, #search-modal, .toolbar-actions, #read-progress {
     display: none !important;
