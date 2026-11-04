@@ -1,0 +1,256 @@
+/* MUFETTIS.ORG DESIGN SYSTEM & HIGH-CONTRAST EDITORIAL COMPONENTS */
+
+/* 1. Mufettis Note Callout Box */
+.mufettis-note {
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  border-left-width: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+html:not(.dark) .mufettis-note {
+  background-color: #f0f7ff !important;
+  border-left-color: #0284c7 !important;
+  border-top: 1px solid #e0effe;
+  border-right: 1px solid #e0effe;
+  border-bottom: 1px solid #e0effe;
+  color: #0f172a !important;
+}
+
+html.dark .mufettis-note {
+  background-color: #0c1e33 !important;
+  border-left-color: #38bdf8 !important;
+  border-top: 1px solid #162c46;
+  border-right: 1px solid #162c46;
+  border-bottom: 1px solid #162c46;
+  color: #f1f5f9 !important;
+}
+
+html:not(.dark) .mufettis-note p,
+html:not(.dark) .mufettis-note span,
+html:not(.dark) .mufettis-note div {
+  color: #0f172a !important;
+}
+
+html.dark .mufettis-note p,
+html.dark .mufettis-note span,
+html.dark .mufettis-note div {
+  color: #f1f5f9 !important;
+}
+
+/* 2. Hafıza Çivisi & Püf Nokta (Service Box) */
+.mufettis-service {
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1.25rem;
+  border-width: 2px;
+  box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.1);
+  transition: all 0.2s ease;
+}
+
+html:not(.dark) .mufettis-service {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%) !important;
+  border-color: #f59e0b !important;
+  color: #451a03 !important;
+}
+
+html.dark .mufettis-service {
+  background: linear-gradient(135deg, #221402 0%, #170d01 100%) !important;
+  border-color: #d97706 !important;
+  color: #fef3c7 !important;
+}
+
+html:not(.dark) .mufettis-service h4 {
+  color: #78350f !important;
+}
+html.dark .mufettis-service h4 {
+  color: #fbbf24 !important;
+}
+
+html:not(.dark) .mufettis-service p,
+html:not(.dark) .mufettis-service span,
+html:not(.dark) .mufettis-service div {
+  color: #451a03 !important;
+}
+
+html.dark .mufettis-service p,
+html.dark .mufettis-service span,
+html.dark .mufettis-service div {
+  color: #fde68a !important;
+}
+
+/* 3. Müfettiş İnceleme Paneli & Feature Box */
+.mufettis-box {
+  margin: 2rem 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border-width: 2px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+}
+
+html:not(.dark) .mufettis-box {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.dark .mufettis-box {
+  background-color: #0b1a2d !important;
+  border-color: #1e3a5f !important;
+}
+
+.mufettis-box-header {
+  background: linear-gradient(90deg, #0b2b46 0%, #103a60 50%, #071d30 100%) !important;
+  color: #ffffff !important;
+  padding: 0.875rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #163e66;
+}
+
+.mufettis-box-body {
+  padding: 1.5rem;
+}
+
+html:not(.dark) .mufettis-box-body {
+  color: #0f172a !important;
+}
+
+html.dark .mufettis-box-body {
+  color: #f1f5f9 !important;
+}
+
+html:not(.dark) .mufettis-box-body p,
+html:not(.dark) .mufettis-box-body span,
+html:not(.dark) .mufettis-box-body div,
+html:not(.dark) .mufettis-box-body li {
+  color: #0f172a !important;
+}
+
+html.dark .mufettis-box-body p,
+html.dark .mufettis-box-body span,
+html.dark .mufettis-box-body div,
+html.dark .mufettis-box-body li {
+  color: #f1f5f9 !important;
+}
+
+/* 4. Warning / Alert Box */
+.mufettis-warning {
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  border-left-width: 5px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+html:not(.dark) .mufettis-warning {
+  background-color: #fef2f2 !important;
+  border-left-color: #ef4444 !important;
+  border-top: 1px solid #fecaca;
+  border-right: 1px solid #fecaca;
+  border-bottom: 1px solid #fecaca;
+  color: #7f1d1d !important;
+}
+
+html.dark .mufettis-warning {
+  background-color: #240a0c !important;
+  border-left-color: #f87171 !important;
+  border-top: 1px solid #451216;
+  border-right: 1px solid #451216;
+  border-bottom: 1px solid #451216;
+  color: #fee2e2 !important;
+}
+
+html:not(.dark) .mufettis-warning p,
+html:not(.dark) .mufettis-warning span,
+html:not(.dark) .mufettis-warning div {
+  color: #7f1d1d !important;
+}
+
+html.dark .mufettis-warning p,
+html.dark .mufettis-warning span,
+html.dark .mufettis-warning div {
+  color: #fee2e2 !important;
+}
+
+/* 5. Success / Answer Box */
+.mufettis-success {
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.5rem;
+  border-radius: 1rem;
+  border-left-width: 5px;
+}
+
+html:not(.dark) .mufettis-success {
+  background-color: #ecfdf5 !important;
+  border-left-color: #10b981 !important;
+  border-top: 1px solid #a7f3d0;
+  border-right: 1px solid #a7f3d0;
+  border-bottom: 1px solid #a7f3d0;
+  color: #064e3b !important;
+}
+
+html.dark .mufettis-success {
+  background-color: #06261b !important;
+  border-left-color: #34d399 !important;
+  border-top: 1px solid #0d4a35;
+  border-right: 1px solid #0d4a35;
+  border-bottom: 1px solid #0d4a35;
+  color: #d1fae5 !important;
+}
+
+html:not(.dark) .mufettis-success p,
+html:not(.dark) .mufettis-success span,
+html:not(.dark) .mufettis-success div {
+  color: #064e3b !important;
+}
+
+html.dark .mufettis-success p,
+html.dark .mufettis-success span,
+html.dark .mufettis-success div {
+  color: #d1fae5 !important;
+}
+
+/* 6. Academic Highlighter */
+.mufettis-mark {
+  background-color: #fef08a !important;
+  color: #713f12 !important;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.375rem;
+  font-weight: 700;
+  border-bottom: 2px solid #eab308;
+}
+
+html.dark .mufettis-mark {
+  background-color: #4d2b07 !important;
+  color: #fef08a !important;
+  border-bottom-color: #ca8a04 !important;
+}
+
+/* 7. Clean Print Stylesheet */
+@media print {
+  header, footer, #floating-exam-hud, #toc-card, #search-modal, .toolbar-actions, #read-progress {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+  }
+  article {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .mufettis-note, .mufettis-service, .mufettis-box {
+    border: 1px solid #ccc !important;
+    background: #f9f9f9 !important;
+    color: black !important;
+    page-break-inside: avoid;
+  }
+  .interactive-quiz-card {
+    page-break-inside: avoid;
+    border: 1px solid #ccc !important;
+  }
+}

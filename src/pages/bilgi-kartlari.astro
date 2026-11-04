@@ -1,0 +1,207 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Curated high-yield exam flashcards
+const flashcards = [
+  {
+    category: "MASAK Uyum",
+    catSlug: "masak",
+    tag: "5549 Sayılı Kanun",
+    question: "Şüpheli İşlem Bildirimi (ŞİB) MASAK'a en geç kaç iş günü içinde yapılmalıdır?",
+    answer: "Şüpheli işlem bildirimleri, şüphenin doğduğu tarihten itibaren en geç 10 İŞ GÜNÜ içinde, gecikmesinde sakınca bulunan hallerde ise DERHAL MASAK Başkanlığı'na bildirilir."
+  },
+  {
+    category: "SPL Lisanslama",
+    catSlug: "spl",
+    tag: "Sermaye Piyasası Araçları",
+    question: "Pay (Hisse Senedi) ile Borçlanma Aracı (Tahvil) arasındaki temel 3 fark nedir?",
+    answer: "1) Pay ortaklık hakkı verir; tahvil alacaklılık hakkı verir.\n2) Pay sahibine kâr payı (temettü) ödenir ve garanti değildir; tahvil sahibine faiz ödenir ve garantilidir.\n3) Tasfiye halinde tahvil sahipleri pay sahiplerinden önce alacağını tahsil eder."
+  },
+  {
+    category: "CIA Part 1",
+    catSlug: "cia",
+    tag: "Üç Hat Modeli",
+    question: "IIA Üç Hat Modeli'nde (Three Lines Model) İç Denetim hangi hatta yer alır ve kime raporlar?",
+    answer: "İç Denetim 3. HATTI oluşturur. Yönetimden tamamen bağımsız ve objektif güvence sağlar. İdari olarak Üst Yöneticiye (Genel Müdür), fonksiyonel olarak ise doğrudan DENETİM KOMİTESİ / YÖNETİM KURULUNA raporlar."
+  },
+  {
+    category: "SPL Lisanslama",
+    catSlug: "spl",
+    tag: "Takas ve Saklama",
+    question: "Borsa İstanbul Pay Piyasası'nda takas süresi (valör) kural olarak nedir?",
+    answer: "Takas süresi T+2'dir. Yani işlemin gerçekleştiği günden sonraki 2. İŞ GÜNÜ saat 15:30'a kadar takas ve nakit transferi tamamlanır."
+  },
+  {
+    category: "MASAK Uyum",
+    catSlug: "masak",
+    tag: "Müşterinin Tanınması (KYC)",
+    question: "Gerçek faydalanıcı (Ultimate Beneficial Owner - UBO) tespiti için asgari yüzde kaç ortaklık aranır?",
+    answer: "Tüzel kişiliğin %25'i aşan payına veya oy hakkına sahip gerçek kişiler tüzel kişinin gerçek faydalanıcısı kabul edilir ve kimliği doğrulanır."
+  },
+  {
+    category: "Banka Denetimi",
+    catSlug: "banka",
+    tag: "Dolandırıcılık Tespiti",
+    question: "Dolandırıcılık Üçgeni'nin (Fraud Triangle) üç temel bileşeni nedir?",
+    answer: "1) Baskı / Teşvik (Maddi sıkıntı, hedefler)\n2) Fırsat (Zayıf iç kontrol, denetim eksikliği)\n3) Haklı Gösterme / Rasyonelleştirme ('Zaten hakkımdı', 'Geçici olarak alıyorum')."
+  },
+  {
+    category: "CIA Part 1",
+    catSlug: "cia",
+    tag: "Bağımsızlık ve Objektiflik",
+    question: "Bir iç denetçinin önceki operasyonel görevine ilişkin güvence denetimi yapabilmesi için en az ne kadar süre geçmelidir?",
+    answer: "IIA Standartlarına göre, iç denetçi daha önce sorumlu olduğu bir operasyonel faaliyeti denetlemek için EN AZ 1 YIL beklemelidir."
+  },
+  {
+    category: "SPL Lisanslama",
+    catSlug: "spl",
+    tag: "Yatırım Kuruluşları",
+    question: "Aracılık Yüklenimi ile En İyi Gayret Aracılığı arasındaki risk farkı nedir?",
+    answer: "Aracılık Yükleniminde yatırım kuruluşu satılamayan payları satın almayı taahhüt eder (satış riski aracı kurumdadır). En İyi Gayret Aracılığında ise satılamayan paylar ihraççıya iade edilir (satış riski ihraççıdadır)."
+  }
+];
+---
+
+<Layout 
+  title="İnteraktif Sınav Bilgi Kartları (Flashcards) | SPL, MASAK, CIA"
+  description="Banka Müfettişliği, SPL, MASAK ve CIA sınavları için 3D çevrilebilir interaktif akıl ve hafıza kartları."
+  canonical="https://mufettis.org/bilgi-kartlari/"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-28">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6">
+      <a href="/" class="hover:text-brand-600 dark:hover:text-sky-400">Anasayfa</a>
+      <span>/</span>
+      <span class="text-slate-800 dark:text-slate-200 font-bold">İnteraktif Bilgi Kartları</span>
+    </nav>
+
+    <!-- Header -->
+    <header class="max-w-3xl mb-10">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 dark:bg-brand-950/80 text-brand-700 dark:text-sky-300 border border-brand-200 dark:border-brand-800 text-xs font-black uppercase tracking-wider mb-3">
+        <span>🗂️ 3D Çevrilebilir Hafıza Kartları</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+        Sınav Akıl Kartları
+      </h1>
+      <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">
+        Telefonda veya bilgisayarda hızlı tekrar yapın. Kartın üzerine tıklayarak cevabı görün, öğrendiklerinizi işaretleyerek ilerlemenizi takip edin.
+      </p>
+    </header>
+
+    <!-- Filter Buttons -->
+    <div class="flex items-center gap-2.5 pb-6 mb-8 border-b border-slate-200 dark:border-slate-800 overflow-x-auto whitespace-nowrap scrollbar-none text-xs">
+      <button type="button" class="fc-filter active px-4 py-2 rounded-xl bg-brand-600 text-white font-bold cursor-pointer" data-filter="all">Tüm Kartlar ({flashcards.length})</button>
+      <button type="button" class="fc-filter px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-sky-100 cursor-pointer" data-filter="spl">📈 SPL</button>
+      <button type="button" class="fc-filter px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-emerald-100 cursor-pointer" data-filter="masak">🛡️ MASAK</button>
+      <button type="button" class="fc-filter px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-purple-100 cursor-pointer" data-filter="cia">🎓 CIA</button>
+      <button type="button" class="fc-filter px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-amber-100 cursor-pointer" data-filter="banka">🏛️ Banka</button>
+    </div>
+
+    <!-- 3D Flashcards Grid -->
+    <div id="flashcards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {flashcards.map((card, idx) => (
+        <div class="flashcard-container perspective-1000 min-h-[300px] cursor-pointer" data-category={card.catSlug}>
+          <div class="flashcard-inner relative w-full h-full min-h-[300px] transition-transform duration-500 transform-style-3d rounded-3xl border-2 border-slate-200 dark:border-slate-800 shadow-md hover:shadow-2xl hover:border-brand-500">
+            
+            <!-- Front Face -->
+            <div class="flashcard-front absolute inset-0 backface-hidden rounded-3xl p-7 bg-white dark:bg-[#0c1827] flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                    {card.category}
+                  </span>
+                  <span class="text-xs text-slate-400 font-bold">#{idx + 1}</span>
+                </div>
+                <span class="text-xs font-bold text-brand-600 dark:text-sky-400 block mb-2">{card.tag}</span>
+                <h3 class="text-base sm:text-lg font-black text-slate-900 dark:text-white leading-snug">
+                  {card.question}
+                </h3>
+              </div>
+
+              <div class="pt-4 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-bold text-slate-400">
+                <span class="flex items-center gap-1.5 text-brand-600 dark:text-sky-400">
+                  <span>🔄</span> Cevabı görmek için dokunun
+                </span>
+              </div>
+            </div>
+
+            <!-- Back Face (Answer) -->
+            <div class="flashcard-back absolute inset-0 backface-hidden rotate-y-180 rounded-3xl p-7 bg-gradient-to-br from-[#07192a] via-[#092237] to-[#05111d] text-white flex flex-col justify-between border border-amber-500/40">
+              <div>
+                <div class="flex items-center justify-between mb-3 pb-2 border-b border-brand-800/80">
+                  <span class="text-[10.5px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1">
+                    <span>✓</span> Doğru Cevap & Mevzuat
+                  </span>
+                  <span class="text-xs text-slate-400 font-bold">#{idx + 1}</span>
+                </div>
+                <p class="text-slate-200 text-xs sm:text-[14px] leading-relaxed whitespace-pre-line font-medium">
+                  {card.answer}
+                </p>
+              </div>
+
+              <div class="pt-3 border-t border-brand-800 flex items-center justify-between text-xs font-bold text-slate-400">
+                <span class="text-amber-400">Tekrar çevirmek için tıklayın ↻</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+
+  <style>
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    .flashcard-flipped {
+      transform: rotateY(180deg);
+    }
+  </style>
+
+  <script>
+    // Flip card handler
+    const cards = document.querySelectorAll('.flashcard-container');
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const inner = card.querySelector('.flashcard-inner');
+        inner?.classList.toggle('flashcard-flipped');
+      });
+    });
+
+    // Category filter handler
+    const filterBtns = document.querySelectorAll('.fc-filter');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-brand-600', 'text-white');
+          b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        });
+        btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        btn.classList.add('bg-brand-600', 'text-white');
+
+        const filter = btn.getAttribute('data-filter');
+        cards.forEach(c => {
+          const cat = c.getAttribute('data-category');
+          if (filter === 'all' || cat === filter) {
+            (c as HTMLElement).style.display = 'block';
+          } else {
+            (c as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</Layout>

@@ -39,7 +39,7 @@ def transform_shortcodes(content, post_title=""):
     # 2. [su_highlight background="..."]...[/su_highlight]
     def replace_highlight(m):
         text = m.group(1).strip()
-        return f'<mark class="bg-amber-100 dark:bg-amber-950/80 text-amber-950 dark:text-amber-200 px-2 py-0.5 rounded-md font-semibold border-b-2 border-amber-400">{text}</mark>'
+        return f'<mark class="mufettis-mark">{text}</mark>'
     content = re.sub(r'\[su_highlight[^\]]*\](.*?)\[/su_highlight\]', replace_highlight, content, flags=re.DOTALL)
 
     # 3. [su_heading style="..." size="..."]...[/su_heading]
@@ -58,7 +58,7 @@ def transform_shortcodes(content, post_title=""):
         title = m.group(1).strip()
         inner = m.group(2).strip() if len(m.groups()) > 1 and m.group(2) else ""
         return f'''
-        <div class="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 via-amber-50/50 to-orange-50/30 dark:from-[#241705] dark:via-[#1c1204] dark:to-[#140c02] border-2 border-amber-300 dark:border-amber-700/80 shadow-md">
+        <div class="mufettis-service">
             <div class="flex items-start gap-3.5">
                 <div class="w-10 h-10 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-lg shrink-0 shadow-sm">
                     💡
@@ -67,10 +67,10 @@ def transform_shortcodes(content, post_title=""):
                     <span class="text-[11px] font-black uppercase tracking-wider text-amber-700 dark:text-amber-400 block mb-1">
                         Hafıza Çivisi & Püf Nokta
                     </span>
-                    <h4 class="text-base sm:text-lg font-black text-slate-900 dark:text-amber-100 leading-snug mb-1.5">
+                    <h4 class="text-base sm:text-lg font-black leading-snug mb-1.5">
                         {title}
                     </h4>
-                    {f'<div class="text-slate-800 dark:text-slate-200 text-sm sm:text-base leading-relaxed mt-2">{inner}</div>' if inner else ''}
+                    {f'<div class="text-sm sm:text-base leading-relaxed mt-2">{inner}</div>' if inner else ''}
                 </div>
             </div>
         </div>
@@ -100,10 +100,10 @@ def transform_shortcodes(content, post_title=""):
         
         if is_answer:
             return f'''
-            <div class="my-5 p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border-2 border-emerald-300 dark:border-emerald-700/80 shadow-xs">
+            <div class="mufettis-success">
                 <div class="flex items-start gap-3">
                     <span class="text-emerald-600 dark:text-emerald-400 text-lg font-black shrink-0 mt-0.5">✓</span>
-                    <div class="text-emerald-950 dark:text-emerald-100 text-sm sm:text-base leading-relaxed font-medium">
+                    <div class="text-sm sm:text-base leading-relaxed font-medium">
                         {inner}
                     </div>
                 </div>
@@ -111,10 +111,10 @@ def transform_shortcodes(content, post_title=""):
             '''
         elif is_warning:
             return f'''
-            <div class="my-5 p-5 sm:p-6 rounded-2xl bg-amber-50/80 dark:bg-amber-950/40 border-l-4 border-amber-500 border-t border-r border-b border-amber-200 dark:border-amber-800/80 shadow-xs">
+            <div class="mufettis-warning">
                 <div class="flex items-start gap-3.5">
                     <span class="text-lg shrink-0 mt-0.5">⚠️</span>
-                    <div class="text-amber-950 dark:text-amber-100 text-sm sm:text-base leading-relaxed font-medium">
+                    <div class="text-sm sm:text-base leading-relaxed font-medium">
                         {inner}
                     </div>
                 </div>
@@ -122,10 +122,10 @@ def transform_shortcodes(content, post_title=""):
             '''
         else:
             return f'''
-            <div class="my-5 p-5 sm:p-6 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border-l-4 border-brand-600 dark:border-sky-400 border-t border-r border-b border-slate-200 dark:border-slate-800 shadow-sm">
+            <div class="mufettis-note">
                 <div class="flex items-start gap-3.5">
-                    <span class="text-lg shrink-0 mt-0.5">📌</span>
-                    <div class="text-slate-800 dark:text-slate-200 text-sm sm:text-base leading-relaxed font-medium">
+                    <span class="text-xl shrink-0 mt-0.5">📌</span>
+                    <div class="text-sm sm:text-base leading-relaxed font-medium">
                         {inner}
                     </div>
                 </div>
@@ -208,6 +208,10 @@ def transform_shortcodes(content, post_title=""):
                         </span>
                     </div>
                     <div class="flex items-center gap-2">
+                        <button type="button" class="quiz-star-btn p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-amber-400 transition-colors text-xs font-bold flex items-center gap-1 cursor-pointer" title="Hata Defterime Kaydet">
+                            <span>⭐</span>
+                            <span class="hidden sm:inline text-[11px]">Kaydet</span>
+                        </button>
                         <span class="quiz-status-badge text-[11px] font-bold px-3 py-1 rounded-full bg-black/40 text-slate-300 border border-slate-700/60 flex items-center gap-1.5 backdrop-blur-sm shadow-xs transition-colors">
                             <span class="status-dot w-2 h-2 rounded-full bg-slate-400"></span>
                             <span class="status-text">Yanıt Bekliyor</span>
@@ -251,15 +255,15 @@ def transform_shortcodes(content, post_title=""):
         else:
             # THIS IS A CONTENT / FEATURE BOX (e.g. 📌 NOT:, Bilgi Notları, Piyasalar, Oranlar)
             return f'''
-            <div class="my-8 rounded-3xl overflow-hidden border-2 border-brand-800/80 bg-white dark:bg-[#0c1827] shadow-lg">
-                <div class="bg-gradient-to-r from-[#0b2b46] via-[#113a60] to-[#071d30] text-white px-5 sm:px-6 py-3.5 flex items-center justify-between border-b border-brand-800">
+            <div class="mufettis-box">
+                <div class="mufettis-box-header">
                     <div class="flex items-center gap-2.5">
                         <span class="text-amber-400 text-base">📑</span>
                         <h4 class="font-black text-sm sm:text-base text-white tracking-tight">{raw_title}</h4>
                     </div>
                     <span class="text-[10px] font-bold text-slate-300 uppercase tracking-wider bg-black/30 px-2.5 py-0.5 rounded-full border border-white/10">Müfettiş İncelemesi</span>
                 </div>
-                <div class="p-5 sm:p-7 text-slate-800 dark:text-slate-200 text-sm sm:text-base leading-relaxed prose dark:prose-invert max-w-none">
+                <div class="mufettis-box-body">
                     {inner}
                 </div>
             </div>
@@ -346,4 +350,4 @@ for p in data["posts"]:
 with open(os.path.join(SRC_DATA, "posts.json"), "w", encoding="utf-8") as f:
     json.dump(processed_posts, f, ensure_ascii=False, indent=2)
 
-print(f"Generated {len(processed_posts)} posts with COMPLETE shortcode transformation!")
+print(f"Generated {len(processed_posts)} posts with semantic high-contrast components!")

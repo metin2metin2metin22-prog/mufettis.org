@@ -1,0 +1,265 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="2026 Banka Müfettişi ve Uyum Görevlisi Maaş Hesaplayıcı"
+  description="Kamu ve özel bankalarda müfettiş yardımcısı, yetkili müfettiş, başmüfettiş ve MASAK uyum görevlisi net maaş, ikramiye ve harcırah hesaplama motoru."
+  canonical="https://mufettis.org/maas-hesaplayici/"
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-28">
+    
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6">
+      <a href="/" class="hover:text-brand-600 dark:hover:text-sky-400">Anasayfa</a>
+      <span>/</span>
+      <span class="text-slate-800 dark:text-slate-200 font-bold">Maaş & Kariyer Hesaplayıcı</span>
+    </nav>
+
+    <!-- Header -->
+    <header class="max-w-3xl mb-12">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-xs font-black uppercase tracking-wider mb-3">
+        <span>💰 2026 Güncel Veriler</span>
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+        Banka Müfettişi & Uyum Maaş Hesaplayıcı
+      </h1>
+      <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">
+        Banka türü, unvan, turne gün sayısı ve yabancı dil seviyenizi seçerek 2026 yılı net maaş, ikramiye ve harcırah toplamınızı anında hesaplayın.
+      </p>
+    </header>
+
+    <!-- Calculator Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      
+      <!-- Input Controls (7 Cols) -->
+      <div class="lg:col-span-7 bg-white dark:bg-[#0c1827] rounded-3xl border-2 border-slate-200 dark:border-slate-800 p-6 sm:p-8 shadow-lg space-y-6">
+        
+        <!-- Control 1: Kurum Türü -->
+        <div>
+          <label class="block text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2.5">
+            1. Banka / Kurum Türü:
+          </label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <label class="cursor-pointer">
+              <input type="radio" name="bank_type" value="kamu" class="peer sr-only" checked />
+              <div class="p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-800 peer-checked:border-brand-600 peer-checked:bg-brand-50 dark:peer-checked:bg-brand-950/40 text-center transition-all">
+                <span class="block font-black text-sm text-slate-900 dark:text-white">Kamu Bankası</span>
+                <span class="text-[11px] text-slate-400">Ziraat, Vakıf, Halk</span>
+              </div>
+            </label>
+
+            <label class="cursor-pointer">
+              <input type="radio" name="bank_type" value="ozel" class="peer sr-only" />
+              <div class="p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-800 peer-checked:border-brand-600 peer-checked:bg-brand-50 dark:peer-checked:bg-brand-950/40 text-center transition-all">
+                <span class="block font-black text-sm text-slate-900 dark:text-white">Özel Banka</span>
+                <span class="text-[11px] text-slate-400">İş, Garanti, Akbank, YKB</span>
+              </div>
+            </label>
+
+            <label class="cursor-pointer">
+              <input type="radio" name="bank_type" value="katilim" class="peer sr-only" />
+              <div class="p-3.5 rounded-2xl border-2 border-slate-200 dark:border-slate-800 peer-checked:border-brand-600 peer-checked:bg-brand-50 dark:peer-checked:bg-brand-950/40 text-center transition-all">
+                <span class="block font-black text-sm text-slate-900 dark:text-white">Katılım Bankası</span>
+                <span class="text-[11px] text-slate-400">Kuveyt Türk, Albaraka</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Control 2: Unvan & Kıdem -->
+        <div>
+          <label class="block text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2.5">
+            2. Mesleki Unvan & Kıdem:
+          </label>
+          <select id="calc-title" class="w-full p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white font-bold text-sm outline-none focus:border-brand-600">
+            <option value="yardimci">Müfettiş Yardımcısı (1 - 3 Yıl Kıdem)</option>
+            <option value="yetkili" selected>Yetkili Müfettiş (4 - 7 Yıl Kıdem)</option>
+            <option value="basmufettis">Kıdemli / Başmüfettiş (8+ Yıl Kıdem)</option>
+            <option value="uyum">MASAK Uyum Görevlisi / AML Uzmanı</option>
+          </select>
+        </div>
+
+        <!-- Control 3: Aylık Turne / Şantiye / Şube Denetimi Gün Sayısı -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
+              3. Aylık Ortalama Turne (Şehir Dışı Harcırah) Günü:
+            </label>
+            <span id="turne-display" class="text-sm font-black text-amber-500 bg-amber-50 dark:bg-amber-950/60 px-3 py-0.5 rounded-lg border border-amber-300 dark:border-amber-800">15 Gün</span>
+          </div>
+          <input id="calc-turne" type="range" min="0" max="25" value="15" class="w-full accent-amber-500 cursor-pointer h-2 bg-slate-200 dark:bg-slate-800 rounded-lg" />
+          <div class="flex justify-between text-[11px] text-slate-400 mt-1">
+            <span>0 Gün (Genel Müdürlük)</span>
+            <span>15 Gün (Standart Teftiş)</span>
+            <span>25 Gün (Yoğun Turne)</span>
+          </div>
+        </div>
+
+        <!-- Control 4: Yabancı Dil Tazminatı -->
+        <div>
+          <label class="block text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2.5">
+            4. Yabancı Dil Tazminatı (YDS / TOEFL):
+          </label>
+          <div class="grid grid-cols-3 gap-2.5">
+            <label class="cursor-pointer">
+              <input type="radio" name="lang_level" value="none" class="peer sr-only" />
+              <div class="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 peer-checked:border-brand-600 peer-checked:bg-brand-50 dark:peer-checked:bg-brand-950/40 text-center transition-all">
+                <span class="block font-bold text-xs text-slate-800 dark:text-slate-200">Yok / Standart</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="lang_level" value="b" class="peer sr-only" checked />
+              <div class="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 peer-checked:border-brand-600 peer-checked:bg-brand-50 dark:peer-checked:bg-brand-950/40 text-center transition-all">
+                <span class="block font-bold text-xs text-slate-800 dark:text-slate-200">YDS B (80+)</span>
+                <span class="text-[10px] text-emerald-500 font-bold">+%10 Prim</span>
+              </div>
+            </label>
+            <label class="cursor-pointer">
+              <input type="radio" name="lang_level" value="a" class="peer sr-only" />
+              <div class="p-3 rounded-2xl border-2 border-slate-200 dark:border-slate-800 peer-checked:border-brand-600 peer-checked:bg-brand-50 dark:peer-checked:bg-brand-950/40 text-center transition-all">
+                <span class="block font-bold text-xs text-slate-800 dark:text-slate-200">YDS A (90+)</span>
+                <span class="text-[10px] text-emerald-500 font-bold">+%20 Prim</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Result Card (5 Cols) -->
+      <div class="lg:col-span-5 bg-gradient-to-br from-[#07192b] via-[#0a2744] to-[#051322] rounded-3xl p-6 sm:p-8 text-white border-2 border-brand-800 shadow-2xl sticky top-24">
+        
+        <div class="pb-6 border-b border-brand-800/80 mb-6">
+          <span class="text-[11px] font-black uppercase tracking-wider text-amber-400 bg-amber-950/60 px-3 py-1 rounded-full border border-amber-800/60 inline-block mb-2">
+            Net Aylık Toplam Hak Ediş
+          </span>
+          <div class="flex items-baseline gap-2">
+            <span id="result-total" class="text-4xl sm:text-5xl font-black text-amber-400 tracking-tight">135.500</span>
+            <span class="text-xl font-bold text-slate-300">TL / Ay</span>
+          </div>
+          <span class="text-xs text-slate-400 mt-1 block">Çıplak maaş + Turne harcırahı + Aylık ikramiye payı dahil</span>
+        </div>
+
+        <!-- Breakdown List -->
+        <div class="space-y-3.5 text-xs font-semibold">
+          <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+            <span class="text-slate-300">Net Çıplak Maaş:</span>
+            <span id="result-salary" class="font-bold text-white text-sm">82.000 TL</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+            <span class="text-slate-300">Aylık Turne Harcırahı (15 Gün):</span>
+            <span id="result-harcirah" class="font-bold text-emerald-400 text-sm">33.000 TL</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+            <span class="text-slate-300">Aylık İkramiye Payı (4 Maaş/Yıl):</span>
+            <span id="result-ikramiye" class="font-bold text-sky-400 text-sm">20.500 TL</span>
+          </div>
+
+          <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/5">
+            <span class="text-slate-300">Dil Tazminatı Payı:</span>
+            <span id="result-dil" class="font-bold text-amber-300 text-sm">8.200 TL</span>
+          </div>
+        </div>
+
+        <div class="mt-8 pt-6 border-t border-brand-800/80 space-y-3 text-xs">
+          <a href="/banka-mufettisi-nasil-olunur-adim-adim-2026-kariyer-rehberi/" class="block w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-center transition-colors shadow-md">
+            Müfettişlik Sınavına Nasıl Hazırlanılır? →
+          </a>
+          <a href="/deneme-sinavlari/" class="block w-full py-2.5 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-center transition-colors">
+            Çözümlü Sınavları Aç
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const bankRadios = document.querySelectorAll('input[name="bank_type"]');
+    const titleSelect = document.getElementById('calc-title') as HTMLSelectElement;
+    const turneInput = document.getElementById('calc-turne') as HTMLInputElement;
+    const turneDisplay = document.getElementById('turne-display');
+    const langRadios = document.querySelectorAll('input[name="lang_level"]');
+
+    const resultTotal = document.getElementById('result-total');
+    const resultSalary = document.getElementById('result-salary');
+    const resultHarcirah = document.getElementById('result-harcirah');
+    const resultIkramiye = document.getElementById('result-ikramiye');
+    const resultDil = document.getElementById('result-dil');
+
+    // Base salary lookup tables (2026 Net Averages in TL)
+    const baseSalaries: Record<string, Record<string, number>> = {
+      kamu: {
+        yardimci: 68000,
+        yetkili: 84000,
+        basmufettis: 110000,
+        uyum: 76000
+      },
+      ozel: {
+        yardimci: 75000,
+        yetkili: 98000,
+        basmufettis: 135000,
+        uyum: 88000
+      },
+      katilim: {
+        yardimci: 66000,
+        yetkili: 82000,
+        basmufettis: 108000,
+        uyum: 74000
+      }
+    };
+
+    // Daily Harcırah Rate (TL)
+    const dailyHarcirah: Record<string, number> = {
+      yardimci: 1900,
+      yetkili: 2300,
+      basmufettis: 2800,
+      uyum: 1800
+    };
+
+    function calculate() {
+      let bank = 'kamu';
+      bankRadios.forEach(r => {
+        if ((r as HTMLInputElement).checked) bank = (r as HTMLInputElement).value;
+      });
+
+      const title = titleSelect.value;
+      const turneDays = parseInt(turneInput.value, 10);
+      if (turneDisplay) turneDisplay.textContent = `${turneDays} Gün`;
+
+      let langBonusPct = 0;
+      langRadios.forEach(r => {
+        if ((r as HTMLInputElement).checked) {
+          if ((r as HTMLInputElement).value === 'b') langBonusPct = 0.10;
+          if ((r as HTMLInputElement).value === 'a') langBonusPct = 0.20;
+        }
+      });
+
+      const base = baseSalaries[bank][title] || 75000;
+      const langBonus = Math.round(base * langBonusPct);
+      const harcirah = turneDays * (dailyHarcirah[title] || 2000);
+      // Annual bonus is typically 4 gross/net salaries spread monthly: base / 3
+      const monthlyBonus = Math.round(base / 3);
+
+      const totalMonthly = base + langBonus + harcirah + monthlyBonus;
+
+      if (resultTotal) resultTotal.textContent = totalMonthly.toLocaleString('tr-TR');
+      if (resultSalary) resultSalary.textContent = `${base.toLocaleString('tr-TR')} TL`;
+      if (resultHarcirah) resultHarcirah.textContent = `${harcirah.toLocaleString('tr-TR')} TL (${turneDays} Gün)`;
+      if (resultIkramiye) resultIkramiye.textContent = `${monthlyBonus.toLocaleString('tr-TR')} TL`;
+      if (resultDil) resultDil.textContent = `${langBonus.toLocaleString('tr-TR')} TL`;
+    }
+
+    bankRadios.forEach(r => r.addEventListener('change', calculate));
+    titleSelect.addEventListener('change', calculate);
+    turneInput.addEventListener('input', calculate);
+    langRadios.forEach(r => r.addEventListener('change', calculate));
+
+    calculate();
+  </script>
+</Layout>
