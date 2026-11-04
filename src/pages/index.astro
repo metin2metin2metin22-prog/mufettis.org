@@ -41,7 +41,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
       
       <!-- Ana Manşet (Lead Story - 7 Kolon) -->
       <div class="lg:col-span-7">
-        <a href={leadStory.url} class="group relative block aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto lg:h-[490px] rounded-3xl overflow-hidden shadow-xl bg-slate-950 border-2 border-slate-200 dark:border-slate-800 transition-all duration-300">
+        <a href={leadStory.url} class="group relative block aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto lg:h-[490px] rounded-none overflow-hidden shadow-xl bg-slate-950 border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500/60 dark:hover:border-amber-400/60 transition-all duration-300">
           <img 
             src={leadStory.featured_image} 
             alt={leadStory.title} 
@@ -51,14 +51,14 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
           <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent"></div>
           
           <div class="absolute bottom-0 inset-x-0 p-6 sm:p-9 flex flex-col justify-end">
-            <div class="flex flex-wrap items-center gap-2.5 mb-3.5">
-              <span class="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-xs font-black uppercase tracking-wider shadow-md">
+            <div class="flex flex-wrap items-center gap-2 mb-3.5">
+              <span class="px-3 py-1 rounded-sm bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-xs font-black uppercase tracking-wider shadow-md">
                 ⭐ Özel Araştırma Dosyası
               </span>
-              <span class="text-xs text-slate-300 font-bold bg-black/50 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
+              <span class="text-xs text-slate-300 font-bold bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-sm border border-white/10">
                 ⏱️ {leadStory.reading_time} dk okuma
               </span>
-              <span class="text-xs text-emerald-400 font-bold bg-emerald-950/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-emerald-500/30 hidden sm:inline-block">
+              <span class="text-xs text-emerald-400 font-bold bg-emerald-950/70 backdrop-blur-md px-2.5 py-1 rounded-sm border border-emerald-500/30 hidden sm:inline-block">
                 ✓ 2026 Güncel Veriler
               </span>
             </div>
@@ -79,7 +79,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
         {subManset.map((sub) => {
           const cat = sub.categories && sub.categories[0] ? sub.categories[0].name : 'Ders Notu';
           return (
-            <a href={sub.url} class="group relative aspect-[16/10] sm:aspect-auto lg:h-[237px] rounded-3xl overflow-hidden shadow-md bg-slate-950 border-2 border-slate-200 dark:border-slate-800 transition-all duration-300">
+            <a href={sub.url} class="group relative aspect-[16/10] sm:aspect-auto lg:h-[237px] rounded-none overflow-hidden shadow-md bg-slate-950 border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500/60 dark:hover:border-amber-400/60 transition-all duration-300">
               <img 
                 src={sub.featured_image} 
                 alt={sub.title} 
@@ -104,7 +104,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
     </div>
 
     <!-- AKILLI DERS VE SINAV SEÇİCİ BANT (HIZLI ERİŞİM) -->
-    <div class="mt-6 bg-white dark:bg-[#0c1827] rounded-3xl p-5 sm:p-6 border-2 border-slate-200 dark:border-slate-800 shadow-md">
+    <div class="mt-6 bg-white dark:bg-[#0c1827] rounded-none sm:rounded-2xl p-5 sm:p-6 border-2 border-slate-200 dark:border-slate-800 shadow-md">
       <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         
         <div class="flex items-center gap-3">
