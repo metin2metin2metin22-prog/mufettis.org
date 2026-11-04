@@ -1,9 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import posts from '../../data/posts.json';
+import { getAllPosts } from '../../utils/posts';
 import categories from '../../data/categories.json';
 
 export async function getStaticPaths() {
+  const posts = getAllPosts();
   return categories.map(cat => ({
     params: { category: cat.slug },
     props: { 

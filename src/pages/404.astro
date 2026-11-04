@@ -1,0 +1,89 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout 
+  title="404 - Sayfa Bulunamadı" 
+  description="Aradığınız sayfa taşınmış, silinmiş veya bağlantı adresi değişmiş olabilir. Müfettişlik ders notları ve sınav arşivine göz atın."
+>
+  <div class="min-h-[70vh] flex items-center justify-center py-20 px-4">
+    <div class="max-w-2xl mx-auto text-center">
+      
+      <!-- 404 Badge & Illustration -->
+      <div class="relative inline-block mb-6">
+        <span class="text-8xl sm:text-9xl font-black tracking-tighter text-slate-200 dark:text-slate-800/80 select-none">
+          404
+        </span>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <span class="text-3xl sm:text-4xl">🔍</span>
+        </div>
+      </div>
+
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-500/10 text-rose-500 dark:text-rose-400 text-xs font-black uppercase tracking-wider mb-4 border border-rose-500/20">
+        <span>Kayıp Denetim Kaydı</span>
+      </div>
+
+      <h1 class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-4">
+        Aradığınız Sayfa Mevzuatta Bulunamadı
+      </h1>
+
+      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base leading-relaxed mb-8 max-w-lg mx-auto">
+        Ulaşmaya çalıştığınız sayfa kaldırılmış, adı değiştirilmiş veya geçici olarak kullanım dışı kalmış olabilir. Aşağıdaki popüler çalışma modüllerinden devam edebilirsiniz.
+      </p>
+
+      <!-- Search Trigger Button -->
+      <div class="mb-10 flex justify-center">
+        <button 
+          id="custom-404-search-trigger"
+          type="button" 
+          class="px-6 py-3.5 rounded-2xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center gap-3 cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          <span>Sitede Hızlı Arama Yap (Ctrl + K)</span>
+        </button>
+      </div>
+
+      <!-- Quick Jump Cards -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-left">
+        <a href="/category/spl-ders-notlari/" class="p-4 rounded-2xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-sky-500 dark:hover:border-sky-500 transition-all shadow-xs group">
+          <span class="text-2xl block mb-2">📈</span>
+          <h3 class="font-bold text-xs text-slate-900 dark:text-white group-hover:text-sky-500 transition-colors">SPL Notları</h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Düzey 1, 2, 3</p>
+        </a>
+
+        <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="p-4 rounded-2xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-emerald-500 dark:hover:border-emerald-500 transition-all shadow-xs group">
+          <span class="text-2xl block mb-2">🛡️</span>
+          <h3 class="font-bold text-xs text-slate-900 dark:text-white group-hover:text-emerald-500 transition-colors">MASAK Uyum</h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Modül 1 & 2</p>
+        </a>
+
+        <a href="/deneme-sinavlari/" class="p-4 rounded-2xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500 dark:hover:border-amber-500 transition-all shadow-xs group">
+          <span class="text-2xl block mb-2">⚡</span>
+          <h3 class="font-bold text-xs text-slate-900 dark:text-white group-hover:text-amber-500 transition-colors">Deneme Sınavları</h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Çözümlü Sorular</p>
+        </a>
+
+        <a href="/maas-hesaplayici/" class="p-4 rounded-2xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-purple-500 dark:hover:border-purple-500 transition-all shadow-xs group">
+          <span class="text-2xl block mb-2">💰</span>
+          <h3 class="font-bold text-xs text-slate-900 dark:text-white group-hover:text-purple-500 transition-colors">Maaş Hesapla</h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">2026 Turne & Harcırah</p>
+        </a>
+      </div>
+
+      <div class="mt-10">
+        <a href="/" class="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
+          <span>←</span> Ana Sayfaya Dön
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const searchTrigger = document.getElementById('custom-404-search-trigger');
+    const mainTrigger = document.getElementById('search-trigger');
+    searchTrigger?.addEventListener('click', () => {
+      mainTrigger?.click();
+    });
+  </script>
+</Layout>

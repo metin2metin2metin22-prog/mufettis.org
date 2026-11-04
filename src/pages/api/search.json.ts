@@ -1,6 +1,7 @@
-import posts from '../../data/posts.json';
+import { getAllPosts } from '../../utils/posts';
 
 export async function GET() {
+  const posts = getAllPosts();
   const searchIndex = posts
     .filter(p => p.post_type === 'post')
     .map(p => ({

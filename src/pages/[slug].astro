@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import posts from '../data/posts.json';
+import { getAllPosts } from '../utils/posts';
 import '../styles/components.css';
 
 export async function getStaticPaths() {
+  const posts = getAllPosts();
   return posts.map(post => ({
     params: { slug: post.slug },
     props: { post }
@@ -11,6 +12,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const posts = getAllPosts();
 
 // Related posts & Next/Prev navigation
 const primaryCat = post.categories && post.categories[0] ? post.categories[0].slug : null;

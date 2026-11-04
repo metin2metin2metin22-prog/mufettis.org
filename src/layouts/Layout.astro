@@ -21,6 +21,7 @@ const {
 
 const siteName = "mufettis.org";
 const fullTitle = title.includes("Müfettiş") || title.includes("mufettis") ? title : `${title} | Müfettiş.org`;
+const ogImage = image ? (image.startsWith('http') ? image : `https://mufettis.org${image}`) : 'https://mufettis.org/wp-content/uploads/2026/04/mufettis.org_-scaled.png';
 ---
 
 <!doctype html>
@@ -43,7 +44,7 @@ const fullTitle = title.includes("Müfettiş") || title.includes("mufettis") ? t
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={ogImage} />
     <meta property="og:site_name" content={siteName} />
     {publishDate && <meta property="article:published_time" content={publishDate} />}
 
@@ -52,7 +53,54 @@ const fullTitle = title.includes("Müfettiş") || title.includes("mufettis") ? t
     <meta property="twitter:url" content={canonical} />
     <meta property="twitter:title" content={fullTitle} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={image} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- Google Structured Data (Schema.org JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://mufettis.org/#website",
+          "url": "https://mufettis.org/",
+          "name": "Müfettiş.org",
+          "description": "Banka Müfettişliği, SPL, MASAK ve CIA Sınav Hazırlık Portalı",
+          "publisher": {
+            "@type": "EducationalOrganization",
+            "name": "mufettis.org",
+            "url": "https://mufettis.org/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mufettis.org/wp-content/uploads/2026/04/cropped-mufettis.org-favicon-1-180x180.png"
+            }
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://mufettis.org/?s={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        ...(type === 'article' ? [{
+          "@type": "Article",
+          "@id": `${canonical}#article`,
+          "isPartOf": { "@id": "https://mufettis.org/#website" },
+          "headline": fullTitle,
+          "description": description,
+          "image": ogImage,
+          "datePublished": publishDate || "2026-04-01T00:00:00Z",
+          "author": {
+            "@type": "Organization",
+            "name": "mufettis.org Denetim ve Mevzuat Kurulu",
+            "url": "https://mufettis.org/"
+          },
+          "publisher": {
+            "@type": "EducationalOrganization",
+            "name": "mufettis.org",
+            "url": "https://mufettis.org/"
+          }
+        }] : [])
+      ]
+    })} />
 
     <!-- Fonts: Plus Jakarta Sans for UI + Lora for Editorial -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,6 +112,9 @@ const fullTitle = title.includes("Müfettiş") || title.includes("mufettis") ? t
       const theme = (() => {
         if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
           return localStorage.getItem('theme');
+        }
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
         }
         return 'light';
       })();
@@ -171,7 +222,7 @@ const fullTitle = title.includes("Müfettiş") || title.includes("mufettis") ? t
               CIA Part 1
             </a>
 
-            <a href="/category/banka-denetimi/" class="px-3 py-2 rounded-xl hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 transition-colors flex items-center gap-1.5 group">
+            <a href="/category/denetim-kutuphanesi/" class="px-3 py-2 rounded-xl hover:text-amber-600 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 transition-colors flex items-center gap-1.5 group">
               <span class="w-2 h-2 rounded-full bg-amber-500 group-hover:scale-125 transition-transform"></span>
               Banka Denetimi
             </a>
@@ -234,8 +285,11 @@ const fullTitle = title.includes("Müfettiş") || title.includes("mufettis") ? t
             <a href="/category/cia-ders-notlari/" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-950/40 text-purple-700 dark:text-purple-300">
               <span class="w-2 h-2 rounded-full bg-purple-500"></span> CIA Part 1
             </a>
-            <a href="/category/banka-denetimi/" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-700 dark:text-amber-300">
+            <a href="/category/denetim-kutuphanesi/" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-amber-50 dark:hover:bg-amber-950/40 text-amber-700 dark:text-amber-300">
               <span class="w-2 h-2 rounded-full bg-amber-500"></span> Banka Denetimi
+            </a>
+            <a href="/category/kariyer-meslek-rehberi/" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-950/40 text-rose-700 dark:text-rose-300">
+              <span class="w-2 h-2 rounded-full bg-rose-500"></span> Kariyer & Meslek
             </a>
             <a href="/category/mali-analiz-kutuphanesi/" class="flex items-center gap-2 px-3 py-2.5 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-950/40 text-teal-700 dark:text-teal-300">
               <span class="w-2 h-2 rounded-full bg-teal-500"></span> Mali Analiz
@@ -323,7 +377,8 @@ const fullTitle = title.includes("Müfettiş") || title.includes("mufettis") ? t
               <li><a href="/category/spl-ders-notlari/" class="hover:text-white transition-colors">📈 SPL Lisanslama Sınav Notları</a></li>
               <li><a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="hover:text-white transition-colors">🛡️ MASAK Uyum Görevlisi Modülleri</a></li>
               <li><a href="/category/cia-ders-notlari/" class="hover:text-white transition-colors">🎓 CIA Part 1 Sertifika Notları</a></li>
-              <li><a href="/category/banka-denetimi/" class="hover:text-white transition-colors">🏛️ Banka Denetimi & BDDK Mevzuatı</a></li>
+              <li><a href="/category/denetim-kutuphanesi/" class="hover:text-white transition-colors">🏛️ Banka Denetimi & BDDK Mevzuatı</a></li>
+              <li><a href="/category/kariyer-meslek-rehberi/" class="hover:text-white transition-colors">🎯 Kariyer & Meslek Rehberi</a></li>
               <li><a href="/category/mali-analiz-kutuphanesi/" class="hover:text-white transition-colors">📊 Mali Analiz & Bilanço Okuma</a></li>
             </ul>
           </div>
@@ -656,6 +711,35 @@ const fullTitle = title.includes("Müfettiş") || title.includes("mufettis") ? t
       });
 
       updateSavedBadge();
+
+      // 5. Back to Top Button Logic
+      const backToTopBtn = document.getElementById('back-to-top-btn');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 350) {
+          backToTopBtn?.classList.remove('hidden');
+        } else {
+          backToTopBtn?.classList.add('hidden');
+        }
+      });
+      backToTopBtn?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // 6. Mobile Drawer Link Closure
+      const drawerLinks = mobileDrawer?.querySelectorAll('a');
+      drawerLinks?.forEach(link => {
+        link.addEventListener('click', () => mobileDrawer?.classList.add('hidden'));
+      });
     </script>
+    
+    <!-- Floating Back to Top Button -->
+    <button 
+      id="back-to-top-btn" 
+      type="button" 
+      aria-label="Yukarı Çık" 
+      class="fixed bottom-6 right-6 z-40 hidden p-3 rounded-2xl bg-brand-600 hover:bg-brand-500 text-white shadow-2xl transition-all duration-300 hover:scale-110 border-2 border-white/20 cursor-pointer"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
   </body>
 </html>

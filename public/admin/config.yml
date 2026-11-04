@@ -3,6 +3,9 @@ backend:
   repo: metin2metin2metin22-prog/mufettis.org
   branch: main
 
+# Yerel geliştirmede şifresiz test için
+local_backend: true
+
 locale: 'tr'
 display_url: https://mufettis.org
 media_folder: "public/wp-content/uploads/2026/11"
@@ -10,29 +13,30 @@ public_folder: "/wp-content/uploads/2026/11"
 
 collections:
   - name: "posts"
-    label: "Yazılar ve Notlar"
+    label: "Yazılar ve Ders Notları"
     folder: "src/content/posts"
     create: true
     slug: "{{slug}}"
     fields:
       - { label: "Başlık", name: "title", widget: "string" }
-      - { label: "Slug (URL Bağlantısı)", name: "slug", widget: "string" }
+      - { label: "Slug (URL Bağlantısı)", name: "slug", widget: "string", hint: "Örnek: yeni-spl-notu" }
       - { label: "Yayın Tarihi", name: "date", widget: "datetime" }
-      - { label: "Kategori", name: "category", widget: "select", options: ["SPL Lisanslama", "MASAK Uyum Görevlisi", "CIA Part 1", "Banka Denetimi", "Mali Analiz Kütüphanesi", "Ekonomi Gündemi"] }
+      - { label: "Kategori", name: "category", widget: "select", options: ["SPL Lisanslama", "MASAK Uyum Görevlisi", "CIA Part 1", "Banka Denetimi", "Mali Analiz Kütüphanesi", "Kariyer & Meslek Rehberi", "Vaka Çalışmaları"] }
       - { label: "Kapak Görseli", name: "image", widget: "image", required: false }
-      - { label: "Özet / Meta Açıklama (Google İçin)", name: "description", widget: "text" }
+      - { label: "Özet / Meta Açıklama (Google SEO İçin)", name: "description", widget: "text" }
       - { label: "Odak Anahtar Kelime", name: "focus_keyword", widget: "string", required: false }
-      - { label: "İçerik", name: "body", widget: "markdown" }
+      - { label: "İnteraktif Sınav İçeriyor mu?", name: "is_quiz", widget: "boolean", default: false }
+      - { label: "İçerik (Markdown veya HTML)", name: "body", widget: "markdown" }
 
   - name: "exams"
-    label: "Deneme Sınavları & Sorular"
+    label: "Deneme Sınavları & Test Setleri"
     folder: "src/content/exams"
     create: true
     slug: "{{slug}}"
     fields:
       - { label: "Sınav Başlığı", name: "title", widget: "string" }
       - { label: "Slug", name: "slug", widget: "string" }
-      - { label: "Sınav Kategorisi", name: "category", widget: "select", options: ["SPL Lisanslama", "CIA Part 1", "MASAK Uyum Görevlisi", "Müfettişlik Genel"] }
+      - { label: "Sınav Kategorisi", name: "category", widget: "select", options: ["SPL Lisanslama", "MASAK Uyum Görevlisi", "CIA Part 1", "Banka Denetimi"] }
       - { label: "Açıklama / Yönerge", name: "description", widget: "text" }
       - label: "Sorular"
         name: "questions"
