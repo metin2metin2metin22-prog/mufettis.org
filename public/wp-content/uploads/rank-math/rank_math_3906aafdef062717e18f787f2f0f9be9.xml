@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="//mufettis.org/main-sitemap.xsl"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<sitemap>
+		<loc>https://mufettis.org/post-sitemap.xml</loc>
+		<lastmod>2026-05-29T19:08:47+00:00</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>https://mufettis.org/page-sitemap.xml</loc>
+		<lastmod>2026-04-11T12:36:42+00:00</lastmod>
+	</sitemap>
+	<sitemap>
+		<loc>https://mufettis.org/category-sitemap.xml</loc>
+		<lastmod>2026-05-29T19:08:47+00:00</lastmod>
+	</sitemap>
+</sitemapindex>

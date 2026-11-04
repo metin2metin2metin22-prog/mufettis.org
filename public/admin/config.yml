@@ -1,0 +1,48 @@
+backend:
+  name: github
+  repo: metin2metin2metin22-prog/mufettis.org
+  branch: main
+
+locale: 'tr'
+display_url: https://mufettis.org
+media_folder: "public/wp-content/uploads/2026/11"
+public_folder: "/wp-content/uploads/2026/11"
+
+collections:
+  - name: "posts"
+    label: "Yazılar ve Notlar"
+    folder: "src/content/posts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Başlık", name: "title", widget: "string" }
+      - { label: "Slug (URL Bağlantısı)", name: "slug", widget: "string" }
+      - { label: "Yayın Tarihi", name: "date", widget: "datetime" }
+      - { label: "Kategori", name: "category", widget: "select", options: ["SPL Lisanslama", "MASAK Uyum Görevlisi", "CIA Part 1", "Banka Denetimi", "Mali Analiz Kütüphanesi", "Ekonomi Gündemi"] }
+      - { label: "Kapak Görseli", name: "image", widget: "image", required: false }
+      - { label: "Özet / Meta Açıklama (Google İçin)", name: "description", widget: "text" }
+      - { label: "Odak Anahtar Kelime", name: "focus_keyword", widget: "string", required: false }
+      - { label: "İçerik", name: "body", widget: "markdown" }
+
+  - name: "exams"
+    label: "Deneme Sınavları & Sorular"
+    folder: "src/content/exams"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Sınav Başlığı", name: "title", widget: "string" }
+      - { label: "Slug", name: "slug", widget: "string" }
+      - { label: "Sınav Kategorisi", name: "category", widget: "select", options: ["SPL Lisanslama", "CIA Part 1", "MASAK Uyum Görevlisi", "Müfettişlik Genel"] }
+      - { label: "Açıklama / Yönerge", name: "description", widget: "text" }
+      - label: "Sorular"
+        name: "questions"
+        widget: "list"
+        fields:
+          - { label: "Soru Metni", name: "question_text", widget: "text" }
+          - { label: "A Şıkkı", name: "option_a", widget: "string" }
+          - { label: "B Şıkkı", name: "option_b", widget: "string" }
+          - { label: "C Şıkkı", name: "option_c", widget: "string" }
+          - { label: "D Şıkkı", name: "option_d", widget: "string" }
+          - { label: "E Şıkkı (Opsiyonel)", name: "option_e", widget: "string", required: false }
+          - { label: "Doğru Şık", name: "correct_option", widget: "select", options: ["A", "B", "C", "D", "E"] }
+          - { label: "Çözüm ve Mevzuat Açıklaması", name: "explanation", widget: "markdown" }

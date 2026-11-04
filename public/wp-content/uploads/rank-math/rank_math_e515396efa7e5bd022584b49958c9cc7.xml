@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl" href="//mufettis.org/main-sitemap.xsl"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+	<url>
+		<loc>https://mufettis.org/category/denetim-kutuphanesi/</loc>
+		<lastmod>2026-04-29T20:49:28+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://mufettis.org/category/spl-ders-notlari/</loc>
+		<lastmod>2026-05-29T12:05:03+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://mufettis.org/category/cia-ders-notlari/</loc>
+		<lastmod>2026-04-27T12:42:02+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://mufettis.org/category/kariyer-meslek-rehberi/</loc>
+		<lastmod>2026-05-08T22:54:34+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://mufettis.org/category/mali-analiz-kutuphanesi/</loc>
+		<lastmod>2026-05-29T19:08:47+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://mufettis.org/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/</loc>
+		<lastmod>2026-05-18T19:57:55+00:00</lastmod>
+	</url>
+</urlset>

@@ -1,0 +1,18 @@
+{
+  "name": "mufettis-org",
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^6.0.2",
+    "@bruits/satteri-win32-x64-msvc": "^0.11.6",
+    "astro": "^5.18.2",
+    "tailwindcss": "^3.4.17"
+  }
+}

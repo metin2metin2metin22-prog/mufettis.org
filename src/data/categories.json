@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Denetim Kütüphanesi",
+    "slug": "denetim-kutuphanesi",
+    "count": 16
+  },
+  {
+    "name": "SPL Ders Notları",
+    "slug": "spl-ders-notlari",
+    "count": 9
+  },
+  {
+    "name": "MASAK Uyum Görevlisi Yetkilendirme Ders Notları",
+    "slug": "masak-uyum-gorevlisi-yetkilendirme-ders-notlari",
+    "count": 6
+  },
+  {
+    "name": "Kariyer &amp; Meslek Rehberi",
+    "slug": "kariyer-meslek-rehberi",
+    "count": 4
+  },
+  {
+    "name": "CIA Ders Notları",
+    "slug": "cia-ders-notlari",
+    "count": 3
+  },
+  {
+    "name": "Mali Analiz Kütüphanesi",
+    "slug": "mali-analiz-kutuphanesi",
+    "count": 2
+  },
+  {
+    "name": "Vaka Çalışmaları",
+    "slug": "vaka-calismalari",
+    "count": 0
+  }
+]

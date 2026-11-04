@@ -1,0 +1,279 @@
+---
+import Layout from '../layouts/Layout.astro';
+import posts from '../data/posts.json';
+import categories from '../data/categories.json';
+
+// Categorize posts
+const featuredSlugs = [
+  '2026-banka-mufettisi-maaslari-kamu-ve-ozel-bankalarda-net-rakamlar-kidem-ve-ikramiyeler',
+  'banka-mufettisi-nasil-olunur-adim-adim-2026-kariyer-rehberi',
+  'genis-kapsamli-sermaye-piyasasi-mevzuati-ve-meslek-kurallari-konu-anlatimi-ve-cozumlu-sorular',
+  'masak-uyum-gorevlisi-yetkilendirme-sinavi-konu-anlatimi-ve-cozumlu-sorular'
+];
+
+const featuredPosts = posts.filter(p => featuredSlugs.includes(p.slug));
+const quizPosts = posts.filter(p => p.is_quiz).slice(0, 6);
+const recentArticles = posts.filter(p => p.post_type === 'post' && !featuredSlugs.includes(p.slug)).slice(0, 9);
+---
+
+<Layout 
+  title="Müfettiş | Sınav Hazırlık Notları, Makaleler ve Çözümlü Deneme Sınavları"
+  description="Banka Müfettişliği, SPL Lisanslama, MASAK Uyum Görevlisi ve CIA sınavlarına hazırlık için kapsamlı ders notları, mevzuat özetleri ve çözümlü testler."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-gradient-to-b from-brand-950 via-brand-900 to-slate-900 text-white pt-20 pb-28 px-4 overflow-hidden border-b border-brand-800/50">
+    <!-- Background subtle mesh -->
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#38a9f7_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-20 -left-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto text-center relative z-10">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-800/80 border border-brand-700/80 text-amber-300 text-xs font-semibold mb-6 backdrop-blur-sm shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+        <span>2026 Müfettişlik & Lisanslama Sınav Kütüphanesi</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+        Sınavlara Hazırlıkta <br class="hidden sm:inline" />
+        <span class="bg-gradient-to-r from-amber-300 via-white to-sky-300 bg-clip-text text-transparent">
+          Güvenilir Ders Notları & Çözümlü Testler
+        </span>
+      </h1>
+
+      <p class="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed font-normal">
+        Banka Müfettişliği, Sermaye Piyasası Lisanslama (SPL), MASAK Uyum Görevlisi ve CIA sınavları için özenle derlenmiş mevzuat özetleri, çözümlü sorular ve kariyer rehberi.
+      </p>
+
+      <!-- Quick Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 text-sm font-semibold">
+        <a href="/deneme-sinavlari/" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-bold shadow-lg shadow-amber-500/20 transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+          <span>⚡ Çözümlü Deneme Sınavları</span>
+        </a>
+        <a href="/category/spl-ders-notlari/" class="px-6 py-3.5 rounded-xl bg-brand-800/90 hover:bg-brand-700 text-white border border-brand-700/80 shadow-md transition-all transform hover:-translate-y-0.5 flex items-center gap-2">
+          <span>📚 SPL Ders Notları</span>
+        </a>
+      </div>
+
+      <!-- Quick Category Tags -->
+      <div class="mt-12 flex flex-wrap items-center justify-center gap-2 text-xs text-slate-400">
+        <span class="text-slate-400">Popüler Başlıklar:</span>
+        <a href="/2026-banka-mufettisi-maaslari-kamu-ve-ozel-bankalarda-net-rakamlar-kidem-ve-ikramiyeler/" class="px-2.5 py-1 rounded-lg bg-brand-900/60 hover:bg-brand-800 text-slate-300 border border-brand-800/60 transition-colors">Banka Müfettişi Maaşları</a>
+        <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="px-2.5 py-1 rounded-lg bg-brand-900/60 hover:bg-brand-800 text-slate-300 border border-brand-800/60 transition-colors">MASAK Modülleri</a>
+        <a href="/category/cia-ders-notlari/" class="px-2.5 py-1 rounded-lg bg-brand-900/60 hover:bg-brand-800 text-slate-300 border border-brand-800/60 transition-colors">CIA Part 1 Soruları</a>
+        <a href="/banka-mufettisi-nasil-olunur-adim-adim-2026-kariyer-rehberi/" class="px-2.5 py-1 rounded-lg bg-brand-900/60 hover:bg-brand-800 text-slate-300 border border-brand-800/60 transition-colors">Müfettişlik Rehberi</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Highlights Grid -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-14 relative z-20">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      
+      <a href="/category/spl-ders-notlari/" class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+        <div class="w-12 h-12 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          📈
+        </div>
+        <h3 class="font-bold text-slate-900 dark:text-white text-base group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">SPL Lisanslama</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Sermaye Piyasası Araçları, Takas & Saklama, Yatırım Kuruluşları</p>
+        <span class="inline-block text-[11px] font-semibold text-blue-600 dark:text-blue-400 mt-3">Tüm Notlar & Testler →</span>
+      </a>
+
+      <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          🛡️
+        </div>
+        <h3 class="font-bold text-slate-900 dark:text-white text-base group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">MASAK Uyum</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Modül 1 ve Modül 2 Konu Anlatımları, Mevzuat ve Yetkilendirme</p>
+        <span class="inline-block text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 mt-3">Konuları İncele →</span>
+      </a>
+
+      <a href="/category/cia-ders-notlari/" class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+        <div class="w-12 h-12 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          🎓
+        </div>
+        <h3 class="font-bold text-slate-900 dark:text-white text-base group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">CIA Part 1</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">İç Denetim İlkeleri, Üç Hat Modeli, Bağımsızlık ve Deneme Setleri</p>
+        <span class="inline-block text-[11px] font-semibold text-purple-600 dark:text-purple-400 mt-3">Çözümlü Sorular →</span>
+      </a>
+
+      <a href="/category/banka-denetimi/" class="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 group">
+        <div class="w-12 h-12 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          🏛️
+        </div>
+        <h3 class="font-bold text-slate-900 dark:text-white text-base group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors">Banka Denetimi</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">Müfettişlik Kariyeri, Maaşlar, Dolandırıcılık Tespiti ve Bilanço</p>
+        <span class="inline-block text-[11px] font-semibold text-amber-600 dark:text-amber-400 mt-3">Rehberleri Oku →</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Featured Posts (Manşet) -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Öne Çıkan Başlıklar</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">En çok okunan sınav hazırlık rehberleri ve kapsamlı mevzuat özetleri</p>
+      </div>
+      <a href="/category/spl-ders-notlari/" class="text-sm font-semibold text-brand-600 dark:text-brand-400 hover:text-brand-700 flex items-center gap-1">
+        Tümünü Gör →
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {featuredPosts.map((post, idx) => (
+        <a href={post.url} class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+          <div class="p-6 sm:p-8">
+            <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-4">
+              {post.categories && post.categories[0] && (
+                <span class="px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/60 text-brand-700 dark:text-brand-300 font-semibold border border-brand-100 dark:border-brand-900">
+                  {post.categories[0].name}
+                </span>
+              )}
+              <span>⏱️ {post.reading_time} dk okuma</span>
+            </div>
+            
+            <h3 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors leading-snug mb-3">
+              {post.title}
+            </h3>
+
+            <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed line-clamp-3">
+              {post.excerpt}
+            </p>
+          </div>
+
+          <div class="px-6 sm:px-8 py-4 bg-slate-50 dark:bg-slate-800/40 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold text-brand-600 dark:text-brand-400 group-hover:text-brand-700">
+            <span>Yazıyı İncele</span>
+            <span class="transform group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Interactive Quizzes Banner Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+    <div class="bg-gradient-to-br from-brand-900 via-brand-950 to-slate-950 rounded-3xl p-8 sm:p-12 text-white border border-brand-800/80 shadow-2xl relative overflow-hidden">
+      <!-- Glow effect -->
+      <div class="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 relative z-10">
+        <div class="max-w-2xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-semibold mb-4 border border-amber-500/30">
+            <span>⚡ İnteraktif Sınav Modülü</span>
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-snug">
+            Gerçek Sınav Formatında Çözümlü Deneme Testleri
+          </h2>
+          <p class="text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">
+            Soruları çözün, anında doğru cevabı ve detaylı mevzuat açıklamalarını görün. SPL, CIA ve MASAK sınavlarında çıkan soru mantıklarını pekiştirin.
+          </p>
+        </div>
+
+        <a href="/deneme-sinavlari/" class="px-8 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-xl shadow-amber-500/20 transition-all transform hover:-translate-y-0.5 text-center whitespace-nowrap">
+          Tüm Sınavları Listele →
+        </a>
+      </div>
+
+      <!-- Quiz Grid Preview -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
+        {quizPosts.map(quiz => (
+          <a href={quiz.url} class="bg-white/10 hover:bg-white/15 backdrop-blur-sm border border-white/10 rounded-xl p-5 transition-all group">
+            <div class="flex items-center justify-between text-xs text-amber-300 mb-2">
+              <span class="font-medium">🎯 Çözümlü Test</span>
+              <span>{quiz.reading_time} dk</span>
+            </div>
+            <h4 class="font-bold text-white text-base leading-snug group-hover:text-amber-200 transition-colors line-clamp-2">
+              {quiz.title}
+            </h4>
+            <span class="inline-block text-xs font-semibold text-slate-300 mt-4 group-hover:text-white">
+              Soruları Çöz →
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Recent Articles & Study Notes Grid -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+    <div class="flex items-center justify-between mb-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">Son Eklenen Sınav Notları</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Düzenli olarak güncellenen mevzuat ve sınav hazırlık içerikleri</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {recentArticles.map(article => (
+        <a href={article.url} class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
+              {article.categories && article.categories[0] && (
+                <span class="font-semibold text-brand-600 dark:text-brand-400">
+                  {article.categories[0].name}
+                </span>
+              )}
+              <span>⏱️ {article.reading_time} dk</span>
+            </div>
+
+            <h3 class="font-bold text-slate-900 dark:text-white text-lg group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors leading-snug mb-3">
+              {article.title}
+            </h3>
+
+            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed line-clamp-3">
+              {article.excerpt}
+            </p>
+          </div>
+
+          <div class="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-slate-500 group-hover:text-brand-600 dark:group-hover:text-brand-400 flex items-center justify-between">
+            <span>Notu Oku</span>
+            <span>→</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Authority / Why Us Banner -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-24 mb-10">
+    <div class="bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 rounded-3xl p-8 sm:p-12">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <h3 class="text-2xl font-bold text-slate-900 dark:text-white">Neden Müfettiş.org?</h3>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-2">Sınav hazırlık sürecinizi en verimli ve kesintisiz kılmak için tasarlandı.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+        <div class="space-y-2">
+          <div class="w-12 h-12 mx-auto rounded-2xl bg-brand-100 dark:bg-brand-950 text-brand-700 dark:text-brand-400 flex items-center justify-center text-xl font-bold">
+            ⚖️
+          </div>
+          <h4 class="font-bold text-slate-900 dark:text-white">Güncel Mevzuat Odaklı</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            SPL, MASAK ve BDDK yönetmeliklerindeki son değişikliklere ve sınav müfredatlarına tam uyum.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="w-12 h-12 mx-auto rounded-2xl bg-amber-100 dark:bg-amber-950 text-amber-700 dark:text-amber-400 flex items-center justify-center text-xl font-bold">
+            💡
+          </div>
+          <h4 class="font-bold text-slate-900 dark:text-white">Açıklamalı Soru Çözümleri</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Sadece şıkkı değil; neden doğru, neden yanlış olduğunu açıklayan öğretici deneme kütüphanesi.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="w-12 h-12 mx-auto rounded-2xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400 flex items-center justify-center text-xl font-bold">
+            ⚡
+          </div>
+          <h4 class="font-bold text-slate-900 dark:text-white">Işık Hızında & Reklamsız</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Göz yormayan minimalist tipografi, gece okuma modu ve sıfır gecikmeli modern altyapı.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

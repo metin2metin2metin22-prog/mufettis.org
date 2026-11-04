@@ -1,0 +1,218 @@
+---
+import Layout from '../layouts/Layout.astro';
+import posts from '../data/posts.json';
+
+export async function getStaticPaths() {
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post }
+  }));
+}
+
+const { post } = Astro.props;
+
+// Find related posts from the same category
+const primaryCat = post.categories && post.categories[0] ? post.categories[0].slug : null;
+const relatedPosts = posts
+  .filter(p => p.slug !== post.slug && primaryCat && p.categories.some(c => c.slug === primaryCat))
+  .slice(0, 3);
+
+// Format date in Turkish
+const formattedDate = new Date(post.date).toLocaleDateString('tr-TR', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+
+// JSON-LD Schema for Google Rich Snippets
+const schemaArticle = {
+  "@context": "https://schema.org",
+  "@type": post.is_quiz ? "Quiz" : "Article",
+  "headline": post.title,
+  "description": post.seo.description || post.excerpt,
+  "datePublished": post.date,
+  "dateModified": post.date,
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `https://mufettis.org/${post.slug}/`
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "mufettis.org",
+    "url": "https://mufettis.org"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "mufettis.org",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://mufettis.org/wp-content/uploads/2026/04/cropped-mufettis.org-favicon-1-180x180.png"
+    }
+  }
+};
+---
+
+<Layout 
+  title={post.seo.title || post.title}
+  description={post.seo.description || post.excerpt}
+  type="article"
+  publishDate={post.date}
+  canonical={`https://mufettis.org/${post.slug}/`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(schemaArticle)} />
+
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20">
+    
+    <!-- Breadcrumb Navigation -->
+    <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6 overflow-x-auto whitespace-nowrap pb-2">
+      <a href="/" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">Anasayfa</a>
+      <span>/</span>
+      {post.categories && post.categories[0] ? (
+        <>
+          <a href={`/category/${post.categories[0].slug}/`} class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors">
+            {post.categories[0].name}
+          </a>
+          <span>/</span>
+        </>
+      ) : (
+        <>
+          <span>Sayfa</span>
+          <span>/</span>
+        </>
+      )}
+      <span class="text-slate-700 dark:text-slate-300 font-medium truncate max-w-xs">{post.title}</span>
+    </nav>
+
+    <!-- Post Header -->
+    <header class="border-b border-slate-200 dark:border-slate-800 pb-8 mb-8">
+      {post.categories && post.categories.length > 0 && (
+        <div class="flex flex-wrap items-center gap-2 mb-4">
+          {post.categories.map(c => (
+            <a href={`/category/${c.slug}/`} class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/70 text-brand-700 dark:text-brand-300 border border-brand-200/60 dark:border-brand-800 hover:bg-brand-100 transition-colors">
+              {c.name}
+            </a>
+          ))}
+          {post.is_quiz && (
+            <span class="text-xs font-bold px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 flex items-center gap-1">
+              ⚡ Çözümlü Deneme Testi
+            </span>
+          )}
+        </div>
+      )}
+
+      <h1 class="text-2xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-tight mb-6">
+        {post.title}
+      </h1>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-brand-900 text-white font-bold text-xs flex items-center justify-center">
+              M
+            </div>
+            <span class="font-medium text-slate-700 dark:text-slate-300">mufettis.org</span>
+          </div>
+          <span>•</span>
+          <time datetime={post.date}>{formattedDate}</time>
+          <span>•</span>
+          <span>⏱️ {post.reading_time} dk okuma</span>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs">
+          <button id="print-btn" type="button" class="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors flex items-center gap-1">
+            🖨️ Yazdır / PDF
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Post Content -->
+    <div class="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-white prose-a:text-brand-600 dark:prose-a:text-brand-400 prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl prose-img:shadow-md text-base sm:text-lg leading-relaxed text-slate-800 dark:text-slate-200">
+      <div set:html={post.content} />
+    </div>
+
+    <!-- Tags if any -->
+    {post.tags && post.tags.length > 0 && (
+      <div class="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center gap-2">
+        <span class="text-xs font-semibold text-slate-400">Etiketler:</span>
+        {post.tags.map(t => (
+          <span class="text-xs px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            #{t.name}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- Share Bar -->
+    <div class="mt-10 p-6 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>
+        <h4 class="font-bold text-slate-900 dark:text-white text-sm">Bu ders notunu arkadaşlarınızla paylaşın</h4>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Sınava hazırlanan diğer adayların da faydalanmasını sağlayın.</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <a 
+          href={`https://api.whatsapp.com/send?text=${encodeURIComponent(post.title + ' ' + Astro.url.href)}`} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm"
+        >
+          <span>WhatsApp</span>
+        </a>
+        <a 
+          href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(Astro.url.href)}`} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          class="px-3.5 py-2 rounded-xl bg-blue-700 hover:bg-blue-600 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm"
+        >
+          <span>LinkedIn</span>
+        </a>
+        <button 
+          id="copy-link-btn"
+          type="button"
+          class="px-3.5 py-2 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold transition-colors"
+        >
+          Bağlantıyı Kopyala
+        </button>
+      </div>
+    </div>
+
+    <!-- Related Articles -->
+    {relatedPosts.length > 0 && (
+      <section class="mt-16 pt-10 border-t border-slate-200 dark:border-slate-800">
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-6">Bu Kategorideki Diğer Notlar & Sınavlar</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {relatedPosts.map(rel => (
+            <a href={rel.url} class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 hover:border-brand-500 transition-all flex flex-col justify-between group">
+              <div>
+                <span class="text-xs text-brand-600 dark:text-brand-400 font-semibold mb-2 block">⏱️ {rel.reading_time} dk</span>
+                <h4 class="font-bold text-slate-900 dark:text-white text-sm leading-snug group-hover:text-brand-600 transition-colors line-clamp-2">
+                  {rel.title}
+                </h4>
+              </div>
+              <span class="text-xs font-semibold text-slate-400 group-hover:text-brand-600 mt-4 block">İncele →</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+  </article>
+
+  <script>
+    // Print handler
+    document.getElementById('print-btn')?.addEventListener('click', () => {
+      window.print();
+    });
+
+    // Copy link handler
+    const copyBtn = document.getElementById('copy-link-btn');
+    copyBtn?.addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        copyBtn.textContent = 'Kopyalandı! ✓';
+        setTimeout(() => {
+          copyBtn.textContent = 'Bağlantıyı Kopyala';
+        }, 2000);
+      });
+    });
+  </script>
+</Layout>
