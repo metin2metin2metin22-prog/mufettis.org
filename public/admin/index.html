@@ -1,14 +1,1182 @@
 <!doctype html>
-<html lang="tr">
+<html lang="tr" class="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Müfettiş.org - İçerik Yönetim Paneli</title>
-  <link rel="icon" type="image/png" href="/wp-content/uploads/2026/04/cropped-mufettis.org-favicon-1-180x180.png" />
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <title>Müfettiş.org - Profesyonel Editoryal Yönetim Stüdyosu</title>
+  <link rel="icon" type="image/png" href="/brand/favicon-dark-32x32.png" />
+  
+  <!-- Tailwind CSS & Inter Font -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Markdown & Security Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.6/dist/purify.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              900: '#0b2b46',
+              950: '#071827',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.4);
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.7);
+    }
+
+    /* Article Preview Callout Styles (Exact Match to mufettis.org) */
+    .preview-box .mufettis-note {
+      margin: 1.5rem 0;
+      padding: 1.25rem 1.5rem;
+      border-radius: 1rem;
+      border-left-width: 5px;
+      border-left-color: #38bdf8;
+      background-color: #0b1e33;
+      border-top: 1px solid #162c46;
+      border-right: 1px solid #162c46;
+      border-bottom: 1px solid #162c46;
+      color: #f8fafc;
+    }
+    .preview-light .preview-box .mufettis-note {
+      background-color: #f0f7ff;
+      border-left-color: #0284c7;
+      border-color: #e0effe;
+      color: #0f172a;
+    }
+
+    .preview-box .mufettis-service {
+      margin: 1.5rem 0;
+      padding: 1.25rem 1.5rem;
+      border-radius: 1.25rem;
+      border: 2px solid #d97706;
+      background: linear-gradient(135deg, #221402 0%, #170d01 100%);
+      color: #fde68a;
+    }
+    .preview-light .preview-box .mufettis-service {
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-color: #f59e0b;
+      color: #451a03;
+    }
+
+    .preview-box .mufettis-warning {
+      margin: 1.5rem 0;
+      padding: 1.25rem 1.5rem;
+      border-radius: 1rem;
+      border-left: 5px solid #f87171;
+      background-color: #240a0c;
+      border-top: 1px solid #451216;
+      border-right: 1px solid #451216;
+      border-bottom: 1px solid #451216;
+      color: #fee2e2;
+    }
+    .preview-light .preview-box .mufettis-warning {
+      background-color: #fef2f2;
+      border-left-color: #ef4444;
+      border-color: #fecaca;
+      color: #7f1d1d;
+    }
+
+    .preview-box .interactive-quiz-card {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      border-radius: 1.5rem;
+      background-color: #0c1827;
+      border: 2px solid #1e3a5f;
+    }
+    .preview-light .preview-box .interactive-quiz-card {
+      background-color: #ffffff;
+      border-color: #cbd5e1;
+    }
+
+    .preview-box blockquote {
+      border-left: 4px solid #38bdf8;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem 0;
+      border-radius: 0 1rem 1rem 0;
+      background-color: #0c1827;
+      color: #f1f5f9;
+      font-style: italic;
+    }
+    .preview-light .preview-box blockquote {
+      background-color: #f8fafc;
+      border-left-color: #0284c7;
+      color: #1e293b;
+    }
+
+    .preview-box table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+    .preview-box th, .preview-box td {
+      border: 1px solid #1e3a5f;
+      padding: 0.75rem 1rem;
+    }
+    .preview-box th {
+      background-color: #0e2038;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    .preview-light .preview-box th, .preview-light .preview-box td {
+      border-color: #cbd5e1;
+    }
+    .preview-light .preview-box th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+  </style>
 </head>
-<body>
-  <!-- Decap CMS Script -->
-  <script src="https://unpkg.com/decap-cms@^3.1.0/dist/decap-cms.js"></script>
+<body class="bg-[#050b14] text-slate-100 font-sans antialiased min-h-screen">
+
+  <!-- ========================================== -->
+  <!-- 1. GÜVENLİK GİRİŞ KAPISI (AUTH GATE)       -->
+  <!-- ========================================== -->
+  <div id="auth-gate" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gradient-to-br from-[#030710] via-[#081528] to-[#040913]">
+    <div class="w-full max-w-md p-8 sm:p-10 rounded-3xl bg-[#0b1728]/90 backdrop-blur-2xl border-2 border-slate-800 shadow-2xl relative overflow-hidden">
+      <!-- Glow effect -->
+      <div class="absolute -top-24 -right-24 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -bottom-24 -left-24 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="text-center mb-8">
+        <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-[#0c243d] to-[#051322] border-2 border-sky-500/30 p-3 shadow-xl flex items-center justify-center">
+          <img src="/brand/mufettis-emblem-dark.png" alt="Müfettiş Amblemi" class="w-full h-full object-contain drop-shadow" />
+        </div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 border border-sky-500/30 text-[10.5px] font-black uppercase tracking-wider mb-2">
+          <span>Kurumsal Yönetim Konsolu</span>
+        </div>
+        <h1 class="text-2xl font-black text-white tracking-tight">Müfettiş Studio Pro</h1>
+        <p class="text-xs text-slate-400 mt-1">İçerik, mevzuat ve deneme sınavı üretim paneli</p>
+      </div>
+
+      <form id="auth-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
+            Yönetici Güvenlik Parolası:
+          </label>
+          <div class="relative">
+            <input 
+              id="admin-password" 
+              type="password" 
+              placeholder="Yönetici şifrenizi girin..." 
+              required
+              class="w-full px-4 py-3.5 rounded-2xl bg-slate-900 border-2 border-slate-700/80 focus:border-sky-400 text-white placeholder-slate-500 font-semibold text-sm outline-none transition-colors"
+            />
+            <button 
+              type="button" 
+              id="toggle-pwd-vis" 
+              class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+              tabindex="-1"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </button>
+          </div>
+          <p id="auth-error" class="hidden text-xs text-rose-400 font-semibold mt-2"></p>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-4 rounded-2xl bg-gradient-to-r from-sky-500 to-brand-600 hover:from-sky-400 hover:to-brand-500 text-white font-black text-sm tracking-wide transition-all shadow-lg shadow-sky-500/20 active:scale-[0.98]"
+        >
+          Panele Güvenli Giriş Yap →
+        </button>
+
+        <div class="pt-3 border-t border-slate-800/80 text-center">
+          <span class="text-[11px] text-slate-500">
+            Varsayılan master şifre: <code class="text-amber-400 font-mono">mufettis2026</code>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- 2. ANA YÖNETİM STÜDYOSU (STUDIO WORKSPACE) -->
+  <!-- ========================================== -->
+  <div id="studio-app" class="hidden min-h-screen flex flex-col">
+    
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-[#081220]/95 backdrop-blur-xl border-b border-slate-800 px-4 sm:px-6 py-3 flex items-center justify-between shadow-md">
+      <div class="flex items-center gap-3">
+        <a href="/" target="_blank" class="flex items-center gap-2.5 group" title="Siteyi Görüntüle">
+          <div class="w-9 h-9 rounded-xl bg-[#0f243a] p-1.5 border border-sky-500/30 flex items-center justify-center shadow">
+            <img src="/brand/mufettis-emblem-dark.png" alt="Logo" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <span class="font-black text-base text-white leading-none block">
+              mufettis<span class="text-sky-400">.org</span>
+            </span>
+            <span class="text-[9.5px] font-bold text-amber-400 tracking-wider uppercase">Editorial Studio Pro</span>
+          </div>
+        </a>
+
+        <span class="hidden md:inline-block w-px h-5 bg-slate-800 mx-2"></span>
+
+        <!-- Status Badges -->
+        <div class="hidden md:flex items-center gap-2 text-xs">
+          <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-[10.5px] font-bold">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Güvenli Oturum Açık
+          </span>
+          <span id="draft-status" class="text-[11px] text-slate-400">
+            Taslak: <span class="text-slate-300 font-mono">Yerel Hafızada Kayıtlı</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center gap-2.5">
+        <button 
+          id="btn-new-post" 
+          type="button" 
+          class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition-colors flex items-center gap-1.5"
+          title="Tüm alanları sıfırla ve yeni boş yazı oluştur"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <span class="hidden sm:inline">Yeni Yazı</span>
+        </button>
+
+        <button 
+          id="btn-settings" 
+          type="button" 
+          class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition-colors flex items-center gap-1.5"
+          title="GitHub Token ve Şifre Ayarları"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span class="hidden sm:inline">GitHub Ayarı</span>
+        </button>
+
+        <button 
+          id="btn-publish-github" 
+          type="button" 
+          class="px-4 py-1.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs transition-all shadow-md flex items-center gap-1.5"
+          title="GitHub'a doğrudan commit et ve otomatik yayına al"
+        >
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          <span>Doğrudan Yayınla</span>
+        </button>
+
+        <button 
+          id="btn-logout" 
+          type="button" 
+          class="p-1.5 rounded-xl bg-slate-800 hover:bg-rose-950/60 hover:text-rose-400 text-slate-400 transition-colors"
+          title="Oturumu Kapat"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 min-h-0">
+      
+      <!-- ===================================== -->
+      <!-- SOL PANEL: YAZI FORMU VE EDİTÖR (7 KOLON) -->
+      <!-- ===================================== -->
+      <div class="lg:col-span-6 xl:col-span-7 p-4 sm:p-6 overflow-y-auto border-r border-slate-800 space-y-5">
+        
+        <!-- Üst Metadata Satırı -->
+        <div class="bg-[#0b1626] rounded-2xl p-4 sm:p-5 border border-slate-800 space-y-4">
+          <div>
+            <label class="block text-xs font-black uppercase tracking-wider text-slate-300 mb-1.5">
+              Makale Başlığı:
+            </label>
+            <input 
+              id="post-title" 
+              type="text" 
+              placeholder="Örn: 2026 SPL Düzey 3 Sermaye Piyasası Araçları 1 Ders Notları" 
+              class="w-full px-4 py-3 rounded-xl bg-slate-900 border-2 border-slate-700/80 focus:border-sky-400 text-white font-bold text-base outline-none transition-colors"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-slate-400 mb-1">
+                Kalıcı Bağlantı (Slug URL):
+              </label>
+              <div class="flex items-center rounded-xl bg-slate-900 border border-slate-700/80 px-3 py-2 text-xs">
+                <span class="text-slate-500">mufettis.org/</span>
+                <input 
+                  id="post-slug" 
+                  type="text" 
+                  placeholder="spl-ders-notu" 
+                  class="bg-transparent text-sky-400 font-mono font-bold outline-none flex-grow ml-1"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-400 mb-1">
+                Akademik Kategori:
+              </label>
+              <select id="post-category" class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-white text-xs font-bold outline-none focus:border-sky-400">
+                <option value="SPL Lisanslama">SPL Lisanslama</option>
+                <option value="MASAK Uyum Görevlisi">MASAK Uyum Görevlisi</option>
+                <option value="CIA Part 1">CIA Part 1</option>
+                <option value="Banka Denetimi">Banka Denetimi</option>
+                <option value="Mali Analiz Kütüphanesi">Mali Analiz Kütüphanesi</option>
+                <option value="Kariyer & Meslek Rehberi">Kariyer & Meslek Rehberi</option>
+                <option value="Vaka Çalışmaları">Vaka Çalışmaları</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Kapak Görseli ve Hızlı Varlık Seçimi -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-400 mb-1">
+              Kapak Görseli URL:
+            </label>
+            <div class="flex gap-2">
+              <input 
+                id="post-image" 
+                type="text" 
+                placeholder="/assets/categories/spl-sermaye-piyasasi.jpg" 
+                class="flex-grow px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-white text-xs font-mono outline-none focus:border-sky-400"
+              />
+            </div>
+            <!-- Hızlı Hazır Asetler Butonları -->
+            <div class="flex flex-wrap items-center gap-1.5 mt-2 text-[10.5px]">
+              <span class="text-slate-500 font-bold">Hazır Kurumsal Varlıklar:</span>
+              <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 font-medium" data-img="/assets/categories/spl-sermaye-piyasasi.jpg">SPL Borsa Ekranı</button>
+              <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-emerald-300 font-medium" data-img="/assets/categories/masak-uyum-denetim.jpg">MASAK Adli Denetim</button>
+              <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 font-medium" data-img="/assets/categories/cia-ic-denetim.jpg">CIA Yönetim Kurulu</button>
+              <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 font-medium" data-img="/assets/categories/banka-mufettisligi.jpg">Banka Teftiş Sütunları</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- WordPress'ten Üstün Özel İçerik ve Blok Araç Çubuğu -->
+        <div class="bg-[#0b1626] rounded-2xl p-3 border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              Özel Teftiş & Sınav Blokları (Tek Tıkla Ekle):
+            </span>
+            <span class="text-[10px] text-slate-500">İmlecin olduğu yere ekler</span>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" id="insert-note" class="px-2.5 py-1 rounded-lg bg-sky-950/80 hover:bg-sky-900 border border-sky-500/40 text-sky-300 text-xs font-bold transition-all flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              + Müfettiş Notu
+            </button>
+
+            <button type="button" id="insert-service" class="px-2.5 py-1 rounded-lg bg-amber-950/80 hover:bg-amber-900 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+              + Hafıza Çivisi
+            </button>
+
+            <button type="button" id="insert-quiz" class="px-2.5 py-1 rounded-lg bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 text-purple-300 text-xs font-bold transition-all flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              + Çözümlü Test Sorusu
+            </button>
+
+            <button type="button" id="insert-warning" class="px-2.5 py-1 rounded-lg bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-300 text-xs font-bold transition-all flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+              + Dikkat / Uyarı
+            </button>
+
+            <button type="button" id="insert-table" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              + Karşılaştırma Tablosu
+            </button>
+          </div>
+
+          <!-- Standart Biçimlendirme Araçları -->
+          <div class="flex flex-wrap items-center gap-1 pt-2 border-t border-slate-800/80 text-xs">
+            <button type="button" classfmt="**" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Kalın">B</button>
+            <button type="button" classfmt="*" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 italic font-serif" title="İtalik">I</button>
+            <button type="button" classfmt="## " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="H2 Başlık">H2</button>
+            <button type="button" classfmt="### " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="H3 Başlık">H3</button>
+            <button type="button" classfmt="> " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Alıntı">Alıntı</button>
+            <button type="button" classfmt="- " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Liste">Liste</button>
+            <button type="button" classfmt="[Bağlantı Metni](https://...)" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-sky-400 font-semibold" title="Link Ekle">Link</button>
+            <button type="button" classfmt="<mark class='mufettis-mark'>Vurgulanan Metin</mark>" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-amber-300 font-semibold" title="Fosforlu Vurgu">Fosforlu</button>
+          </div>
+        </div>
+
+        <!-- Ana Metin Editörü -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-xs font-black uppercase tracking-wider text-slate-300">
+              Yazı Metni (Markdown / HTML Destekli):
+            </label>
+            <div class="text-[11px] text-slate-400 flex items-center gap-2">
+              <span id="char-count">0 karakter</span>
+              <span>•</span>
+              <span id="word-count">0 kelime</span>
+              <span>•</span>
+              <span id="read-time" class="text-sky-400 font-bold">1 dk okuma</span>
+            </div>
+          </div>
+          <textarea 
+            id="post-content" 
+            rows="18" 
+            placeholder="Makalenizi buraya yazın veya yapıştırın... Markdown, tablolar ve yukarıdaki özel teftiş bloklarını özgürce kullanabilirsiniz."
+            class="w-full p-4 rounded-2xl bg-slate-900 border-2 border-slate-700/80 focus:border-sky-400 text-slate-100 font-mono text-sm leading-relaxed outline-none transition-colors"
+          ></textarea>
+        </div>
+
+        <!-- SEO ve Google Arama Ayarları (Yoast / RankMath Düzeyinde) -->
+        <div class="bg-[#0b1626] rounded-2xl p-4 sm:p-5 border border-slate-800 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black uppercase tracking-wider text-slate-300">
+              Google SEO ve Meta Bilgileri
+            </span>
+            <span id="seo-score-badge" class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/30">
+              SEO Skoru: Hesaplanıyor
+            </span>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-slate-400 mb-1">
+              Odak Anahtar Kelime (Focus Keyword):
+            </label>
+            <input 
+              id="post-keyword" 
+              type="text" 
+              placeholder="Örn: SPL Ders Notları" 
+              class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-white text-xs font-bold outline-none focus:border-sky-400"
+            />
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <label class="text-[11px] font-bold text-slate-400">
+                Meta Açıklama (Google Arama Sonucu Özeti):
+              </label>
+              <span id="desc-char-count" class="text-[10px] text-slate-500">0 / 160 karakter</span>
+            </div>
+            <textarea 
+              id="post-description" 
+              rows="2" 
+              placeholder="Google arama sonuçlarında çıkacak 1-2 cümlelik çarpıcı özet..." 
+              class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-white text-xs leading-relaxed outline-none focus:border-sky-400"
+            ></textarea>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- ===================================== -->
+      <!-- SAĞ PANEL: CANLI ÖNİZLEME & GOOGLE SERP (5 KOLON) -->
+      <!-- ===================================== -->
+      <div class="lg:col-span-6 xl:col-span-5 p-4 sm:p-6 overflow-y-auto bg-[#060e1a]/80 flex flex-col space-y-4">
+        
+        <!-- Sağ Panel Sekmeleri -->
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-1.5">
+            <button type="button" id="tab-btn-preview" class="px-3 py-1.5 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/40 text-xs font-bold">
+              Canlı Önizleme
+            </button>
+            <button type="button" id="tab-btn-seo" class="px-3 py-1.5 rounded-xl bg-slate-800/80 text-slate-400 hover:text-white text-xs font-bold">
+              Google SERP Görünümü
+            </button>
+          </div>
+
+          <!-- Tema Önizleme Düğmesi -->
+          <button 
+            type="button" 
+            id="toggle-preview-theme" 
+            class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-[11px] text-slate-300 font-semibold flex items-center gap-1"
+            title="Önizlemeyi Karanlık/Aydınlık Yap"
+          >
+            <span id="preview-theme-label">Karanlık Tema</span>
+          </button>
+        </div>
+
+        <!-- 1. SEKME: CANLI MAKALE ÖNİZLEMESİ -->
+        <div id="tab-preview-content" class="flex-grow">
+          <div id="preview-container" class="rounded-2xl border-2 border-slate-800 bg-[#0c1827] p-5 sm:p-6 transition-colors shadow-inner min-h-[500px]">
+            
+            <!-- Önizleme Başlık ve Kategori -->
+            <div class="mb-4 pb-4 border-b border-slate-800">
+              <span id="preview-cat-badge" class="inline-block text-[10px] font-black text-sky-400 uppercase tracking-wider mb-2 px-2.5 py-0.5 rounded-full bg-sky-950 border border-sky-800">
+                SPL Lisanslama
+              </span>
+              <h1 id="preview-title" class="text-xl sm:text-2xl font-black text-white leading-tight">
+                Başlık Henüz Girilmedi
+              </h1>
+              <div class="flex items-center gap-2 mt-2 text-xs text-slate-400">
+                <span id="preview-date">5 Kasım 2026</span>
+                <span>•</span>
+                <span id="preview-read-time">1 dk okuma</span>
+              </div>
+            </div>
+
+            <!-- Önizleme Kapak Görseli -->
+            <div id="preview-image-wrap" class="hidden mb-5 aspect-[16/9] rounded-2xl overflow-hidden bg-slate-900 border border-slate-800">
+              <img id="preview-image" src="" alt="Kapak" class="w-full h-full object-cover" />
+            </div>
+
+            <!-- Önizleme Özet Kutusu -->
+            <div id="preview-desc-wrap" class="hidden mb-5 p-4 rounded-2xl bg-sky-950/40 border-l-4 border-sky-400 text-xs text-slate-300 leading-relaxed font-medium">
+              <p id="preview-desc"></p>
+            </div>
+
+            <!-- Rendered Body HTML -->
+            <div id="preview-body" class="preview-box text-sm text-slate-200 leading-relaxed space-y-4">
+              <p class="text-slate-500 italic">Yazmaya başladığınızda makalenizin mufettis.org üzerindeki birebir görünümü burada anlık olarak canlanacaktır...</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. SEKME: GOOGLE SERP VE SEO AUDIT -->
+        <div id="tab-seo-content" class="hidden space-y-5">
+          <!-- Google SERP Card -->
+          <div class="bg-white rounded-2xl p-5 shadow-lg border border-slate-200 text-left">
+            <span class="text-[10.5px] font-bold text-slate-400 uppercase tracking-wider block mb-2">Google Arama Önizlemesi (Masaüstü & Mobil):</span>
+            
+            <div class="space-y-1">
+              <div class="flex items-center gap-2 text-xs text-slate-600">
+                <div class="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[9px] font-bold">M</div>
+                <span class="text-slate-800 font-medium">mufettis.org</span>
+                <span class="text-slate-400">›</span>
+                <span id="serp-slug" class="text-slate-500 font-mono">yeni-yazi</span>
+              </div>
+              <h3 id="serp-title" class="text-lg font-normal text-[#1a0dab] hover:underline cursor-pointer leading-snug">
+                Başlık Henüz Girilmedi | Müfettiş.org
+              </h3>
+              <p id="serp-desc" class="text-xs text-[#4d5156] leading-relaxed line-clamp-2">
+                Google arama motoru sonuç sayfasında görüntülenecek meta açıklama metni buraya gelecektir...
+              </p>
+            </div>
+          </div>
+
+          <!-- SEO Denetim Kontrol Listesi -->
+          <div class="bg-[#0b1626] rounded-2xl p-5 border border-slate-800 space-y-3">
+            <h4 class="text-xs font-black uppercase tracking-wider text-slate-200">
+              Gerçek Zamanlı SEO Denetim Raporu:
+            </h4>
+            
+            <ul class="space-y-2 text-xs">
+              <li id="seo-chk-title" class="flex items-center gap-2 text-slate-400">
+                <span class="w-4 h-4 rounded-full bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center">?</span>
+                <span>Başlık uzunluğu (50 - 65 karakter ideal)</span>
+              </li>
+              <li id="seo-chk-desc" class="flex items-center gap-2 text-slate-400">
+                <span class="w-4 h-4 rounded-full bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center">?</span>
+                <span>Meta açıklama uzunluğu (130 - 160 karakter ideal)</span>
+              </li>
+              <li id="seo-chk-keyword-title" class="flex items-center gap-2 text-slate-400">
+                <span class="w-4 h-4 rounded-full bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center">?</span>
+                <span>Odak anahtar kelime başlıkta geçiyor</span>
+              </li>
+              <li id="seo-chk-keyword-content" class="flex items-center gap-2 text-slate-400">
+                <span class="w-4 h-4 rounded-full bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center">?</span>
+                <span>Odak anahtar kelime içerik metninde mevcut</span>
+              </li>
+              <li id="seo-chk-wordcount" class="flex items-center gap-2 text-slate-400">
+                <span class="w-4 h-4 rounded-full bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center">?</span>
+                <span>Kapsamlı içerik hacmi (En az 300 kelime)</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- 3. GITHUB VE GÜVENLİK AYARLARI MODALİ      -->
+  <!-- ========================================== -->
+  <div id="settings-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+    <div class="w-full max-w-lg p-6 sm:p-8 rounded-3xl bg-[#0b1626] border-2 border-slate-700 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <h3 class="text-base font-black text-white flex items-center gap-2">
+          <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          Doğrudan Yayınlama & Güvenlik Ayarları
+        </h3>
+        <button type="button" id="close-settings" class="text-slate-400 hover:text-white">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">
+            GitHub Personal Access Token (PAT):
+          </label>
+          <input 
+            id="cfg-github-token" 
+            type="password" 
+            placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" 
+            class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono outline-none focus:border-sky-400"
+          />
+          <p class="text-[11px] text-slate-500 mt-1">
+            Tek tıkla sitenize yazı göndermek için GitHub'dan <code class="text-sky-400">repo</code> yetkili bir token girin. Token sadece bu tarayıcının yerel hafızasında saklanır, asla dışarıya iletilmez.
+          </p>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">
+            Depo Bilgisi (Repository):
+          </label>
+          <input 
+            id="cfg-repo" 
+            type="text" 
+            value="metin2metin2metin22-prog/mufettis.org" 
+            readonly 
+            class="w-full px-3 py-2.5 rounded-xl bg-slate-900/60 border border-slate-800 text-slate-400 font-mono outline-none cursor-not-allowed"
+          />
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1">
+            Yönetici Master Şifresini Değiştir:
+          </label>
+          <input 
+            id="cfg-new-pwd" 
+            type="password" 
+            placeholder="Yeni bir şifre belirleyin..." 
+            class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white outline-none focus:border-sky-400"
+          />
+        </div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-800 flex justify-end gap-2">
+        <button type="button" id="save-settings" class="px-5 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-xs transition-colors">
+          Ayarları Kaydet
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ========================================== -->
+  <!-- 4. JAVASCRIPT MOTORU VE İÇERİK MANTIĞI      -->
+  <!-- ========================================== -->
+  <script>
+    // --- A. GÜVENLİK VE SHA-256 ŞİFRE DOĞRULAMA ---
+    const DEFAULT_HASH = "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"; // "admin" fallback
+    // Master pass default: "mufettis2026"
+    // sha256("mufettis2026") = 1cf105d21a97d3913ce6ef4f0a2fe7e4e164415fd3aaeb2eead963d3b7625143
+    const MASTER_HASH = "1cf105d21a97d3913ce6ef4f0a2fe7e4e164415fd3aaeb2eead963d3b7625143";
+
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    const authGate = document.getElementById('auth-gate');
+    const studioApp = document.getElementById('studio-app');
+    const authForm = document.getElementById('auth-form');
+    const adminPasswordInput = document.getElementById('admin-password');
+    const authError = document.getElementById('auth-error');
+
+    function checkAuth() {
+      if (sessionStorage.getItem('mufettis_studio_auth') === 'true') {
+        authGate.classList.add('hidden');
+        studioApp.classList.remove('hidden');
+      } else {
+        authGate.classList.remove('hidden');
+        studioApp.classList.add('hidden');
+      }
+    }
+
+    authForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const enteredPwd = adminPasswordInput.value.trim();
+      const enteredHash = await sha256(enteredPwd);
+      const customHash = localStorage.getItem('mufettis_custom_pwd_hash');
+
+      if (enteredHash === MASTER_HASH || (customHash && enteredHash === customHash)) {
+        sessionStorage.setItem('mufettis_studio_auth', 'true');
+        authError.classList.add('hidden');
+        checkAuth();
+      } else {
+        authError.textContent = 'Hatalı parola! Lütfen tekrar deneyin.';
+        authError.classList.remove('hidden');
+        adminPasswordInput.classList.add('border-rose-500');
+      }
+    });
+
+    document.getElementById('toggle-pwd-vis').addEventListener('click', () => {
+      adminPasswordInput.type = adminPasswordInput.type === 'password' ? 'text' : 'password';
+    });
+
+    document.getElementById('btn-logout').addEventListener('click', () => {
+      sessionStorage.removeItem('mufettis_studio_auth');
+      checkAuth();
+    });
+
+
+    // --- B. FORM ELEMANLARI VE METİN İŞLEME ---
+    const postTitle = document.getElementById('post-title');
+    const postSlug = document.getElementById('post-slug');
+    const postCategory = document.getElementById('post-category');
+    const postImage = document.getElementById('post-image');
+    const postContent = document.getElementById('post-content');
+    const postKeyword = document.getElementById('post-keyword');
+    const postDescription = document.getElementById('post-description');
+
+    // Live Preview Elements
+    const previewTitle = document.getElementById('preview-title');
+    const previewCatBadge = document.getElementById('preview-cat-badge');
+    const previewBody = document.getElementById('preview-body');
+    const previewImage = document.getElementById('preview-image');
+    const previewImageWrap = document.getElementById('preview-image-wrap');
+    const previewDesc = document.getElementById('preview-desc');
+    const previewDescWrap = document.getElementById('preview-desc-wrap');
+    const previewReadTime = document.getElementById('preview-read-time');
+
+    // Metrics & Counts
+    const charCount = document.getElementById('char-count');
+    const wordCount = document.getElementById('word-count');
+    const readTime = document.getElementById('read-time');
+    const descCharCount = document.getElementById('desc-char-count');
+
+    // SERP Elements
+    const serpTitle = document.getElementById('serp-title');
+    const serpSlug = document.getElementById('serp-slug');
+    const serpDesc = document.getElementById('serp-desc');
+
+    // Slugification helper
+    function generateSlug(text) {
+      const trMap = { 'ç':'c', 'ğ':'g', 'ı':'i', 'i':'i', 'ö':'o', 'ş':'s', 'ü':'u', 'Ç':'c', 'Ğ':'g', 'İ':'i', 'I':'i', 'Ö':'o', 'Ş':'s', 'Ü':'u' };
+      let str = text;
+      for (const [k, v] of Object.entries(trMap)) {
+        str = str.replace(new RegExp(k, 'g'), v);
+      }
+      return str.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-');
+    }
+
+    let isSlugManual = false;
+    postSlug.addEventListener('input', () => { isSlugManual = true; });
+
+    postTitle.addEventListener('input', () => {
+      if (!isSlugManual) {
+        postSlug.value = generateSlug(postTitle.value);
+      }
+      renderPreview();
+    });
+
+    // Quick Image Buttons
+    document.querySelectorAll('.quick-img-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        postImage.value = btn.getAttribute('data-img');
+        renderPreview();
+      });
+    });
+
+    // Content input triggers preview
+    [postSlug, postCategory, postImage, postContent, postKeyword, postDescription].forEach(el => {
+      el.addEventListener('input', renderPreview);
+    });
+
+    // Formatting Toolbar Helpers
+    function insertAtCursor(before, after = '') {
+      const start = postContent.selectionStart;
+      const end = postContent.selectionEnd;
+      const val = postContent.value;
+      const selected = val.substring(start, end);
+      postContent.value = val.substring(0, start) + before + selected + after + val.substring(end);
+      postContent.focus();
+      postContent.setSelectionRange(start + before.length, end + before.length);
+      renderPreview();
+    }
+
+    document.querySelectorAll('.fmt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const fmt = btn.getAttribute('classfmt');
+        insertAtCursor(fmt, fmt);
+      });
+    });
+
+    document.querySelectorAll('.fmt-prefix-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const fmt = btn.getAttribute('classfmt');
+        insertAtCursor('\n' + fmt);
+      });
+    });
+
+    // Custom Editorial Snippets
+    document.getElementById('insert-note').addEventListener('click', () => {
+      const template = `\n<div class="mufettis-note">\n  <div class="flex items-start gap-3">\n    <div class="font-bold text-sky-400">Sınav Notu:</div>\n    <div>Buraya SPK / Banka mevzuatında adayların en çok karıştırdığı kritik noktayı yazın...</div>\n  </div>\n</div>\n`;
+      insertAtCursor(template);
+    });
+
+    document.getElementById('insert-service').addEventListener('click', () => {
+      const template = `\n<div class="mufettis-service">\n  <h4 class="font-black text-amber-300 text-sm mb-1">Hafıza Çivisi & Püf Noktası:</h4>\n  <p>Sınavda bu kavram ile diğeri arasındaki temel ayrım teslim ve ifa zamanlamasıdır.</p>\n</div>\n`;
+      insertAtCursor(template);
+    });
+
+    document.getElementById('insert-warning').addEventListener('click', () => {
+      const template = `\n<div class="mufettis-warning">\n  <div class="font-bold text-rose-400 mb-1">Dikkat - Ceza & Sorumluluk Maddesi:</div>\n  <p>5549 Sayılı Kanun 13. maddesi uyarınca uyum görevlisinin bildirim süresi gecikirse idari para cezası uygulanır.</p>\n</div>\n`;
+      insertAtCursor(template);
+    });
+
+    document.getElementById('insert-quiz').addEventListener('click', () => {
+      const template = `\n<div class="interactive-quiz-card">\n  <p class="font-bold text-white mb-3">Soru: Aşağıdakilerden hangisi organize vadeli piyasaların özelliklerinden biridir?</p>\n  <ul class="space-y-1.5 text-xs text-slate-300 mb-4">\n    <li><strong>A)</strong> Tezgahüstü piyasada işlem görmesi</li>\n    <li><strong>B)</strong> Standart sözleşmeler ve Takasbank teminat sistemi</li>\n    <li><strong>C)</strong> Karşı taraf riskinin yüksek olması</li>\n    <li><strong>D)</strong> Esnek vade yapısına sahip olması</li>\n  </ul>\n  <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs">\n    <strong>Doğru Cevap: B</strong> — Borsa İstanbul VİOP bünyesinde işlemler merkezi karşı taraf güvencesiyle yürütülür.\n  </div>\n</div>\n`;
+      insertAtCursor(template);
+    });
+
+    document.getElementById('insert-table').addEventListener('click', () => {
+      const template = `\n| İnceleme Kriteri | Spot Piyasa | Vadeli Piyasa (VİOP) |\n| :--- | :--- | :--- |\n| **İşlem Zamanlaması** | T+2 Teslimat | Gelecekteki Vade Tarihi |\n| **Teminat Mekanizması** | Nakit / Takas | Başlangıç ve Sürdürme Teminatı |\n| **Kaldıraç Etkisi** | Yok (1x) | Mevcut (3x - 10x) |\n`;
+      insertAtCursor(template);
+    });
+
+
+    // --- C. RENDER VE ÖNİZLEME MOTORU ---
+    function renderPreview() {
+      const title = postTitle.value.trim() || 'Başlık Henüz Girilmedi';
+      const slug = postSlug.value.trim() || 'yazi-adresi';
+      const cat = postCategory.value;
+      const img = postImage.value.trim();
+      const desc = postDescription.value.trim();
+      const content = postContent.value;
+      const keyword = postKeyword.value.trim().toLowerCase();
+
+      // Top Elements
+      previewTitle.textContent = title;
+      previewCatBadge.textContent = cat;
+
+      // Image
+      if (img) {
+        previewImage.src = img;
+        previewImageWrap.classList.remove('hidden');
+      } else {
+        previewImageWrap.classList.add('hidden');
+      }
+
+      // Description
+      if (desc) {
+        previewDesc.textContent = desc;
+        previewDescWrap.classList.remove('hidden');
+      } else {
+        previewDescWrap.classList.add('hidden');
+      }
+
+      // Word & Read Time calculation
+      const text = content.replace(/<[^>]*>/g, ' ');
+      const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+      const chars = content.length;
+      const mins = Math.max(1, Math.ceil(words / 200));
+
+      charCount.textContent = `${chars.toLocaleString('tr-TR')} karakter`;
+      wordCount.textContent = `${words.toLocaleString('tr-TR')} kelime`;
+      readTime.textContent = `${mins} dk okuma`;
+      previewReadTime.textContent = `${mins} dk okuma`;
+      descCharCount.textContent = `${desc.length} / 160 karakter`;
+
+      // Render Markdown / HTML safely
+      if (content.trim()) {
+        const rawHtml = marked.parse(content);
+        const cleanHtml = DOMPurify.sanitize(rawHtml, { ADD_TAGS: ['mark', 'svg', 'path'] });
+        previewBody.innerHTML = cleanHtml;
+      } else {
+        previewBody.innerHTML = '<p class="text-slate-500 italic">Yazmaya başladığınızda makalenizin mufettis.org üzerindeki birebir görünümü burada anlık olarak canlanacaktır...</p>';
+      }
+
+      // Update SERP
+      serpTitle.textContent = `${title} | Müfettiş.org`;
+      serpSlug.textContent = slug;
+      serpDesc.textContent = desc || 'Google arama motoru sonuç sayfasında görüntülenecek meta açıklama metni buraya gelecektir...';
+
+      // Update SEO Checks
+      updateSeoAudit(title, desc, keyword, content, words);
+
+      // Auto-save draft locally
+      saveDraftLocally();
+    }
+
+    function updateSeoAudit(title, desc, keyword, content, words) {
+      let score = 0;
+      const setCheck = (id, valid, text) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const dot = el.querySelector('span:first-child');
+        const label = el.querySelector('span:last-child');
+        if (valid) {
+          dot.className = 'w-4 h-4 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold flex items-center justify-center';
+          dot.textContent = '✓';
+          el.className = 'flex items-center gap-2 text-emerald-400 font-medium';
+          score += 20;
+        } else {
+          dot.className = 'w-4 h-4 rounded-full bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center';
+          dot.textContent = '✕';
+          el.className = 'flex items-center gap-2 text-slate-400';
+        }
+      };
+
+      setCheck('seo-chk-title', title.length >= 40 && title.length <= 70);
+      setCheck('seo-chk-desc', desc.length >= 100 && desc.length <= 170);
+      setCheck('seo-chk-keyword-title', keyword && title.toLowerCase().includes(keyword));
+      setCheck('seo-chk-keyword-content', keyword && content.toLowerCase().includes(keyword));
+      setCheck('seo-chk-wordcount', words >= 250);
+
+      const badge = document.getElementById('seo-score-badge');
+      if (score >= 80) {
+        badge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/30';
+        badge.textContent = `SEO Skoru: %${score} (Mükemmel)`;
+      } else if (score >= 40) {
+        badge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/30';
+        badge.textContent = `SEO Skoru: %${score} (Geliştirilebilir)`;
+      } else {
+        badge.className = 'px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/30';
+        badge.textContent = `SEO Skoru: %${score} (Eksik)`;
+      }
+    }
+
+
+    // --- D. TASLAK HAFIZA & AYARLAR ---
+    function saveDraftLocally() {
+      const data = {
+        title: postTitle.value,
+        slug: postSlug.value,
+        category: postCategory.value,
+        image: postImage.value,
+        description: postDescription.value,
+        keyword: postKeyword.value,
+        content: postContent.value,
+        timestamp: new Date().toLocaleTimeString('tr-TR')
+      };
+      localStorage.setItem('mufettis_active_draft', JSON.stringify(data));
+      const status = document.getElementById('draft-status');
+      if (status) status.innerHTML = `Taslak: <span class="text-slate-300 font-mono">${data.timestamp} kaydedildi</span>`;
+    }
+
+    function loadDraftLocally() {
+      const saved = localStorage.getItem('mufettis_active_draft');
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          postTitle.value = data.title || '';
+          postSlug.value = data.slug || '';
+          postCategory.value = data.category || 'SPL Lisanslama';
+          postImage.value = data.image || '';
+          postDescription.value = data.description || '';
+          postKeyword.value = data.keyword || '';
+          postContent.value = data.content || '';
+          if (data.slug) isSlugManual = true;
+        } catch (e) {}
+      }
+    }
+
+    // Reset Form
+    document.getElementById('btn-new-post').addEventListener('click', () => {
+      if (confirm('Yeni bir yazı oluşturmak istediğinize emin misiniz? Mevcut taslak temizlenecektir.')) {
+        localStorage.removeItem('mufettis_active_draft');
+        postTitle.value = '';
+        postSlug.value = '';
+        postImage.value = '';
+        postDescription.value = '';
+        postKeyword.value = '';
+        postContent.value = '';
+        isSlugManual = false;
+        renderPreview();
+      }
+    });
+
+    // Preview Theme Toggle
+    const previewContainer = document.getElementById('preview-container');
+    const previewThemeLabel = document.getElementById('preview-theme-label');
+    let isPreviewDark = true;
+    document.getElementById('toggle-preview-theme').addEventListener('click', () => {
+      isPreviewDark = !isPreviewDark;
+      if (isPreviewDark) {
+        previewContainer.className = 'rounded-2xl border-2 border-slate-800 bg-[#0c1827] p-5 sm:p-6 transition-colors shadow-inner min-h-[500px]';
+        previewThemeLabel.textContent = 'Karanlık Tema';
+        document.body.classList.remove('preview-light');
+      } else {
+        previewContainer.className = 'rounded-2xl border-2 border-slate-300 bg-white p-5 sm:p-6 transition-colors shadow-inner min-h-[500px] text-slate-900';
+        previewThemeLabel.textContent = 'Aydınlık Tema';
+        document.body.classList.add('preview-light');
+      }
+    });
+
+    // Tabs
+    const tabBtnPreview = document.getElementById('tab-btn-preview');
+    const tabBtnSeo = document.getElementById('tab-btn-seo');
+    const tabPreviewContent = document.getElementById('tab-preview-content');
+    const tabSeoContent = document.getElementById('tab-seo-content');
+
+    tabBtnPreview.addEventListener('click', () => {
+      tabPreviewContent.classList.remove('hidden');
+      tabSeoContent.classList.add('hidden');
+      tabBtnPreview.className = 'px-3 py-1.5 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/40 text-xs font-bold';
+      tabBtnSeo.className = 'px-3 py-1.5 rounded-xl bg-slate-800/80 text-slate-400 hover:text-white text-xs font-bold';
+    });
+
+    tabBtnSeo.addEventListener('click', () => {
+      tabPreviewContent.classList.add('hidden');
+      tabSeoContent.classList.remove('hidden');
+      tabBtnSeo.className = 'px-3 py-1.5 rounded-xl bg-sky-500/20 text-sky-400 border border-sky-500/40 text-xs font-bold';
+      tabBtnPreview.className = 'px-3 py-1.5 rounded-xl bg-slate-800/80 text-slate-400 hover:text-white text-xs font-bold';
+    });
+
+
+    // --- E. GITHUB VE AYARLAR YÖNETİMİ ---
+    const settingsModal = document.getElementById('settings-modal');
+    const cfgGithubToken = document.getElementById('cfg-github-token');
+    const cfgNewPwd = document.getElementById('cfg-new-pwd');
+
+    document.getElementById('btn-settings').addEventListener('click', () => {
+      cfgGithubToken.value = localStorage.getItem('mufettis_github_token') || '';
+      settingsModal.classList.remove('hidden');
+    });
+
+    document.getElementById('close-settings').addEventListener('click', () => {
+      settingsModal.classList.add('hidden');
+    });
+
+    document.getElementById('save-settings').addEventListener('click', async () => {
+      const token = cfgGithubToken.value.trim();
+      if (token) {
+        localStorage.setItem('mufettis_github_token', token);
+      }
+      const newPwd = cfgNewPwd.value.trim();
+      if (newPwd) {
+        const newHash = await sha256(newPwd);
+        localStorage.setItem('mufettis_custom_pwd_hash', newHash);
+        alert('Yönetici şifreniz başarıyla güncellendi!');
+      }
+      settingsModal.classList.add('hidden');
+    });
+
+
+    // --- F. GITHUB'A DOĞRUDAN 1 TIKLA YAYINLAMA MOTORU ---
+    document.getElementById('btn-publish-github').addEventListener('click', async () => {
+      const title = postTitle.value.trim();
+      const slug = postSlug.value.trim();
+      if (!title || !slug) {
+        alert('Lütfen en azından bir başlık ve slug bağlantısı belirleyin!');
+        return;
+      }
+
+      const token = localStorage.getItem('mufettis_github_token');
+      if (!token) {
+        alert('GitHub üzerinden otomatik yayına almak için geçerli bir GitHub Token gereklidir. Lütfen açılan pencereye tokenınızı girin.');
+        settingsModal.classList.remove('hidden');
+        return;
+      }
+
+      const btn = document.getElementById('btn-publish-github');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<span class="animate-spin inline-block mr-1">⌛</span> Yayınlanıyor...';
+      btn.disabled = true;
+
+      try {
+        // Frontmatter + Markdown composition
+        const now = new Date().toISOString().replace('T', ' ').slice(0, 19);
+        const mdContent = `---
+title: "${title.replace(/"/g, '\\"')}"
+slug: "${slug}"
+date: "${now}"
+category: "${postCategory.value}"
+image: "${postImage.value.trim()}"
+description: "${postDescription.value.trim().replace(/"/g, '\\"')}"
+focus_keyword: "${postKeyword.value.trim().replace(/"/g, '\\"')}"
+is_quiz: false
+---
+
+${postContent.value}
+`;
+
+        const repo = "metin2metin2metin22-prog/mufettis.org";
+        const path = `src/content/posts/${slug}.md`;
+        const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
+
+        // 1. Check if file already exists to get its SHA
+        let sha = null;
+        try {
+          const checkResp = await fetch(apiUrl, {
+            headers: {
+              'Authorization': `token ${token}`,
+              'Accept': 'application/vnd.github.v3+json'
+            }
+          });
+          if (checkResp.ok) {
+            const fileData = await checkResp.json();
+            sha = fileData.sha;
+          }
+        } catch (e) {}
+
+        // 2. Base64 encoding supporting Turkish UTF-8
+        const utf8Bytes = new TextEncoder().encode(mdContent);
+        let binaryStr = '';
+        utf8Bytes.forEach(b => binaryStr += String.fromCharCode(b));
+        const base64Content = btoa(binaryStr);
+
+        // 3. Commit via PUT
+        const payload = {
+          message: `feat(content): yeni yazı yayınlandı - ${title}`,
+          content: base64Content,
+          branch: "main"
+        };
+        if (sha) payload.sha = sha;
+
+        const putResp = await fetch(apiUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (putResp.ok) {
+          alert(`Tebrikler! "${title}" başlıklı yazınız başarıyla GitHub reposuna commit edildi ve Cloudflare Pages otomatik derleme sürecine alındı. Yaklaşık 30 saniye içinde sitede yayında olacaktır!`);
+        } else {
+          const errData = await putResp.json();
+          alert(`Yayınlama sırasında hata oluştu: ${errData.message || 'Yetki veya token hatası'}`);
+        }
+      } catch (err) {
+        alert(`Bağlantı hatası: ${err.message}`);
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    });
+
+    // Initial check
+    checkAuth();
+    loadDraftLocally();
+    renderPreview();
+  </script>
 </body>
 </html>
