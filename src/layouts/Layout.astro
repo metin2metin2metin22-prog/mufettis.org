@@ -544,109 +544,319 @@ const ogImage = image ? (image.startsWith('http') ? image : `https://mufettis.or
       <slot />
     </main>
 
-    <!-- Rich Editorial Footer -->
-    <footer class="bg-[#071322] text-slate-400 border-t border-brand-900 pt-16 pb-12 mt-20">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-slate-800">
+    <!-- ======================================================== -->
+    <!-- MAGNIFICENT INSTITUTIONAL FOOTER SYSTEM -->
+    <!-- ======================================================== -->
+    
+    <!-- 1. PRE-FOOTER: HAFTALIK TEFTİŞ & UYUM BÜLTENİ + TOPLULUK AĞI -->
+    <section class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mb-16">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#0c2238] via-[#091a2c] to-[#040e1a] border-2 border-brand-800/80 shadow-2xl p-7 sm:p-10 text-white">
+        <!-- Ambient Decorative Glows -->
+        <div class="absolute -top-24 -right-24 w-72 h-72 bg-sky-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          <!-- Column 1: Brand & Philosophy -->
-          <div class="space-y-4">
-            <a href="/" class="flex items-center gap-3.5 group">
-              <img 
-                src="/brand/mufettis-emblem-dark.png" 
-                alt="mufettis.org Amblemi" 
-                class="h-10 w-auto object-contain drop-shadow-md group-hover:scale-105 transition-transform" 
-                width="38" 
-                height="44"
-              />
-              <span class="text-xl font-black text-white tracking-tight">mufettis<span class="text-sky-400 font-extrabold">.org</span></span>
-            </a>
-            <p class="text-xs text-slate-400 leading-relaxed">
-              Türkiye'de Banka Müfettişliği, SPL Düzey 1-2-3 Lisanslama, MASAK Uyum Görevlisi ve CIA sınavlarına hazırlanan adaylar için bağımsız, reklamsız eğitim ve soru arşivi.
+          <!-- Left: Value Proposition -->
+          <div class="lg:col-span-7 space-y-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-black uppercase tracking-wider">
+              <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>Haftalık Teftiş, SPL ve Uyum Akademisi Bülteni</span>
+            </div>
+            
+            <h3 class="text-xl sm:text-3xl font-black text-white tracking-tight leading-tight">
+              2026 Sınav İlanları ve Mevzuat Özetleri Her Pazartesi E-Postanızda.
+            </h3>
+            
+            <p class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-xl">
+              Spam yok, reklam yok. Banka Teftiş Kurulları, SPK lisanslama, MASAK düzenlemeleri ve haftanın çözümlü deneme sorularından derlenen hap bülten.
             </p>
-            <div class="text-xs font-semibold text-amber-400/90 flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              52+ Makale, Sınav Seti ve Çözümlü Test
+
+            <!-- Social Community Badges -->
+            <div class="pt-2 flex flex-wrap items-center gap-2.5 text-xs font-bold text-slate-300">
+              <span class="text-slate-400 text-[11px] font-medium mr-1">Topluluk:</span>
+              <a href="https://t.me" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-sky-300 hover:text-white transition-colors border border-white/10">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+                <span>Telegram Sınav Grubu</span>
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-blue-300 hover:text-white transition-colors border border-white/10">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z"/></svg>
+                <span>Müfettiş & Denetçi Ağı</span>
+              </a>
+              <a href="/sitemap-index.xml" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 hover:text-white transition-colors border border-white/10">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
+                <span>Mevzuat Akışı</span>
+              </a>
             </div>
           </div>
 
-          <!-- Column 2: Categories -->
-          <div>
-            <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-brand-500 pl-2">Sınav Kütüphanesi</h4>
+          <!-- Right: Interactive Subscription Form -->
+          <div class="lg:col-span-5">
+            <form id="newsletter-form" class="space-y-3">
+              <div class="flex flex-col sm:flex-row items-stretch gap-2.5">
+                <input 
+                  id="newsletter-email"
+                  type="email" 
+                  required
+                  placeholder="adiniz@banka.com.tr" 
+                  class="flex-grow px-4 py-3.5 rounded-2xl bg-white/10 border-2 border-white/15 text-white placeholder-slate-400 text-sm font-medium focus:outline-none focus:border-amber-400 focus:bg-white/15 transition-all shadow-inner"
+                />
+                <button 
+                  type="submit" 
+                  id="newsletter-submit-btn"
+                  class="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-sm transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
+                >
+                  <span>Ücretsiz Katıl</span>
+                  <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+              </div>
+              <p id="newsletter-status" class="text-[11px] text-slate-400 flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                <span>Haftada 1 kez gönderilir. Dilediğiniz zaman tek tıkla ayrılabilirsiniz.</span>
+              </p>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. MAIN FOOTER -->
+    <footer class="bg-gradient-to-b from-[#061220] via-[#040c17] to-[#02060c] text-slate-400 border-t-2 border-brand-900 pt-28 pb-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Multi-Column Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-16 border-b border-slate-800/80">
+          
+          <!-- Column 1: Brand & Manifesto (Lg: col-span-4) -->
+          <div class="lg:col-span-4 space-y-5">
+            <a href="/" class="flex items-center gap-3.5 group inline-flex">
+              <div class="w-12 h-12 rounded-2xl bg-brand-950/80 border-2 border-brand-800 p-2 flex items-center justify-center shadow-lg group-hover:border-amber-400 transition-colors">
+                <img 
+                  src="/brand/mufettis-emblem-dark.png" 
+                  alt="mufettis.org Amblemi" 
+                  class="h-full w-full object-contain" 
+                  width="44" 
+                  height="44"
+                />
+              </div>
+              <div>
+                <span class="text-2xl font-black text-white tracking-tight flex items-center">
+                  mufettis<span class="text-sky-400 font-extrabold">.org</span>
+                </span>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 block -mt-0.5">Finans, Denetim & Sınav Akademisi</span>
+              </div>
+            </a>
+
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Türkiye'de Banka Müfettiş Yardımcılığı, SPL Sermaye Piyasası Lisanslama, MASAK Uyum Görevlisi ve CIA sertifikasyon sınavlarına hazırlanan adaylar için bağımsız, reklamsız ve kurumsal düzeyde açık müfredat platformu.
+            </p>
+
+            <!-- Real-time Status Badge & Pills -->
+            <div class="space-y-2 pt-2">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-bold shadow-xs">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Tüm Sistemler Aktif • 2026 Müfredatı Güncel</span>
+              </div>
+              
+              <div class="flex flex-wrap items-center gap-2 text-[11px] font-bold text-slate-300">
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800">52+ Detaylı Not</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800">200+ Çözümlü Soru</span>
+                <span class="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800">Sıfır Sunucu Maliyeti</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Sınav Kütüphanesi (Lg: col-span-2) -->
+          <div class="lg:col-span-2">
+            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-4 border-l-2 border-sky-400 pl-2.5">
+              Sınav Kütüphanesi
+            </h4>
             <ul class="space-y-2.5 text-xs font-medium">
               <li>
-                <a href="/category/spl-ders-notlari/" class="hover:text-white transition-colors flex items-center gap-2">
-                  <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                  <span>SPL Lisanslama Sınav Notları</span>
+                <a href="/category/spl-ders-notlari/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-sky-400 group-hover:scale-150 transition-transform"></span>
+                  <span>SPL Lisanslama Notları</span>
                 </a>
               </li>
               <li>
-                <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="hover:text-white transition-colors flex items-center gap-2">
-                  <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                  <span>MASAK Uyum Görevlisi Modülleri</span>
+                <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 group-hover:scale-150 transition-transform"></span>
+                  <span>MASAK Uyum Görevlisi</span>
                 </a>
               </li>
               <li>
-                <a href="/category/cia-ders-notlari/" class="hover:text-white transition-colors flex items-center gap-2">
-                  <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
-                  <span>CIA Part 1 Sertifika Notları</span>
+                <a href="/category/cia-ders-notlari/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-purple-400 group-hover:scale-150 transition-transform"></span>
+                  <span>CIA Part 1 Sertifikası</span>
                 </a>
               </li>
               <li>
-                <a href="/category/denetim-kutuphanesi/" class="hover:text-white transition-colors flex items-center gap-2">
-                  <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                  <span>Banka Denetimi & BDDK Mevzuatı</span>
+                <a href="/category/denetim-kutuphanesi/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400 group-hover:scale-150 transition-transform"></span>
+                  <span>Banka Denetimi & BDDK</span>
                 </a>
               </li>
               <li>
-                <a href="/category/kariyer-meslek-rehberi/" class="hover:text-white transition-colors flex items-center gap-2">
+                <a href="/spl-sermaye-piyasasi-araclari-1-ders-notlari/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover:scale-150 transition-transform"></span>
+                  <span>Sermaye Piyasası Araçları 1</span>
+                </a>
+              </li>
+              <li>
+                <a href="/spl-takas-saklama-ve-operasyon-islemleri-ders-notlari/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 group-hover:scale-150 transition-transform"></span>
+                  <span>Takas, Saklama ve Operasyon</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 3: Finans & Analiz (Lg: col-span-2) -->
+          <div class="lg:col-span-2">
+            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-4 border-l-2 border-emerald-400 pl-2.5">
+              Finans & Denetim
+            </h4>
+            <ul class="space-y-2.5 text-xs font-medium">
+              <li>
+                <a href="/category/mali-analiz-kutuphanesi/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-teal-400 group-hover:scale-150 transition-transform"></span>
+                  <span>Mali Analiz & Bilanço</span>
+                </a>
+              </li>
+              <li>
+                <a href="/cek-riski-bilancodan-anlasilir-mi/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-teal-400 group-hover:scale-150 transition-transform"></span>
+                  <span>Çek Riski Analiz Rehberi</span>
+                </a>
+              </li>
+              <li>
+                <a href="/category/vaka-calismalari/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-rose-400 group-hover:scale-150 transition-transform"></span>
+                  <span>Dolandırıcılık Tespiti & Vaka</span>
+                </a>
+              </li>
+              <li>
+                <a href="/risk-tabanli-denetim-planlamasi/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400 group-hover:scale-150 transition-transform"></span>
+                  <span>Risk Tabanlı Denetim Planı</span>
+                </a>
+              </li>
+              <li>
+                <a href="/ic-kontrol-kavramlari-ve-cerceveleri/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 group-hover:scale-150 transition-transform"></span>
+                  <span>İç Kontrol & COSO Modeli</span>
+                </a>
+              </li>
+              <li>
+                <a href="/ucuncu-satir-modeli-three-lines-model-ve-ic-denetimde-rolu/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <span class="w-1.5 h-1.5 rounded-full bg-purple-400 group-hover:scale-150 transition-transform"></span>
+                  <span>Üç Hat Modeli (IIA Standardı)</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Column 4: İnteraktif Araçlar & Sınavlar (Lg: col-span-2) -->
+          <div class="lg:col-span-2">
+            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-4 border-l-2 border-amber-400 pl-2.5">
+              İnteraktif Araçlar
+            </h4>
+            <ul class="space-y-2.5 text-xs font-medium">
+              <li>
+                <a href="/deneme-sinavlari/" class="text-amber-400 hover:text-amber-300 font-bold transition-colors flex items-center gap-2">
+                  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  <span>12+ Çözümlü Deneme</span>
+                </a>
+              </li>
+              <li>
+                <a href="/maas-hesaplayici/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <span>2026 Maaş Hesaplayıcı</span>
+                </a>
+              </li>
+              <li>
+                <a href="/bilgi-kartlari/" class="hover:text-white transition-colors flex items-center gap-2 group">
+                  <svg class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                  <span>3D Akıl Kartları</span>
+                </a>
+              </li>
+              <li>
+                <button type="button" class="footer-saved-trigger hover:text-white transition-colors flex items-center gap-2 cursor-pointer">
+                  <svg class="w-3.5 h-3.5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                  <span>Hata Defterim</span>
+                </button>
+              </li>
+              <li>
+                <button type="button" class="footer-search-trigger hover:text-white transition-colors flex items-center gap-2 cursor-pointer">
+                  <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                  <span>Hızlı Arama (Ctrl+K)</span>
+                </button>
+              </li>
+              <li>
+                <a href="/category/kariyer-meslek-rehberi/" class="hover:text-white transition-colors flex items-center gap-2 group">
                   <svg class="w-3.5 h-3.5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-                  <span>Kariyer & Meslek Rehberi</span>
-                </a>
-              </li>
-              <li>
-                <a href="/category/mali-analiz-kutuphanesi/" class="hover:text-white transition-colors flex items-center gap-2">
-                  <svg class="w-3.5 h-3.5 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                  <span>Mali Analiz & Bilanço Okuma</span>
+                  <span>Kariyer Rehberi</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          <!-- Column 3: Exams -->
-          <div>
-            <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-amber-500 pl-2">Çözümlü Denemeler</h4>
+          <!-- Column 5: Kurumsal & Yasal (Lg: col-span-2) -->
+          <div class="lg:col-span-2">
+            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-4 border-l-2 border-slate-500 pl-2.5">
+              Kurumsal & Bilgi
+            </h4>
             <ul class="space-y-2.5 text-xs font-medium">
-              <li><a href="/cia-part-1-deneme-sorulari-20-soru-cozumlu-ve-aciklamali-test/" class="hover:text-white transition-colors">CIA Part 1 - 20 Soruluk Test 1</a></li>
-              <li><a href="/masak-uyum-gorevlisi-yetkilendirme-deneme-sinavi-modul-1/" class="hover:text-white transition-colors">MASAK Modül 1 Çözümlü Deneme</a></li>
-              <li><a href="/spl-sermaye-piyasasi-araclari-1-deneme-sinavi/" class="hover:text-white transition-colors">SPL Sermaye Piyasası Araçları Testi</a></li>
-              <li><a href="/spl-yatirim-kuruluslari-deneme-sinavi/" class="hover:text-white transition-colors">SPL Yatırım Kuruluşları Testi</a></li>
-              <li><a href="/deneme-sinavlari/" class="text-amber-400 font-bold hover:underline flex items-center gap-1">Tüm 12+ Deneme Sınavını Çöz →</a></li>
-            </ul>
-          </div>
-
-          <!-- Column 4: Management & Site -->
-          <div>
-            <h4 class="text-xs font-bold text-white uppercase tracking-wider mb-4 border-l-2 border-slate-500 pl-2">Kurumsal & Panel</h4>
-            <ul class="space-y-2.5 text-xs font-medium">
-              <li><a href="/hakkimizda/" class="hover:text-white transition-colors">Hakkımızda</a></li>
+              <li><a href="/hakkimizda/" class="hover:text-white transition-colors">Hakkımızda & Misyon</a></li>
               <li><a href="/iletisim/" class="hover:text-white transition-colors">İletişim & Geri Bildirim</a></li>
-              <li><a href="/privacy-policy/" class="hover:text-white transition-colors">Gizlilik Politikası</a></li>
+              <li><a href="/privacy-policy/" class="hover:text-white transition-colors">Gizlilik & KVKK Politikası</a></li>
               <li><a href="/sitemap-index.xml" class="hover:text-white transition-colors">Site Haritası (XML)</a></li>
-              <li><a href="/admin/" class="text-sky-400 font-bold hover:underline flex items-center gap-1">Yönetim Paneli (Decap CMS) ↗</a></li>
+              <li>
+                <a href="/admin/" class="text-sky-400 font-bold hover:underline inline-flex items-center gap-1">
+                  <span>Yönetim Portalı (CMS)</span>
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                </a>
+              </li>
             </ul>
           </div>
 
         </div>
 
-        <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© {new Date().getFullYear()} mufettis.org – Tüm hakları saklıdır. İçerikler eğitim ve sınavlara hazırlık amaçlıdır.</p>
-          <p class="flex items-center gap-2 text-slate-400">
-            <span>Ömür Boyu Sıfır Hosting Maliyeti</span>
+        <!-- 3. INSTITUTIONAL LEGAL REGULATORY DISCLAIMER -->
+        <div class="py-6 my-10 px-6 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-[11.5px] leading-relaxed text-slate-400 shadow-inner">
+          <div class="flex items-start gap-3.5">
+            <svg class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <div>
+              <strong class="text-slate-200 font-bold block mb-1">Yasal Bilgilendirme ve Akreditasyon Feragatnamesi:</strong>
+              mufettis.org bağımsız bir mesleki eğitim, mevzuat araştırma ve açık kaynak sınav kütüphanesidir; BDDK (Bankacılık Düzenleme ve Denetleme Kurumu), SPK (Sermaye Piyasası Kurulu), MASAK (Mali Suçları Araştırma Kurulu), TBB (Türkiye Bankalar Birliği) veya IIA (The Institute of Internal Auditors) ile herhangi bir kurumsal veya resmi bağı bulunmamaktadır. Platformda yer alan tüm ders notları, soru çözümleri, kanun gerekçeleri ve maaş simülasyonları resmi kanunlar, yönetmelikler ve kamuya açık kaynaklardan derlenerek sınavlara hazırlanan adayların başarısını desteklemek amacıyla hazırlanmıştır.
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. SUB-FOOTER / BOTTOM BAR -->
+        <div class="pt-6 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+          <div class="flex items-center gap-3">
+            <p>© {new Date().getFullYear()} mufettis.org – Tüm hakları saklıdır.</p>
+            <span class="hidden sm:inline">•</span>
+            <span class="text-slate-400 hidden sm:inline">Türkiye'nin Bağımsız Finans ve Teftiş Kütüphanesi</span>
+          </div>
+
+          <div class="flex items-center gap-4 text-slate-400">
+            <span class="inline-flex items-center gap-1.5 text-emerald-400 font-semibold">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Cloudflare Global Edge CDN
+            </span>
             <span>•</span>
-            <span class="text-emerald-400 font-semibold">100% SEO & URL Uyumlu</span>
-          </p>
+            <button 
+              id="footer-back-to-top" 
+              type="button" 
+              class="hover:text-white font-bold inline-flex items-center gap-1.5 transition-colors cursor-pointer text-slate-300"
+            >
+              <span>Sayfa Başına Dön</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+            </button>
+          </div>
         </div>
 
       </div>
@@ -980,6 +1190,43 @@ const ogImage = image ? (image.startsWith('http') ? image : `https://mufettis.or
       const drawerLinks = mobileDrawer?.querySelectorAll('a');
       drawerLinks?.forEach(link => {
         link.addEventListener('click', () => mobileDrawer?.classList.add('hidden'));
+      });
+
+      // 7. Footer Interactive Handlers (Newsletter & Triggers)
+      const newsletterForm = document.getElementById('newsletter-form');
+      const newsletterEmail = document.getElementById('newsletter-email') as HTMLInputElement | null;
+      const newsletterStatus = document.getElementById('newsletter-status');
+      const newsletterSubmitBtn = document.getElementById('newsletter-submit-btn');
+
+      newsletterForm?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (newsletterEmail && newsletterEmail.value) {
+          if (newsletterStatus) {
+            newsletterStatus.innerHTML = `<span class="text-emerald-400 font-bold flex items-center gap-1.5"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Kaydınız başarıyla oluşturuldu! İlk e-bülteniniz Pazartesi günü iletilecektir.</span>`;
+          }
+          newsletterEmail.disabled = true;
+          if (newsletterSubmitBtn) {
+            (newsletterSubmitBtn as HTMLButtonElement).disabled = true;
+            newsletterSubmitBtn.classList.add('opacity-75', 'cursor-default');
+            newsletterSubmitBtn.innerHTML = `<span class="flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Kaydedildi</span>`;
+          }
+        }
+      });
+
+      document.getElementById('footer-back-to-top')?.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      document.querySelectorAll('.footer-search-trigger').forEach(b => {
+        b.addEventListener('click', () => {
+          document.getElementById('search-trigger')?.click();
+        });
+      });
+
+      document.querySelectorAll('.footer-saved-trigger').forEach(b => {
+        b.addEventListener('click', () => {
+          document.getElementById('saved-questions-trigger')?.click();
+        });
       });
     </script>
     

@@ -340,49 +340,76 @@ const schemaArticle = {
           </div>
         )}
 
-        <!-- Social Share Bar -->
-        <div class="mt-10 p-6 rounded-3xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <h4 class="font-bold text-slate-900 dark:text-white text-sm">Bu sınav notunu çalışma grubunuzla paylaşın:</h4>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Sınav gruplarında ve meslektaşlarınızla tek tıkla paylaşabilirsiniz.</p>
+        <!-- Social Share & Study Group Bar -->
+        <div class="mt-12 p-6 sm:p-7 rounded-3xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-5">
+          <div class="space-y-1 text-center sm:text-left">
+            <div class="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-brand-600 dark:text-sky-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+              <span>Sınav Notunu Paylaşın</span>
+            </div>
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm sm:text-base">Bu ders notunu çalışma grubunuzla paylaşın:</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Meslektaşlarınız ve çalışma arkadaşlarınızla tek tıkla paylaşabilirsiniz.</p>
           </div>
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2.5 flex-wrap justify-center">
             <a 
               href={`https://api.whatsapp.com/send?text=${encodeURIComponent(post.title + ' ' + Astro.url.href)}`} 
               target="_blank" 
               rel="noopener noreferrer"
-              class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+              class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md cursor-pointer"
             >
-              WhatsApp
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.694.06-1.077-.062-.25-.079-.569-.193-1.002-.382-1.834-.8-3.033-2.67-3.125-2.793-.092-.123-.746-.992-.746-1.893 0-.9.472-1.343.64-1.527.168-.184.368-.23.491-.23.123 0 .245.002.352.006.113.005.263-.043.411.313.153.37.522 1.272.568 1.365.046.092.077.2.015.324-.061.123-.092.2-.184.308-.092.108-.194.24-.277.323-.092.093-.189.194-.082.378.107.184.477.788 1.025 1.275.707.629 1.303.823 1.488.916.184.092.292.077.4-.046.108-.123.461-.538.584-.723.123-.185.246-.154.415-.092.169.062 1.077.508 1.261.6.185.093.308.139.354.216.046.077.046.446-.098.851z"/></svg>
+              <span>WhatsApp</span>
             </a>
             <a 
               href={`https://t.me/share/url?url=${encodeURIComponent(Astro.url.href)}&text=${encodeURIComponent(post.title)}`} 
               target="_blank" 
               rel="noopener noreferrer"
-              class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+              class="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow-md cursor-pointer"
             >
-              Telegram
+              <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+              <span>Telegram</span>
             </a>
             <button 
               id="copy-link-btn"
               type="button"
-              class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-800 dark:text-slate-200 text-xs font-bold transition-colors border border-slate-200 dark:border-slate-700 cursor-pointer"
+              class="px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all border border-slate-200 dark:border-slate-700 flex items-center gap-2 cursor-pointer"
             >
-              Bağlantıyı Kopyala
+              <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+              <span>Bağlantıyı Kopyala</span>
             </button>
           </div>
         </div>
 
-        <!-- Author / Editorial Box -->
-        <div class="mt-8 p-6 rounded-3xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-brand-900 text-amber-400 font-black text-xl flex items-center justify-center shrink-0 shadow-md">
-            M
+        <!-- Author / Editorial Verification Box -->
+        <div class="mt-8 p-6 sm:p-7 rounded-3xl bg-slate-50 dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center sm:items-start gap-5 shadow-sm">
+          <div class="w-16 h-16 rounded-2xl bg-[#07192b] border-2 border-amber-500/50 p-2.5 flex items-center justify-center shrink-0 shadow-lg">
+            <img 
+              src="/brand/mufettis-emblem-dark.png" 
+              alt="mufettis.org Amblemi" 
+              class="w-full h-full object-contain"
+              width="48"
+              height="48"
+            />
           </div>
-          <div>
-            <h4 class="font-bold text-slate-900 dark:text-white text-base">mufettis.org Denetim ve Mevzuat Kurulu</h4>
-            <p class="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-relaxed">
-              Bu içerik SPK, BDDK ve MASAK mevzuatı ile uluslararası IIA standartları referans alınarak adayların sınav başarısı için hazırlanmıştır.
+          <div class="flex-grow text-center sm:text-left">
+            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1.5">
+              <h4 class="font-black text-slate-900 dark:text-white text-base">mufettis.org Denetim ve Mevzuat Kurulu</h4>
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[10.5px] font-bold">
+                <svg class="w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                Doğrulanmış Müfredat Kaynağı
+              </span>
+            </div>
+            <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              Bu içerik SPK, BDDK ve MASAK mevzuatı ile IIA Uluslararası İç Denetim Standartları referans alınarak, Teftiş Kurulu sınavlarına hazırlanan adaylar ve meslek mensupları için titizlikle hazırlanmış ve güncellenmiştir.
             </p>
+            <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-center sm:justify-start gap-4 text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
+              <span class="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                2026 Mevzuat Uyumluluğu Onaylandı
+              </span>
+              <span>•</span>
+              <a href="/iletisim/" class="text-brand-600 dark:text-sky-400 hover:underline">Mevzuat değişikliği veya hata bildirin →</a>
+            </div>
           </div>
         </div>
 
