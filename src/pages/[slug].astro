@@ -11,14 +11,20 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 
-// Related posts
+// Related posts & Next/Prev navigation
 const primaryCat = post.categories && post.categories[0] ? post.categories[0].slug : null;
+const categoryAllPosts = posts.filter(p => primaryCat && p.categories.some(c => c.slug === primaryCat) && p.post_type === 'post');
+
+const currentIndex = categoryAllPosts.findIndex(p => p.slug === post.slug);
+const prevPost = currentIndex > 0 ? categoryAllPosts[currentIndex - 1] : null;
+const nextPost = currentIndex >= 0 && currentIndex < categoryAllPosts.length - 1 ? categoryAllPosts[currentIndex + 1] : null;
+
 const relatedPosts = posts
   .filter(p => p.slug !== post.slug && primaryCat && p.categories.some(c => c.slug === primaryCat) && p.featured_image)
   .slice(0, 4);
 
 // Quiz recommendations for sidebar
-const quizRecommendations = posts.filter(p => p.is_quiz && p.slug !== post.slug).slice(0, 3);
+const quizRecommendations = posts.filter(p => p.is_quiz && p.slug !== post.slug).slice(0, 4);
 
 // Format date in Turkish
 const formattedDate = new Date(post.date).toLocaleDateString('tr-TR', {
@@ -26,6 +32,50 @@ const formattedDate = new Date(post.date).toLocaleDateString('tr-TR', {
   month: 'long',
   day: 'numeric'
 });
+
+// Category Color Coding & Theming
+const getCategoryTheme = (catSlug = '') => {
+  if (catSlug.includes('spl')) {
+    return { 
+      badge: 'bg-sky-50 dark:bg-sky-950/80 text-sky-700 dark:text-sky-300 border-sky-300 dark:border-sky-800', 
+      bar: 'bg-sky-500',
+      text: 'text-sky-600 dark:text-sky-400',
+      tag: '📈 SPL Lisanslama Müfredatı'
+    };
+  }
+  if (catSlug.includes('masak')) {
+    return { 
+      badge: 'bg-emerald-50 dark:bg-emerald-950/80 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800', 
+      bar: 'bg-emerald-500',
+      text: 'text-emerald-600 dark:text-emerald-400',
+      tag: '🛡️ MASAK Uyum Görevlisi'
+    };
+  }
+  if (catSlug.includes('cia')) {
+    return { 
+      badge: 'bg-purple-50 dark:bg-purple-950/80 text-purple-700 dark:text-purple-300 border-purple-300 dark:border-purple-800', 
+      bar: 'bg-purple-500',
+      text: 'text-purple-600 dark:text-purple-400',
+      tag: '🎓 CIA Part 1 Sertifikasyon'
+    };
+  }
+  if (catSlug.includes('banka') || catSlug.includes('kariyer')) {
+    return { 
+      badge: 'bg-amber-50 dark:bg-amber-950/80 text-amber-800 dark:text-amber-300 border-amber-300 dark:border-amber-800', 
+      bar: 'bg-amber-500',
+      text: 'text-amber-600 dark:text-amber-400',
+      tag: '🏛️ Banka Denetimi & Teftiş'
+    };
+  }
+  return { 
+    badge: 'bg-teal-50 dark:bg-teal-950/80 text-teal-800 dark:text-teal-300 border-teal-300 dark:border-teal-800', 
+    bar: 'bg-brand-600',
+    text: 'text-teal-600 dark:text-teal-400',
+    tag: '📊 Mali Analiz & Mevzuat'
+  };
+};
+
+const catStyle = getCategoryTheme(primaryCat || '');
 
 // JSON-LD Schema
 const schemaArticle = {
@@ -66,12 +116,12 @@ const schemaArticle = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(schemaArticle)} />
 
-  <!-- Reading Progress Bar (Sticky Top) -->
-  <div id="read-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-amber-400 to-sky-500 z-50 transition-all duration-75 w-0"></div>
+  <!-- Reading Progress Bar at the top -->
+  <div id="read-progress" class="fixed top-0 left-0 h-1.5 bg-gradient-to-r from-amber-400 via-sky-400 to-emerald-400 z-50 transition-all duration-75 w-0 shadow-sm"></div>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-28">
     
-    <!-- Breadcrumb -->
+    <!-- Top Breadcrumbs -->
     <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6 overflow-x-auto whitespace-nowrap pb-1">
       <a href="/" class="hover:text-brand-600 dark:hover:text-sky-400 transition-colors font-medium">Anasayfa</a>
       <span>/</span>
@@ -88,96 +138,194 @@ const schemaArticle = {
           <span>/</span>
         </>
       )}
-      <span class="text-slate-800 dark:text-slate-200 font-semibold truncate max-w-sm">{post.title}</span>
+      <span class="text-slate-800 dark:text-slate-200 font-bold truncate max-w-sm">{post.title}</span>
     </nav>
 
-    <!-- Main 2-Column Grid -->
+    <!-- 2-Column Editorial Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
       
-      <!-- Left Column: Main Article Body (8 Cols) -->
+      <!-- Main Content (8 Cols) -->
       <article class="lg:col-span-8">
         
         <!-- Post Header -->
-        <header class="mb-6">
-          {post.categories && post.categories.length > 0 && (
-            <div class="flex flex-wrap items-center gap-2 mb-3">
-              {post.categories.map(c => (
-                <a href={`/category/${c.slug}/`} class="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-md bg-brand-50 dark:bg-brand-950/70 text-brand-700 dark:text-sky-400 border border-brand-200/60 dark:border-brand-800 hover:bg-brand-100 transition-colors">
-                  {c.name}
-                </a>
-              ))}
-              {post.is_quiz && (
-                <span class="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-md bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-800 flex items-center gap-1 shadow-xs">
-                  ⚡ Çözümlü Deneme Testi
-                </span>
-              )}
-            </div>
-          )}
+        <header class="mb-7">
+          <div class="flex flex-wrap items-center gap-2.5 mb-3.5">
+            {post.categories && post.categories.map(c => (
+              <a href={`/category/${c.slug}/`} class={`text-[11px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full border ${catStyle.badge} transition-all hover:scale-105 shadow-xs`}>
+                {c.name}
+              </a>
+            ))}
+            {post.is_quiz ? (
+              <span class="text-[11px] font-black uppercase tracking-wider px-3.5 py-1 rounded-full bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 shadow-md flex items-center gap-1.5 animate-pulse-subtle">
+                <span>⚡</span> Çözümlü İnteraktif Sınav
+              </span>
+            ) : (
+              <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full border border-slate-200 dark:border-slate-700">
+                📖 Konu Anlatımı & Mevzuat
+              </span>
+            )}
+          </div>
 
-          <h1 class="text-2xl sm:text-4xl md:text-[40px] font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-5">
+          <h1 class="text-2xl sm:text-4xl md:text-[38px] font-black text-slate-900 dark:text-white tracking-tight leading-tight mb-5">
             {post.title}
           </h1>
 
-          <!-- Meta & Action Toolbar -->
-          <div class="py-3 px-4 rounded-xl bg-white dark:bg-[#0b1726] border border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 shadow-xs">
+          <!-- Toolbar (Author, Reading Time, TTS, Font Size, Print) -->
+          <div class="py-3 px-4.5 rounded-2xl bg-white dark:bg-[#0c1827] border-2 border-slate-200/90 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400 shadow-sm">
             <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-brand-900 text-white font-bold text-xs flex items-center justify-center shadow">
+              <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-900 to-brand-800 text-amber-400 font-black text-sm flex items-center justify-center shadow-md">
                 M
               </div>
               <div>
-                <span class="font-bold text-slate-900 dark:text-white block">mufettis.org</span>
+                <span class="font-bold text-slate-900 dark:text-white block text-[13px]">mufettis.org Denetim Kurulu</span>
                 <div class="flex items-center gap-2 text-[11px]">
                   <time datetime={post.date}>{formattedDate}</time>
                   <span>•</span>
-                  <span>⏱️ {post.reading_time} dk okuma</span>
+                  <span>⏱️ {post.reading_time} dk okuma ({post.word_count} kelime)</span>
                 </div>
               </div>
             </div>
 
-            <!-- Interactive Toolbar (Font Zoom, TTS, Print) -->
-            <div class="flex items-center gap-1.5">
-              <button id="tts-btn" type="button" title="Yazıyı Sesli Oku" class="px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors flex items-center gap-1 font-semibold text-[11px]">
-                <span id="tts-icon">🔊</span>
-                <span id="tts-text">Sesli Dinle</span>
-              </button>
-              <button id="font-toggle-btn" type="button" title="Yazı Boyutunu Değiştir" class="px-2 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors font-bold text-[11px]">
+            <!-- Toolbar Actions -->
+            <div class="flex items-center gap-2">
+              
+              <!-- Text-to-speech with speed control -->
+              <div class="flex items-center rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 p-0.5">
+                <button id="tts-btn" type="button" title="Yazıyı Sesli Oku" class="px-3 py-1.5 rounded-lg hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors flex items-center gap-1.5 font-bold text-xs cursor-pointer">
+                  <span id="tts-icon">🔊</span>
+                  <span id="tts-text">Sesli Dinle</span>
+                </button>
+                <button id="tts-speed-btn" type="button" title="Okuma Hızı" class="px-2 py-1.5 text-[11px] font-black text-brand-600 dark:text-sky-400 hover:bg-white dark:hover:bg-slate-800 rounded-lg cursor-pointer">
+                  1.0x
+                </button>
+              </div>
+
+              <!-- Font Size Toggle -->
+              <button id="font-toggle-btn" type="button" title="Yazı Boyutunu Değiştir" class="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors font-black text-xs cursor-pointer">
                 A+
               </button>
-              <button id="print-btn" type="button" title="Yazdır veya PDF Kaydet" class="p-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors text-[11px]">
+
+              <!-- Print -->
+              <button id="print-btn" type="button" title="Yazdır veya PDF Kaydet" class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors text-xs cursor-pointer">
                 🖨️
               </button>
             </div>
           </div>
         </header>
 
-        <!-- FULL-BLEED FEATURED IMAGE BANNER (WordPress Pars Theme Resim Alanı) -->
+        <!-- Full-Bleed Featured Cover Image -->
         {post.featured_image && (
-          <div class="mb-8 rounded-2xl overflow-hidden shadow-lg border border-slate-200 dark:border-slate-800 bg-slate-900">
+          <div class="mb-8 rounded-3xl overflow-hidden shadow-2xl border-2 border-slate-200 dark:border-slate-800 bg-slate-950">
             <img 
               src={post.featured_image} 
               alt={post.title} 
-              class="w-full h-auto max-h-[460px] object-cover"
+              class="w-full h-auto max-h-[480px] object-cover"
               loading="eager"
             />
           </div>
         )}
 
-        <!-- Excerpt Lead Box -->
+        <!-- Excerpt / Summary Lead Box -->
         {post.excerpt && (
-          <div class="mb-8 p-5 rounded-2xl bg-brand-50/70 dark:bg-brand-950/40 border-l-4 border-brand-600 dark:border-sky-400 text-slate-700 dark:text-slate-200 text-base sm:text-lg leading-relaxed font-medium">
+          <div class="mb-8 p-6 rounded-3xl bg-gradient-to-r from-brand-50/70 to-slate-50 dark:from-[#0c1c2e] dark:to-[#091524] border-l-4 border-brand-600 dark:border-sky-400 text-slate-800 dark:text-slate-200 text-base sm:text-lg leading-relaxed font-medium shadow-sm">
+            <div class="text-xs font-black uppercase tracking-wider text-brand-700 dark:text-sky-400 mb-2 flex items-center gap-2">
+              <span>📌 Özet & Kritik Odak Noktası:</span>
+            </div>
             {post.excerpt}
           </div>
         )}
 
-        <!-- ARTICLE BODY (Rich Content & Questions) -->
-        <div id="article-body" class="prose prose-slate dark:prose-invert max-w-none text-base sm:text-[17px] leading-[1.8] text-slate-800 dark:text-slate-200 prose-headings:font-black prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-white prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4 prose-h3:text-xl prose-a:text-brand-600 dark:prose-a:text-sky-400 prose-a:font-semibold hover:prose-a:underline prose-img:rounded-2xl prose-img:shadow-md prose-table:border-collapse prose-table:border prose-table:border-slate-300 dark:prose-table:border-slate-700">
+        <!-- ARTICLE BODY & QUESTIONS -->
+        <div 
+          id="article-body" 
+          class="prose prose-slate dark:prose-invert max-w-none text-base sm:text-[17px] leading-[1.85] text-slate-800 dark:text-slate-200 prose-headings:font-black prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-white prose-h2:text-2xl sm:prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-5 prose-h3:text-xl prose-a:text-brand-600 dark:prose-a:text-sky-400 prose-a:font-bold hover:prose-a:underline prose-img:rounded-3xl prose-img:shadow-lg prose-table:border-collapse prose-table:border prose-table:border-slate-300 dark:prose-table:border-slate-700 prose-th:bg-slate-100 dark:prose-th:bg-slate-800 prose-th:p-3 prose-td:p-3"
+        >
           <div set:html={post.content} />
         </div>
 
+        <!-- EXAM KARNE / SCORE SUMMARY CARD (Only shows if questions exist) -->
+        <div id="exam-score-card" class="hidden mt-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#07192a] via-[#0b2b46] to-[#061727] text-white border-2 border-brand-800 shadow-2xl">
+          <div class="flex items-center justify-between pb-6 border-b border-brand-800/80 mb-6">
+            <div>
+              <span class="text-xs font-black uppercase tracking-wider text-amber-400 bg-amber-950/60 px-3 py-1 rounded-full border border-amber-800/60 inline-block mb-2">
+                📊 Sınav Karnesi & Performans Raporu
+              </span>
+              <h3 class="text-2xl sm:text-3xl font-black text-white">Deneme Sınavı Tamamlandı!</h3>
+            </div>
+            <div class="text-right">
+              <span id="score-percent" class="text-3xl sm:text-4xl font-black text-amber-400">%0</span>
+              <span class="text-xs text-slate-300 block font-semibold">Başarı Oranı</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+            <div class="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
+              <span class="text-xs text-slate-300 block mb-1">Toplam Soru</span>
+              <span id="stat-total" class="text-2xl font-black text-white">0</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-center">
+              <span class="text-xs text-emerald-300 block mb-1">Doğru Sayısı</span>
+              <span id="stat-correct" class="text-2xl font-black text-emerald-400">0</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-center">
+              <span class="text-xs text-rose-300 block mb-1">Yanlış Sayısı</span>
+              <span id="stat-wrong" class="text-2xl font-black text-rose-400">0</span>
+            </div>
+            <div class="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-center">
+              <span class="text-xs text-amber-300 block mb-1">Boş / Kalan</span>
+              <span id="stat-empty" class="text-2xl font-black text-amber-400">0</span>
+            </div>
+          </div>
+
+          <p id="score-evaluation" class="text-sm text-slate-300 leading-relaxed p-4 rounded-2xl bg-black/40 border border-white/5 mb-6"></p>
+
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <button id="reset-all-quiz-btn" type="button" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer">
+              <span>↺</span> Tüm Soruları Sıfırla ve Baştan Çöz
+            </button>
+            <a href="/deneme-sinavlari/" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-colors">
+              Diğer Deneme Sınavlarını Gör →
+            </a>
+          </div>
+        </div>
+
+        <!-- Next / Previous Lesson Navigation -->
+        {(prevPost || nextPost) && (
+          <div class="mt-14 pt-8 border-t-2 border-slate-200 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {prevPost ? (
+              <a href={prevPost.url} class="group p-5 rounded-2xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-sky-500 shadow-sm transition-all flex flex-col justify-between">
+                <div>
+                  <span class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1 mb-1">
+                    <span>←</span> Önceki Konu
+                  </span>
+                  <h4 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 transition-colors line-clamp-2">
+                    {prevPost.title}
+                  </h4>
+                </div>
+                <span class="text-xs font-semibold text-slate-400 mt-3 block">⏱️ {prevPost.reading_time} dk</span>
+              </a>
+            ) : <div></div>}
+
+            {nextPost && (
+              <a href={nextPost.url} class="group p-5 rounded-2xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-sky-500 shadow-sm transition-all flex flex-col justify-between sm:text-right">
+                <div>
+                  <span class="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1 sm:justify-end mb-1">
+                    Sonraki Konu <span>→</span>
+                  </span>
+                  <h4 class="font-bold text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 transition-colors line-clamp-2">
+                    {nextPost.title}
+                  </h4>
+                </div>
+                <span class="text-xs font-semibold text-slate-400 mt-3 block">⏱️ {nextPost.reading_time} dk</span>
+              </a>
+            )}
+          </div>
+        )}
+
         <!-- Social Share Bar -->
-        <div class="mt-12 p-6 rounded-2xl bg-white dark:bg-[#0b1726] border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="mt-10 p-6 rounded-3xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h4 class="font-bold text-slate-900 dark:text-white text-sm">Bu sınav notunu arkadaşlarınızla paylaşın:</h4>
+            <h4 class="font-bold text-slate-900 dark:text-white text-sm">Bu sınav notunu çalışma grubunuzla paylaşın:</h4>
             <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Sınav gruplarında ve meslektaşlarınızla tek tıkla paylaşabilirsiniz.</p>
           </div>
           <div class="flex items-center gap-2">
@@ -200,7 +348,7 @@ const schemaArticle = {
             <button 
               id="copy-link-btn"
               type="button"
-              class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-800 dark:text-slate-200 text-xs font-bold transition-colors border border-slate-200 dark:border-slate-700"
+              class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-800 dark:text-slate-200 text-xs font-bold transition-colors border border-slate-200 dark:border-slate-700 cursor-pointer"
             >
               Bağlantıyı Kopyala
             </button>
@@ -208,8 +356,8 @@ const schemaArticle = {
         </div>
 
         <!-- Author / Editorial Box -->
-        <div class="mt-8 p-6 rounded-2xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex items-center gap-4">
-          <div class="w-14 h-14 rounded-2xl bg-brand-900 text-white font-black text-xl flex items-center justify-center shrink-0 shadow-md">
+        <div class="mt-8 p-6 rounded-3xl bg-slate-100 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-brand-900 text-amber-400 font-black text-xl flex items-center justify-center shrink-0 shadow-md">
             M
           </div>
           <div>
@@ -225,45 +373,60 @@ const schemaArticle = {
       <!-- Right Column: Sticky Sidebar (4 Cols) -->
       <aside class="lg:col-span-4 space-y-8">
         
+        <!-- Table of Contents Widget (Auto-Generated with Scroll Spy) -->
+        <div id="toc-card" class="hidden bg-white dark:bg-[#0c1827] rounded-3xl p-6 border-2 border-slate-200 dark:border-slate-800 shadow-sm sticky top-24">
+          <div class="flex items-center justify-between pb-3.5 mb-3.5 border-b border-slate-100 dark:border-slate-800">
+            <h3 class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
+              <span>📑</span> İçindekiler
+            </h3>
+            <span class="text-[10px] text-brand-600 dark:text-sky-400 font-bold uppercase">Hızlı Gezinti</span>
+          </div>
+          <nav id="toc-list" class="space-y-1 text-xs max-h-[380px] overflow-y-auto pr-1 scrollbar-thin">
+            <!-- Populated via client JS -->
+          </nav>
+        </div>
+
         <!-- Çözümlü Deneme Sınavları CTA Kartı -->
-        <div class="bg-gradient-to-br from-brand-950 to-brand-900 rounded-2xl p-6 text-white border border-brand-800 shadow-lg">
-          <span class="px-2.5 py-1 rounded bg-amber-500 text-slate-950 font-black text-[10px] uppercase tracking-wider inline-block mb-3">
-            Sınav Pratiği
+        <div class="bg-gradient-to-br from-brand-950 via-[#071e33] to-[#041220] rounded-3xl p-6 sm:p-7 text-white border-2 border-brand-800 shadow-xl relative overflow-hidden">
+          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-amber-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+          <span class="px-3 py-1 rounded-full bg-amber-500 text-slate-950 font-black text-[10px] uppercase tracking-wider inline-block mb-3 shadow-sm">
+            ⚡ Sınav Simülatörü
           </span>
           <h3 class="text-lg font-black text-white leading-snug">
-            Çözümlü Deneme Sınavları ile Kendinizi Test Edin
+            Çözümlü Denemelerle Kendinizi Test Edin
           </h3>
           <p class="text-slate-300 text-xs mt-2 leading-relaxed">
-            Soruları gerçek sınav formatında çözün, anında açıklamalı çözümleri görün.
+            Şıklara tıklayarak anında doğru cevabı ve kanun maddesini inceleyin.
           </p>
           
           <div class="mt-4 space-y-2.5 pt-4 border-t border-brand-800/80">
             {quizRecommendations.map(q => (
-              <a href={q.url} class="block p-2.5 rounded-xl bg-white/10 hover:bg-white/15 transition-colors group">
+              <a href={q.url} class="block p-3 rounded-2xl bg-white/10 hover:bg-white/15 transition-all group border border-white/5">
                 <h4 class="font-bold text-xs text-white group-hover:text-amber-300 transition-colors line-clamp-1">
                   {q.title}
                 </h4>
-                <span class="text-[10px] text-slate-300 mt-1 block">Çözmek için tıkla →</span>
+                <span class="text-[10px] text-slate-300 mt-1 block font-semibold group-hover:text-white">Çözmek için tıkla →</span>
               </a>
             ))}
           </div>
 
-          <a href="/deneme-sinavlari/" class="mt-5 block w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs text-center transition-colors">
-            Tüm Deneme Sınavlarını Listele
+          <a href="/deneme-sinavlari/" class="mt-5 block w-full py-3 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs text-center transition-colors shadow-md">
+            Tüm Deneme Sınavlarını Aç
           </a>
         </div>
 
-        <!-- İlgili Sınav Notları (Görsel Thumbnails) -->
+        <!-- Benzer Sınav Notları -->
         {relatedPosts.length > 0 && (
-          <div class="bg-white dark:bg-[#0b1726] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <h3 class="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider mb-4 border-l-2 border-brand-600 pl-2">
-              Benzer Sınav Notları
+          <div class="bg-white dark:bg-[#0c1827] rounded-3xl p-6 border-2 border-slate-200 dark:border-slate-800 shadow-sm">
+            <h3 class="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider mb-4 border-l-3 border-brand-600 pl-2.5">
+              İlgili Müfredat Notları
             </h3>
             
             <div class="space-y-4">
               {relatedPosts.map(rel => (
-                <a href={rel.url} class="flex items-center gap-3 group">
-                  <div class="w-16 h-14 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 shrink-0 border border-slate-200 dark:border-slate-700">
+                <a href={rel.url} class="flex items-center gap-3.5 group">
+                  <div class="w-16 h-14 rounded-2xl overflow-hidden bg-slate-950 shrink-0 border border-slate-200 dark:border-slate-800 shadow-xs">
                     <img 
                       src={rel.featured_image} 
                       alt={rel.title} 
@@ -283,29 +446,291 @@ const schemaArticle = {
           </div>
         )}
 
-        <!-- Hızlı Kategori Listesi -->
-        <div class="bg-white dark:bg-[#0b1726] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
-          <h3 class="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider mb-4 border-l-2 border-amber-500 pl-2">
-            Sınav Branşları
-          </h3>
-          <ul class="space-y-2 text-xs font-bold text-slate-700 dark:text-slate-300">
-            <li><a href="/category/spl-ders-notlari/" class="hover:text-brand-600 dark:hover:text-sky-400 flex items-center justify-between py-1"><span>📈 SPL Lisanslama Notları</span><span>→</span></a></li>
-            <li><a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="hover:text-brand-600 dark:hover:text-sky-400 flex items-center justify-between py-1"><span>🛡️ MASAK Uyum Görevlisi</span><span>→</span></a></li>
-            <li><a href="/category/cia-ders-notlari/" class="hover:text-brand-600 dark:hover:text-sky-400 flex items-center justify-between py-1"><span>🎓 CIA Part 1 Notları</span><span>→</span></a></li>
-            <li><a href="/category/banka-denetimi/" class="hover:text-brand-600 dark:hover:text-sky-400 flex items-center justify-between py-1"><span>🏛️ Banka Denetimi & Mevzuat</span><span>→</span></a></li>
-            <li><a href="/category/mali-analiz-kutuphanesi/" class="hover:text-brand-600 dark:hover:text-sky-400 flex items-center justify-between py-1"><span>📊 Mali Analiz Kütüphanesi</span><span>→</span></a></li>
-          </ul>
-        </div>
-
       </aside>
 
     </div>
 
   </div>
 
-  <!-- Interactive JavaScript: Reading Progress, Font Zoom, TTS, Copy -->
+  <!-- FLOATING EXAM HUD (SCORE TRACKER) - ONLY FOR QUIZZES -->
+  <div id="floating-exam-hud" class="fixed bottom-5 inset-x-4 sm:inset-x-auto sm:right-6 sm:left-auto z-40 hidden max-w-lg bg-slate-950/90 backdrop-blur-md text-white px-5 py-3.5 rounded-2xl border-2 border-amber-500/50 shadow-2xl transition-all duration-300">
+    <div class="flex items-center gap-4 text-xs font-bold">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
+        <span id="hud-answered" class="text-slate-300">0 / 0 Soru</span>
+      </div>
+      <div class="flex items-center gap-2 text-emerald-400">
+        <span>✓ <span id="hud-correct">0</span> Doğru</span>
+      </div>
+      <div class="flex items-center gap-2 text-rose-400">
+        <span>✗ <span id="hud-wrong">0</span> Yanlış</span>
+      </div>
+      <button id="hud-finish-btn" type="button" class="ml-auto px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[11px] transition-transform hover:scale-105 cursor-pointer shadow-sm">
+        Raporu Gör 📊
+      </button>
+    </div>
+  </div>
+
+  <!-- CLIENT SCRIPTS -->
   <script>
-    // 1. Reading Progress Bar
+    // ==========================================
+    // 1. INTERACTIVE EXAM & QUESTION ENGINE 2.0
+    // ==========================================
+    const quizCards = document.querySelectorAll('.interactive-quiz-card');
+    const floatingHud = document.getElementById('floating-exam-hud');
+    const hudAnswered = document.getElementById('hud-answered');
+    const hudCorrect = document.getElementById('hud-correct');
+    const hudWrong = document.getElementById('hud-wrong');
+    const hudFinishBtn = document.getElementById('hud-finish-btn');
+    
+    const scoreCard = document.getElementById('exam-score-card');
+    const scorePercent = document.getElementById('score-percent');
+    const statTotal = document.getElementById('stat-total');
+    const statCorrect = document.getElementById('stat-correct');
+    const statWrong = document.getElementById('stat-wrong');
+    const statEmpty = document.getElementById('stat-empty');
+    const scoreEvaluation = document.getElementById('score-evaluation');
+    const resetAllBtn = document.getElementById('reset-all-quiz-btn');
+
+    let totalQuestions = quizCards.length;
+    let answeredCount = 0;
+    let correctCount = 0;
+    let wrongCount = 0;
+
+    if (totalQuestions > 0 && floatingHud) {
+      floatingHud.classList.remove('hidden');
+      updateHUD();
+    }
+
+    function updateHUD() {
+      if (hudAnswered) hudAnswered.textContent = `${answeredCount} / ${totalQuestions} Yanıtlandı`;
+      if (hudCorrect) hudCorrect.textContent = `${correctCount}`;
+      if (hudWrong) hudWrong.textContent = `${wrongCount}`;
+
+      // Update final scorecard stats
+      if (statTotal) statTotal.textContent = `${totalQuestions}`;
+      if (statCorrect) statCorrect.textContent = `${correctCount}`;
+      if (statWrong) statWrong.textContent = `${wrongCount}`;
+      if (statEmpty) statEmpty.textContent = `${totalQuestions - answeredCount}`;
+      
+      const pct = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+      if (scorePercent) scorePercent.textContent = `%${pct}`;
+
+      if (scoreEvaluation) {
+        if (pct >= 85) {
+          scoreEvaluation.innerHTML = `<strong>Tebrikler! Mükemmel Performans:</strong> Bu konudaki mevzuat ve pratik soru çözüm kabiliyetiniz çok yüksek düzeyde. Gerçek sınavda da bu başarıyı rahatlıkla tekrarlayabilirsiniz.`;
+        } else if (pct >= 70) {
+          scoreEvaluation.innerHTML = `<strong>Başarılı! Sınav Barajı Aşıldı:</strong> Sınav geçme barajı olan %70 düzeyinin üzerindesiniz. Yanlış yaptığınız sorulardaki mevzuat maddelerini tekrar inceleyerek tam puanı hedefleyebilirsiniz.`;
+        } else {
+          scoreEvaluation.innerHTML = `<strong>Geliştirilmeli:</strong> Yanlış çözdüğünüz soruların altındaki "Mevzuat ve Çözüm Açıklaması" kutularını detaylıca okuyup, yukarıdaki butondan testi tekrar çözmenizi öneririz.`;
+        }
+      }
+    }
+
+    hudFinishBtn?.addEventListener('click', () => {
+      scoreCard?.classList.remove('hidden');
+      scoreCard?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    quizCards.forEach((card) => {
+      const correctAnswer = (card.getAttribute('data-correct-answer') || 'A').trim().toUpperCase();
+      const optionButtons = card.querySelectorAll('.quiz-option-btn');
+      const feedbackBox = card.querySelector('.quiz-feedback-box');
+      const feedbackMessage = card.querySelector('.feedback-message');
+      const feedbackBanner = card.querySelector('.feedback-banner');
+      const statusBadge = card.querySelector('.quiz-status-badge');
+      const statusText = card.querySelector('.status-text');
+      const statusDot = card.querySelector('.status-dot');
+      const resetBtn = card.querySelector('.quiz-reset-btn');
+
+      let isAnswered = false;
+
+      optionButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (isAnswered) return;
+          isAnswered = true;
+          answeredCount++;
+
+          const selectedOption = (btn.getAttribute('data-option') || '').trim().toUpperCase();
+
+          // Disable choices
+          optionButtons.forEach(b => {
+            (b as HTMLButtonElement).disabled = true;
+            b.classList.remove('hover:border-brand-500', 'hover:bg-brand-50/50', 'dark:hover:bg-brand-950/30', 'cursor-pointer');
+            b.classList.add('cursor-default');
+          });
+
+          const isCorrect = (selectedOption === correctAnswer);
+
+          if (isCorrect) {
+            correctCount++;
+            // Selected Option Styling
+            btn.classList.add('bg-emerald-50', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-950', 'dark:text-emerald-100');
+            const badge = btn.querySelector('.option-badge');
+            if (badge) {
+              badge.className = 'option-badge inline-flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-600 text-white border-2 border-emerald-600 font-extrabold text-sm shadow-md';
+              badge.textContent = `${selectedOption} ✓`;
+            }
+
+            // Top Status Badge
+            if (statusBadge && statusText && statusDot) {
+              statusBadge.className = 'quiz-status-badge text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-600 text-white flex items-center gap-1.5 shadow-sm';
+              statusText.textContent = 'Doğru Çözüldü ✓';
+              statusDot.className = 'status-dot w-2 h-2 rounded-full bg-white';
+            }
+
+            // Feedback Banner
+            if (feedbackBanner && feedbackMessage) {
+              feedbackBanner.className = 'feedback-banner p-4 rounded-2xl mb-4 font-bold text-sm flex items-center justify-between shadow-sm bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-200 border-2 border-emerald-400 dark:border-emerald-700';
+              feedbackMessage.innerHTML = `<span>🎉 Harika! Tebrikler, Doğru Cevap: (${correctAnswer})</span>`;
+            }
+          } else {
+            wrongCount++;
+            // Selected Option Styling
+            btn.classList.add('bg-rose-50', 'dark:bg-rose-950/40', 'border-rose-500', 'text-rose-950', 'dark:text-rose-100');
+            const badge = btn.querySelector('.option-badge');
+            if (badge) {
+              badge.className = 'option-badge inline-flex items-center justify-center w-8 h-8 rounded-xl bg-rose-600 text-white border-2 border-rose-600 font-extrabold text-sm shadow-md';
+              badge.textContent = `${selectedOption} ✗`;
+            }
+
+            // Highlight True Correct Answer
+            optionButtons.forEach(b => {
+              if (b.getAttribute('data-option')?.trim().toUpperCase() === correctAnswer) {
+                b.classList.add('bg-emerald-50', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-950', 'dark:text-emerald-100');
+                const cBadge = b.querySelector('.option-badge');
+                if (cBadge) {
+                  cBadge.className = 'option-badge inline-flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-600 text-white border-2 border-emerald-600 font-extrabold text-sm shadow-md';
+                  cBadge.textContent = `${correctAnswer} ✓`;
+                }
+              }
+            });
+
+            // Top Status Badge
+            if (statusBadge && statusText && statusDot) {
+              statusBadge.className = 'quiz-status-badge text-[11px] font-bold px-3 py-1 rounded-full bg-rose-600 text-white flex items-center gap-1.5 shadow-sm';
+              statusText.textContent = 'Yanlış Çözüldü ✗';
+              statusDot.className = 'status-dot w-2 h-2 rounded-full bg-white';
+            }
+
+            // Feedback Banner
+            if (feedbackBanner && feedbackMessage) {
+              feedbackBanner.className = 'feedback-banner p-4 rounded-2xl mb-4 font-bold text-sm flex items-center justify-between shadow-sm bg-rose-100 dark:bg-rose-950/80 text-rose-900 dark:text-rose-200 border-2 border-rose-400 dark:border-rose-700';
+              feedbackMessage.innerHTML = `<span>❌ Yanlış Cevap. Doğru Seçenek: <strong>(${correctAnswer})</strong></span>`;
+            }
+          }
+
+          // Slide open explanation box
+          if (feedbackBox) {
+            feedbackBox.classList.remove('hidden');
+          }
+
+          updateHUD();
+
+          // Auto-show final score card when all answered
+          if (answeredCount === totalQuestions && scoreCard) {
+            scoreCard.classList.remove('hidden');
+          }
+        });
+      });
+
+      // Reset single question handler
+      resetBtn?.addEventListener('click', () => {
+        if (!isAnswered) return;
+        
+        // Find if this card was previously correct or wrong
+        const wasCorrect = statusText?.textContent?.includes('Doğru');
+        if (wasCorrect) correctCount--;
+        else wrongCount--;
+        answeredCount--;
+        isAnswered = false;
+
+        optionButtons.forEach(b => {
+          (b as HTMLButtonElement).disabled = false;
+          b.className = 'quiz-option-btn group w-full text-left p-4 sm:p-5 rounded-2xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50/70 hover:bg-brand-50/50 dark:bg-slate-900/40 dark:hover:bg-brand-950/30 hover:border-brand-500 dark:hover:border-sky-500 transition-all duration-200 flex items-start gap-3.5 sm:gap-4 cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500/40 relative overflow-hidden';
+          const opt = b.getAttribute('data-option');
+          const badge = b.querySelector('.option-badge');
+          if (badge) {
+            badge.className = 'option-badge inline-flex items-center justify-center w-8 h-8 rounded-xl bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 font-extrabold text-sm text-slate-700 dark:text-slate-300 group-hover:border-brand-500 group-hover:bg-brand-600 group-hover:text-white transition-all shrink-0 shadow-sm';
+            badge.textContent = opt || '';
+          }
+        });
+
+        if (feedbackBox) feedbackBox.classList.add('hidden');
+        if (statusBadge && statusText && statusDot) {
+          statusBadge.className = 'quiz-status-badge text-[11px] font-bold px-3 py-1 rounded-full bg-black/40 text-slate-300 border border-slate-700/60 flex items-center gap-1.5 backdrop-blur-sm shadow-xs transition-colors';
+          statusText.textContent = 'Yanıt Bekliyor';
+          statusDot.className = 'status-dot w-2 h-2 rounded-full bg-slate-400';
+        }
+
+        updateHUD();
+      });
+    });
+
+    // Reset All Questions Handler
+    resetAllBtn?.addEventListener('click', () => {
+      quizCards.forEach(card => {
+        const btn = card.querySelector('.quiz-reset-btn') as HTMLButtonElement;
+        btn?.click();
+      });
+      scoreCard?.classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ==========================================
+    // 2. AUTO-GENERATED TABLE OF CONTENTS WITH SCROLL SPY
+    // ==========================================
+    const articleBody = document.getElementById('article-body');
+    const tocCard = document.getElementById('toc-card');
+    const tocList = document.getElementById('toc-list');
+
+    if (articleBody && tocCard && tocList) {
+      const headings = articleBody.querySelectorAll('h2, h3');
+      if (headings.length >= 2) {
+        tocCard.classList.remove('hidden');
+        
+        headings.forEach((h, index) => {
+          const id = h.id || `section-${index + 1}`;
+          h.id = id;
+          const isH3 = h.tagName.toLowerCase() === 'h3';
+
+          const a = document.createElement('a');
+          a.href = `#${id}`;
+          a.textContent = h.textContent || '';
+          a.setAttribute('data-target-id', id);
+          a.className = `toc-link block py-1.5 px-2.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-colors truncate ${
+            isH3 
+              ? 'pl-5 text-slate-500 dark:text-slate-400 font-medium text-[11.5px]' 
+              : 'font-bold text-slate-800 dark:text-slate-200 text-xs'
+          }`;
+          tocList.appendChild(a);
+        });
+
+        // Active Scroll Spy
+        window.addEventListener('scroll', () => {
+          let currentId = '';
+          headings.forEach(h => {
+            const rect = h.getBoundingClientRect();
+            if (rect.top <= 140) {
+              currentId = h.id;
+            }
+          });
+
+          const tocLinks = tocList.querySelectorAll('.toc-link');
+          tocLinks.forEach(link => {
+            if (link.getAttribute('data-target-id') === currentId) {
+              link.classList.add('bg-brand-50', 'dark:bg-sky-950/60', 'text-brand-700', 'dark:text-sky-300', 'font-black');
+            } else {
+              link.classList.remove('bg-brand-50', 'dark:bg-sky-950/60', 'text-brand-700', 'dark:text-sky-300', 'font-black');
+            }
+          });
+        });
+      }
+    }
+
+    // ==========================================
+    // 3. READING PROGRESS BAR
+    // ==========================================
     window.addEventListener('scroll', () => {
       const winScroll = document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -314,26 +739,62 @@ const schemaArticle = {
       if (bar) bar.style.width = scrolled + '%';
     });
 
-    // 2. Font Size Toggle (A+ / A-)
+    // ==========================================
+    // 4. FONT SIZE TOGGLE (A+ / A-)
+    // ==========================================
     const fontBtn = document.getElementById('font-toggle-btn');
-    const articleBody = document.getElementById('article-body');
     let isLargeFont = false;
     fontBtn?.addEventListener('click', () => {
       isLargeFont = !isLargeFont;
       if (isLargeFont) {
-        articleBody?.classList.add('text-xl');
+        articleBody?.classList.add('text-lg', 'sm:text-xl');
         fontBtn.textContent = 'A-';
       } else {
-        articleBody?.classList.remove('text-xl');
+        articleBody?.classList.remove('text-lg', 'sm:text-xl');
         fontBtn.textContent = 'A+';
       }
     });
 
-    // 3. Text-to-Speech (Sesli Dinle)
+    // ==========================================
+    // 5. TEXT-TO-SPEECH (TTS 2.0 WITH SPEED)
+    // ==========================================
     const ttsBtn = document.getElementById('tts-btn');
+    const ttsSpeedBtn = document.getElementById('tts-speed-btn');
     const ttsIcon = document.getElementById('tts-icon');
     const ttsText = document.getElementById('tts-text');
     let isSpeaking = false;
+    let ttsRate = 1.0;
+
+    const speeds = [1.0, 1.25, 1.5];
+    let speedIndex = 0;
+
+    ttsSpeedBtn?.addEventListener('click', () => {
+      speedIndex = (speedIndex + 1) % speeds.length;
+      ttsRate = speeds[speedIndex];
+      ttsSpeedBtn.textContent = `${ttsRate.toFixed(1)}x`;
+      if (isSpeaking) {
+        window.speechSynthesis.cancel();
+        startSpeaking();
+      }
+    });
+
+    function startSpeaking() {
+      const textToRead = articleBody?.innerText || '';
+      const utterance = new SpeechSynthesisUtterance(textToRead.slice(0, 6000));
+      utterance.lang = 'tr-TR';
+      utterance.rate = ttsRate;
+
+      utterance.onend = () => {
+        isSpeaking = false;
+        if (ttsIcon) ttsIcon.textContent = '🔊';
+        if (ttsText) ttsText.textContent = 'Sesli Dinle';
+      };
+
+      window.speechSynthesis.speak(utterance);
+      isSpeaking = true;
+      if (ttsIcon) ttsIcon.textContent = '⏹️';
+      if (ttsText) ttsText.textContent = 'Durdur';
+    }
 
     ttsBtn?.addEventListener('click', () => {
       if (!('speechSynthesis' in window)) {
@@ -347,37 +808,17 @@ const schemaArticle = {
         if (ttsIcon) ttsIcon.textContent = '🔊';
         if (ttsText) ttsText.textContent = 'Sesli Dinle';
       } else {
-        const textToRead = articleBody?.innerText || '';
-        const utterance = new SpeechSynthesisUtterance(textToRead.slice(0, 4000));
-        utterance.lang = 'tr-TR';
-        utterance.rate = 1.0;
-
-        utterance.onend = () => {
-          isSpeaking = false;
-          if (ttsIcon) ttsIcon.textContent = '🔊';
-          if (ttsText) ttsText.textContent = 'Sesli Dinle';
-        };
-
-        window.speechSynthesis.speak(utterance);
-        isSpeaking = true;
-        if (ttsIcon) ttsIcon.textContent = '⏹️';
-        if (ttsText) ttsText.textContent = 'Durdur';
+        startSpeaking();
       }
     });
 
-    // 4. Print handler
-    document.getElementById('print-btn')?.addEventListener('click', () => {
-      window.print();
-    });
-
-    // 5. Copy link handler
+    // 6. Print & Copy Link
+    document.getElementById('print-btn')?.addEventListener('click', () => window.print());
     const copyBtn = document.getElementById('copy-link-btn');
     copyBtn?.addEventListener('click', () => {
       navigator.clipboard.writeText(window.location.href).then(() => {
         copyBtn.textContent = 'Kopyalandı! ✓';
-        setTimeout(() => {
-          copyBtn.textContent = 'Bağlantıyı Kopyala';
-        }, 2000);
+        setTimeout(() => { copyBtn.textContent = 'Bağlantıyı Kopyala'; }, 2000);
       });
     });
   </script>

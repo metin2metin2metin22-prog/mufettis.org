@@ -3,6 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import posts from '../data/posts.json';
 
 const quizList = posts.filter(p => p.is_quiz);
+
+const splQuizzes = quizList.filter(p => p.categories && p.categories.some(c => c.slug.includes('spl')));
+const masakQuizzes = quizList.filter(p => p.categories && p.categories.some(c => c.slug.includes('masak')));
+const ciaQuizzes = quizList.filter(p => p.categories && p.categories.some(c => c.slug.includes('cia')));
 ---
 
 <Layout 
@@ -10,55 +14,179 @@ const quizList = posts.filter(p => p.is_quiz);
   description="Banka Müfettişliği, SPL, MASAK ve CIA sınavlarına hazırlananlar için ayrıntılı çözümlü ve açıklamalı deneme testleri."
   canonical="https://mufettis.org/deneme-sinavlari/"
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24">
-    
-    <header class="border-b border-slate-200 dark:border-slate-800 pb-8 mb-12">
-      <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-3">
-        <a href="/" class="hover:text-brand-600 dark:hover:text-brand-400">Anasayfa</a>
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-b from-[#07192a] via-[#092237] to-[#05111d] text-white pt-16 pb-20 px-4 border-b border-brand-800 relative overflow-hidden">
+    <div class="absolute right-0 top-0 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+        <a href="/" class="hover:text-white transition-colors">Anasayfa</a>
         <span>/</span>
-        <span class="text-slate-800 dark:text-slate-200 font-semibold">Deneme Sınavları</span>
-      </div>
+        <span class="text-white font-bold">Deneme Sınavları</span>
+      </nav>
 
       <div class="max-w-3xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 text-xs font-bold mb-4 border border-amber-300 dark:border-amber-800">
-          <span>⚡ Gerçek Sınav Formatında</span>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-black uppercase tracking-wider mb-4 border border-amber-500/40 shadow-sm">
+          <span>⚡ Gerçek Sınav Simülatörü</span>
         </div>
-        <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        
+        <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
           Çözümlü Deneme Sınavları
         </h1>
-        <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mt-3 leading-relaxed">
-          Tüm sorular sınav müfredatlarına uygun olarak hazırlanmış olup, her sorunun altında <strong class="text-emerald-600 dark:text-emerald-400">detaylı mevzuat ve çözüm açıklaması</strong> yer almaktadır.
+        
+        <p class="text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">
+          Tüm sorular SPL, MASAK ve IIA sınav formatına uygun olarak hazırlanmış olup, her sorunun altında <strong class="text-emerald-400 font-bold">detaylı mevzuat referansı ve kanun gerekçesi</strong> yer almaktadır.
         </p>
+
+        <!-- Stats Counter -->
+        <div class="mt-8 flex flex-wrap items-center gap-4 text-xs font-bold">
+          <div class="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2">
+            <span class="text-amber-400 text-base">📝</span>
+            <span>{quizList.length} İnteraktif Test Seti</span>
+          </div>
+          <div class="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2">
+            <span class="text-emerald-400 text-base">⚖️</span>
+            <span>200+ Çözümlü & Açıklamalı Soru</span>
+          </div>
+          <div class="px-4 py-2 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/10 flex items-center gap-2">
+            <span class="text-sky-400 text-base">🎯</span>
+            <span>Anında Doğru / Yanlış & Karne</span>
+          </div>
+        </div>
       </div>
-    </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {quizList.map(quiz => (
-        <a href={quiz.url} class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm hover:shadow-xl transition-all duration-200 flex flex-col justify-between group hover:border-amber-400">
-          <div>
-            <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
-              <span class="font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-2.5 py-1 rounded-full border border-amber-200 dark:border-amber-900">
-                ⚡ Çözümlü Test
-              </span>
-              <span>⏱️ {quiz.reading_time} dk</span>
-            </div>
+    </div>
+  </section>
 
-            <h2 class="font-bold text-slate-900 dark:text-white text-lg group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors leading-snug mb-3">
-              {quiz.title}
-            </h2>
+  <!-- Filter & Quiz Grid Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-28">
+    
+    <!-- Filter Chips -->
+    <div class="flex items-center justify-between pb-6 mb-8 border-b-2 border-slate-200 dark:border-slate-800 flex-wrap gap-4">
+      <div class="flex items-center gap-2">
+        <button type="button" class="quiz-filter-btn active px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs transition-colors cursor-pointer shadow-sm" data-filter="all">
+          Tüm Sınavlar ({quizList.length})
+        </button>
+        <button type="button" class="quiz-filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer" data-filter="spl">
+          📈 SPL Lisanslama ({splQuizzes.length})
+        </button>
+        <button type="button" class="quiz-filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer" data-filter="masak">
+          🛡️ MASAK Uyum ({masakQuizzes.length})
+        </button>
+        <button type="button" class="quiz-filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer" data-filter="cia">
+          🎓 CIA Part 1 ({ciaQuizzes.length})
+        </button>
+      </div>
 
-            <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed line-clamp-3">
-              {quiz.excerpt}
-            </p>
-          </div>
-
-          <div class="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold text-amber-600 dark:text-amber-400 group-hover:text-amber-500">
-            <span>Sınavı Başlat & Çöz</span>
-            <span>→</span>
-          </div>
-        </a>
-      ))}
+      <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+        Kural: <strong class="text-emerald-600 dark:text-emerald-400 font-bold">%70 ve Üzeri Başarılı Sayılır</strong>
+      </span>
     </div>
 
-  </div>
+    <!-- Cards Grid -->
+    <div id="quiz-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {quizList.map(quiz => {
+        const catSlug = quiz.categories && quiz.categories[0] ? quiz.categories[0].slug : '';
+        let filterTag = 'other';
+        if (catSlug.includes('spl')) filterTag = 'spl';
+        else if (catSlug.includes('masak')) filterTag = 'masak';
+        else if (catSlug.includes('cia')) filterTag = 'cia';
+
+        return (
+          <article 
+            class="quiz-card group bg-white dark:bg-[#0c1827] rounded-3xl border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between hover:border-amber-400"
+            data-tag={filterTag}
+          >
+            <!-- Card Image -->
+            <a href={quiz.url} class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
+              {quiz.featured_image ? (
+                <img 
+                  src={quiz.featured_image} 
+                  alt={quiz.title} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center bg-slate-900 text-slate-600 font-bold">
+                  mufettis.org Deneme
+                </div>
+              )}
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+              
+              <div class="absolute top-3 left-3">
+                <span class="px-3 py-1 rounded-xl bg-amber-500 text-slate-950 font-black text-[10.5px] uppercase shadow-md flex items-center gap-1">
+                  <span>⚡</span> 20 Soru Çözümlü
+                </span>
+              </div>
+
+              <div class="absolute bottom-3 right-3">
+                <span class="px-2.5 py-0.5 rounded-lg bg-black/70 backdrop-blur-sm text-white text-[11px] font-bold">
+                  ⏱️ {quiz.reading_time} dk süre
+                </span>
+              </div>
+            </a>
+
+            <!-- Card Content -->
+            <div class="p-6 sm:p-7 flex-grow flex flex-col justify-between">
+              <div>
+                <span class="text-[10px] font-black uppercase tracking-wider text-amber-500 block mb-1.5">
+                  {quiz.categories && quiz.categories[0] ? quiz.categories[0].name : 'Deneme Sınavı'}
+                </span>
+
+                <a href={quiz.url}>
+                  <h2 class="font-black text-slate-900 dark:text-white text-base sm:text-lg leading-snug group-hover:text-amber-500 transition-colors line-clamp-2 mb-3">
+                    {quiz.title}
+                  </h2>
+                </a>
+
+                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-[13px] line-clamp-3 leading-relaxed mb-5">
+                  {quiz.excerpt}
+                </p>
+              </div>
+
+              <div class="pt-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-black">
+                <span class="text-amber-500 flex items-center gap-1.5">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  Sınavı Başlat & Çöz
+                </span>
+                <span class="transform group-hover:translate-x-1.5 transition-transform">→</span>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+  </section>
+
+  <!-- Client-Side Filter Script -->
+  <script>
+    const filterBtns = document.querySelectorAll('.quiz-filter-btn');
+    const quizCards = document.querySelectorAll('.quiz-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-amber-500', 'text-slate-950', 'font-black');
+          b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'font-bold');
+        });
+
+        btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'font-bold');
+        btn.classList.add('bg-amber-500', 'text-slate-950', 'font-black');
+
+        const filter = btn.getAttribute('data-filter');
+
+        quizCards.forEach(card => {
+          const tag = card.getAttribute('data-tag');
+          if (filter === 'all' || tag === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+  </script>
 </Layout>

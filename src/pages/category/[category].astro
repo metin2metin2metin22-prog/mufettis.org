@@ -14,78 +14,246 @@ export async function getStaticPaths() {
 }
 
 const { category, categoryPosts } = Astro.props;
+
+// Category Theme Setup
+const getCategoryTheme = (slug = '') => {
+  if (slug.includes('spl')) {
+    return {
+      gradient: 'from-[#07192b] via-[#0a2744] to-[#051424]',
+      badge: 'bg-sky-500/20 text-sky-300 border-sky-500/40',
+      accentText: 'text-sky-400',
+      accentBorder: 'border-sky-500',
+      tag: '📈 SPL Lisanslama Merkezi',
+      desc: 'Sermaye Piyasası Araçları 1, Takas Saklama ve Operasyon, Yatırım Kuruluşları ve Mevzuat Ders Notları.',
+      stats: 'Düzey 1-2-3 Müfredatı'
+    };
+  }
+  if (slug.includes('masak')) {
+    return {
+      gradient: 'from-[#052117] via-[#083526] to-[#041911]',
+      badge: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40',
+      accentText: 'text-emerald-400',
+      accentBorder: 'border-emerald-500',
+      tag: '🛡️ MASAK Uyum Merkezi',
+      desc: 'MASAK Uyum Görevlisi Yetkilendirme Sınavı, Modül 1 ve Modül 2 Detaylı Konu Anlatımları ve Sınav Soruları.',
+      stats: '5549 Sayılı Kanun & AML/CFT'
+    };
+  }
+  if (slug.includes('cia')) {
+    return {
+      gradient: 'from-[#1a0c2e] via-[#281347] to-[#120721]',
+      badge: 'bg-purple-500/20 text-purple-300 border-purple-500/40',
+      accentText: 'text-purple-400',
+      accentBorder: 'border-purple-500',
+      tag: '🎓 CIA Part 1 Sertifikasyon',
+      desc: 'Uluslararası İç Denetim Standartları, Üç Hat Modeli, Kurumsal Yönetişim ve 20\'şer Soruluk Çözümlü Testler.',
+      stats: 'IIA Küresel Standartları'
+    };
+  }
+  if (slug.includes('banka') || slug.includes('kariyer')) {
+    return {
+      gradient: 'from-[#261504] via-[#3a2208] to-[#1a0e02]',
+      badge: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
+      accentText: 'text-amber-400',
+      accentBorder: 'border-amber-500',
+      tag: '🏛️ Banka Denetimi & Kariyer',
+      desc: 'Banka Müfettiş Yardımcılığı Sınavları, 2026 Maaş Rehberi, Dolandırıcılık Tespiti ve Kariyer Basamakları.',
+      stats: 'Teftiş Kurulu & BDDK Mevzuatı'
+    };
+  }
+  return {
+    gradient: 'from-[#0b2b46] via-[#081f33] to-[#041220]',
+    badge: 'bg-brand-500/20 text-sky-300 border-brand-500/40',
+    accentText: 'text-sky-400',
+    accentBorder: 'border-brand-500',
+    tag: '📚 Denetim Kütüphanesi',
+    desc: 'Mali tablolar analizi, bilanço okuma teknikleri, risk yönetimi ve mevzuat rehberleri.',
+    stats: 'Mevzuat & Finans Kütüphanesi'
+  };
+};
+
+const theme = getCategoryTheme(category.slug);
+const quizCount = categoryPosts.filter(p => p.is_quiz).length;
+const lectureCount = categoryPosts.filter(p => !p.is_quiz).length;
 ---
 
 <Layout 
-  title={`${category.name} Ders Notları ve Çözümlü Sınavlar`}
+  title={`${category.name} Sınav Notları ve Çözümlü Sorular`}
   description={`${category.name} alanında kapsamlı sınav hazırlık notları, mevzuat özetleri ve çözümlü deneme soruları.`}
   canonical={`https://mufettis.org/category/${category.slug}/`}
 >
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-24">
-    
-    <!-- Category Header -->
-    <header class="border-b border-slate-200 dark:border-slate-800 pb-8 mb-10">
-      <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-3">
-        <a href="/" class="hover:text-brand-600 dark:hover:text-brand-400">Anasayfa</a>
-        <span>/</span>
-        <span>Kategori</span>
-        <span>/</span>
-        <span class="text-slate-800 dark:text-slate-200 font-semibold">{category.name}</span>
-      </div>
+  <!-- Hero Category Header -->
+  <section class={`relative bg-gradient-to-b ${theme.gradient} text-white pt-14 pb-20 px-4 border-b border-slate-800 overflow-hidden`}>
+    <div class="absolute right-0 top-0 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {category.name}
-          </h1>
-          <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-2">
-            Bu kategoride toplam <strong class="text-brand-600 dark:text-brand-400">{categoryPosts.length}</strong> adet ders notu ve deneme sınavı bulunmaktadır.
-          </p>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+        <a href="/" class="hover:text-white transition-colors">Anasayfa</a>
+        <span>/</span>
+        <span>Kategoriler</span>
+        <span>/</span>
+        <span class="text-white font-bold">{category.name}</span>
+      </nav>
+
+      <div class="max-w-3xl">
+        <div class={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider mb-4 border ${theme.badge}`}>
+          <span>{theme.tag}</span>
         </div>
+        
+        <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+          {category.name}
+        </h1>
+        
+        <p class="text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">
+          {theme.desc}
+        </p>
 
-        <a href="/deneme-sinavlari/" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-sm flex items-center gap-2">
-          <span>⚡ Çözümlü Testler</span>
-        </a>
+        <!-- Category Stats Pill Bar -->
+        <div class="mt-6 flex flex-wrap items-center gap-4 text-xs font-bold text-slate-300">
+          <span class="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
+            📚 {categoryPosts.length} Toplam İçerik
+          </span>
+          <span class="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
+            📖 {lectureCount} Konu Anlatımı
+          </span>
+          <span class="px-3 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            ⚡ {quizCount} Çözümlü Deneme
+          </span>
+          <span class="px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-sm border border-white/10">
+            ✓ {theme.stats}
+          </span>
+        </div>
       </div>
-    </header>
 
-    <!-- Articles Grid -->
-    {categoryPosts.length > 0 ? (
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categoryPosts.map(post => (
-          <a href={post.url} class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-sm hover:shadow-lg transition-all duration-200 flex flex-col justify-between group">
-            <div>
-              <div class="flex items-center justify-between text-xs text-slate-400 mb-3">
-                {post.is_quiz ? (
-                  <span class="font-bold text-amber-600 dark:text-amber-400">⚡ Çözümlü Test</span>
+    </div>
+  </section>
+
+  <!-- Content Grid Section with Filter Tabs -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-24">
+    
+    <!-- Filter Tabs (Tümü / Konu Anlatımı / Denemeler) -->
+    <div class="flex items-center justify-between pb-6 mb-8 border-b-2 border-slate-200 dark:border-slate-800 flex-wrap gap-4">
+      <div class="flex items-center gap-2">
+        <button type="button" class="category-tab-btn active px-4 py-2 rounded-xl bg-brand-600 text-white font-bold text-xs transition-colors cursor-pointer" data-tab="all">
+          Tüm İçerikler ({categoryPosts.length})
+        </button>
+        <button type="button" class="category-tab-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer" data-tab="lecture">
+          📖 Konu Anlatımları ({lectureCount})
+        </button>
+        <button type="button" class="category-tab-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer" data-tab="quiz">
+          ⚡ Çözümlü Testler ({quizCount})
+        </button>
+      </div>
+
+      <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+        Kategori: <strong class="text-slate-900 dark:text-white font-bold">{category.name}</strong>
+      </span>
+    </div>
+
+    <!-- Cards Grid -->
+    <div id="category-posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {categoryPosts.map(post => {
+        const isQuiz = post.is_quiz;
+        return (
+          <article 
+            class={`category-post-card group bg-white dark:bg-[#0c1827] rounded-3xl border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between hover:${theme.accentBorder}`}
+            data-is-quiz={isQuiz ? "true" : "false"}
+          >
+            <!-- Card Image -->
+            <a href={post.url} class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
+              {post.featured_image ? (
+                <img 
+                  src={post.featured_image} 
+                  alt={post.title} 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                  loading="lazy"
+                />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center bg-slate-900 text-slate-600 font-bold">
+                  mufettis.org
+                </div>
+              )}
+              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+              
+              <!-- Badges -->
+              <div class="absolute top-3 left-3">
+                {isQuiz ? (
+                  <span class="px-3 py-1 rounded-xl bg-amber-500 text-slate-950 font-black text-[10px] uppercase shadow-md flex items-center gap-1">
+                    <span>⚡</span> 20 Soru Çözümlü Test
+                  </span>
                 ) : (
-                  <span class="font-semibold text-brand-600 dark:text-brand-400">Ders Notu</span>
+                  <span class="px-3 py-1 rounded-xl bg-sky-600 text-white font-black text-[10px] uppercase shadow-md flex items-center gap-1">
+                    <span>📖</span> Konu Anlatımı
+                  </span>
                 )}
-                <span>⏱️ {post.reading_time} dk</span>
               </div>
 
-              <h2 class="font-bold text-slate-900 dark:text-white text-lg group-hover:text-brand-600 dark:group-hover:text-brand-400 transition-colors leading-snug mb-3">
-                {post.title}
-              </h2>
+              <div class="absolute bottom-3 right-3">
+                <span class="px-2.5 py-0.5 rounded-lg bg-black/70 backdrop-blur-sm text-white text-[11px] font-bold">
+                  ⏱️ {post.reading_time} dk
+                </span>
+              </div>
+            </a>
 
-              <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed line-clamp-3">
-                {post.excerpt}
-              </p>
+            <!-- Card Content -->
+            <div class="p-6 flex-grow flex flex-col justify-between">
+              <div>
+                <a href={post.url}>
+                  <h2 class={`font-black text-slate-900 dark:text-white text-base sm:text-lg leading-snug group-hover:${theme.accentText} transition-colors line-clamp-2 mb-3`}>
+                    {post.title}
+                  </h2>
+                </a>
+                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-[13px] line-clamp-3 leading-relaxed mb-4">
+                  {post.excerpt}
+                </p>
+              </div>
+
+              <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-black">
+                <span class={isQuiz ? "text-amber-500" : theme.accentText}>
+                  {isQuiz ? "Testi Hemen Çöz" : "Ders Notunu Oku"}
+                </span>
+                <span class="transform group-hover:translate-x-1.5 transition-transform">→</span>
+              </div>
             </div>
+          </article>
+        );
+      })}
+    </div>
 
-            <div class="pt-5 mt-5 border-t border-slate-100 dark:border-slate-800 text-xs font-semibold text-slate-500 group-hover:text-brand-600 dark:group-hover:text-brand-400 flex items-center justify-between">
-              <span>{post.is_quiz ? 'Soruları Çöz' : 'Notu Oku'}</span>
-              <span>→</span>
-            </div>
-          </a>
-        ))}
-      </div>
-    ) : (
-      <div class="text-center py-20 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8">
-        <p class="text-slate-500 dark:text-slate-400">Bu kategoride henüz yayınlanmış yazı bulunmuyor.</p>
-        <a href="/" class="mt-4 inline-block text-sm font-semibold text-brand-600 hover:underline">Anasayfaya Dön →</a>
-      </div>
-    )}
+  </section>
 
-  </div>
+  <!-- Client-Side Tab Filtering Script -->
+  <script>
+    const tabBtns = document.querySelectorAll('.category-tab-btn');
+    const postCards = document.querySelectorAll('.category-post-card');
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => {
+          b.classList.remove('bg-brand-600', 'text-white');
+          b.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        });
+
+        btn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+        btn.classList.add('bg-brand-600', 'text-white');
+
+        const tab = btn.getAttribute('data-tab');
+
+        postCards.forEach(card => {
+          const isQuiz = card.getAttribute('data-is-quiz') === 'true';
+          if (tab === 'all') {
+            card.classList.remove('hidden');
+          } else if (tab === 'lecture') {
+            if (isQuiz) card.classList.add('hidden');
+            else card.classList.remove('hidden');
+          } else if (tab === 'quiz') {
+            if (!isQuiz) card.classList.add('hidden');
+            else card.classList.remove('hidden');
+          }
+        });
+      });
+    });
+  </script>
 </Layout>
