@@ -40,6 +40,10 @@ html.dark .mufettis-note div {
   color: #f1f5f9 !important;
 }
 
+html.dark .mufettis-note strong {
+  color: #38bdf8 !important;
+}
+
 /* 2. Hafıza Çivisi & Püf Nokta (Service Box) */
 .mufettis-service {
   margin: 1.75rem 0;
@@ -229,7 +233,29 @@ html.dark .mufettis-mark {
   border-bottom-color: #ca8a04 !important;
 }
 
-/* 7. Clean Print Stylesheet */
+/* 7. Quiz & Solution Card High-Contrast Support */
+html.dark .interactive-quiz-card {
+  background-color: #0c1827 !important;
+  border-color: #1e3a5f !important;
+}
+
+html.dark .solution-card {
+  background: linear-gradient(135deg, #071322 0%, #030a13 100%) !important;
+  border-color: #1e3a5f !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .solution-card p,
+html.dark .solution-card span,
+html.dark .solution-card div {
+  color: #cbd5e1 !important;
+}
+
+html.dark .solution-card strong {
+  color: #38bdf8 !important;
+}
+
+/* 8. Clean Print Stylesheet */
 @media print {
   header, footer, #floating-exam-hud, #toc-card, #search-modal, .toolbar-actions, #read-progress {
     display: none !important;
