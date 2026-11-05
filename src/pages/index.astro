@@ -749,6 +749,9 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
                 alt={quiz.title} 
                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
                 loading="lazy"
+                decoding="async"
+                width="600"
+                height="338"
               />
               <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
               

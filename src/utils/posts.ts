@@ -1,4 +1,13 @@
 import rawPosts from '../data/posts.json';
+import fs from 'node:fs';
+import path from 'node:path';
+
+export function getWebp(url?: string | null): string {
+  if (!url) return '';
+  const webp = url.replace(/\.(png|jpe?g)$/i, '.webp');
+  const disk = path.join(process.cwd(), 'public', webp.replace(/^\//, ''));
+  return fs.existsSync(disk) ? webp : url;
+}
 
 export interface CategoryRef {
   name: string;
@@ -159,6 +168,7 @@ export function getAllPosts(): Post[] {
   for (const p of rawPosts as Post[]) {
     postsMap.set(p.slug, {
       ...p,
+      featured_image: getWebp(p.featured_image),
       content: processShortcodes(p.content)
     });
   }
@@ -195,7 +205,7 @@ export function getAllPosts(): Post[] {
             description: fm.description || '',
             focus_keyword: fm.focus_keyword || ''
           },
-          featured_image: fm.image || null,
+          featured_image: getWebp(fm.image) || null,
           is_quiz: Boolean(fm.is_quiz),
           reading_time: readingTime,
           word_count: wordCount,

@@ -122,13 +122,12 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
       <link rel="preload" as="image" href={preloadImage} fetchpriority="high" type="image/webp" />
     )}
 
-    <!-- Fonts: Preconnect & High-Performance Non-blocking Fonts -->
+    <!-- Fonts: Preconnect & High-Performance Non-blocking Fonts (No Render Blocking) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:wght@400;600&display=swap" media="print" onload="this.media='all'">
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Lora:wght@400;600&display=swap">
     </noscript>
 
     <!-- Theme Initialization Script -->
@@ -420,18 +419,22 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
           <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
             <div class="flex items-center gap-3">
               <img 
-                src="/brand/mufettis-emblem-light.png" 
+                src="/brand/mufettis-emblem-light.webp" 
                 alt="mufettis.org Logo" 
                 class="w-9 h-auto object-contain dark:hidden" 
                 width="36" 
                 height="42"
+                loading="lazy"
+                decoding="async"
               />
               <img 
-                src="/brand/mufettis-emblem-dark.png" 
+                src="/brand/mufettis-emblem-dark.webp" 
                 alt="mufettis.org Logo" 
                 class="w-9 h-auto object-contain hidden dark:block" 
                 width="36" 
                 height="42"
+                loading="lazy"
+                decoding="async"
               />
               <div>
                 <span class="font-black text-base text-slate-900 dark:text-white block leading-tight">mufettis.org</span>
@@ -685,11 +688,13 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
             <a href="/" class="flex items-center gap-3.5 group inline-flex">
               <div class="w-12 h-12 rounded-2xl bg-brand-950/80 border-2 border-brand-800 p-2 flex items-center justify-center shadow-lg group-hover:border-amber-400 transition-colors">
                 <img 
-                  src="/brand/mufettis-emblem-dark.png" 
+                  src="/brand/mufettis-emblem-dark.webp" 
                   alt="mufettis.org Amblemi" 
                   class="h-full w-full object-contain" 
                   width="44" 
                   height="44"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div>
@@ -1041,17 +1046,32 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
 
       let allPosts: any[] = [];
       let activeFilter = 'all';
+      let searchLoaded = false;
 
-      fetch('/api/search.json')
-        .then(res => res.json())
-        .then(data => { allPosts = data; renderInitialSuggestions(); })
-        .catch(() => {});
+      function loadSearchData(callback?: () => void) {
+        if (searchLoaded) {
+          if (callback) callback();
+          return;
+        }
+        searchLoaded = true;
+        fetch('/api/search.json')
+          .then(res => res.json())
+          .then(data => { 
+            allPosts = data; 
+            if (callback) callback();
+            else if (input && !input.value.trim()) renderInitialSuggestions(); 
+          })
+          .catch(() => {});
+      }
 
       function openSearch() {
+        loadSearchData(() => {
+          if (!input.value.trim()) renderInitialSuggestions();
+        });
         modal?.classList.remove('hidden');
         lockScroll();
         input?.focus();
-        if (!input.value.trim()) renderInitialSuggestions();
+        if (allPosts.length > 0 && !input.value.trim()) renderInitialSuggestions();
       }
 
       function closeSearch() {
@@ -1060,11 +1080,13 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
       }
 
       trigger?.addEventListener('click', openSearch);
+      trigger?.addEventListener('pointerenter', () => loadSearchData(), { once: true });
       closeBtn?.addEventListener('click', closeSearch);
 
       window.addEventListener('keydown', (e) => {
         if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
           e.preventDefault();
+          loadSearchData();
           openSearch();
         }
         if (e.key === 'Escape' && !modal?.classList.contains('hidden')) {

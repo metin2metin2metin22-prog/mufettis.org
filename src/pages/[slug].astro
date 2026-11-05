@@ -231,6 +231,10 @@ const schemaArticle = {
               alt={post.title} 
               class="w-full h-auto max-h-[480px] object-cover"
               loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              width="1200"
+              height="630"
             />
           </div>
         )}

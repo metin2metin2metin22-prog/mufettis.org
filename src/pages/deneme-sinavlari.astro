@@ -112,6 +112,9 @@ const ciaQuizzes = quizList.filter(p => p.categories && p.categories.some(c => c
                   alt={quiz.title} 
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                   loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="375"
                 />
               ) : (
                 <div class="w-full h-full flex items-center justify-center bg-slate-900 text-slate-600 font-bold">
