@@ -50,16 +50,6 @@ import Layout from '../layouts/Layout.astro';
 
           <div class="space-y-3 pt-2 text-xs">
             <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-              <div class="w-9 h-9 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0 border border-sky-500/20">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"></path></svg>
-              </div>
-              <div>
-                <span class="text-slate-400 font-medium block text-[10.5px]">Resmî İletişim E-Postası:</span>
-                <a href="mailto:iletisim@mufettis.org" class="font-bold text-slate-900 dark:text-white hover:text-sky-500 transition-colors">iletisim@mufettis.org</a>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
               <div class="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/20">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
               </div>
@@ -321,7 +311,7 @@ import Layout from '../layouts/Layout.astro';
         form.reset();
 
       } catch (err) {
-        showAlert('Mesaj gönderilirken geçici bir ağ sorunu oluştu. Lütfen tekrar deneyiniz veya iletisim@mufettis.org adresine doğrudan yazınız.', 'error');
+        showAlert('Mesaj gönderilirken geçici bir ağ sorunu oluştu. Lütfen tekrar deneyiniz.', 'error');
       } finally {
         submitBtn.disabled = false;
         btnText.textContent = 'Mesajı Güvenle Gönder';
