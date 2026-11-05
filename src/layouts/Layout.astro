@@ -8,6 +8,7 @@ interface Props {
   canonical?: string;
   type?: 'website' | 'article';
   publishDate?: string;
+  preloadImage?: string;
 }
 
 const {
@@ -16,7 +17,8 @@ const {
   image = "/wp-content/uploads/2026/04/mufettis.org_-scaled.png",
   canonical = Astro.url.href,
   type = "website",
-  publishDate
+  publishDate,
+  preloadImage
 } = Astro.props;
 
 const siteName = "mufettis.org";
@@ -115,10 +117,19 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
       ]
     })} />
 
-    <!-- Fonts: Plus Jakarta Sans for UI + Lora for Editorial -->
+    <!-- LCP Image Preload for Instant Render -->
+    {preloadImage && (
+      <link rel="preload" as="image" href={preloadImage} fetchpriority="high" type="image/webp" />
+    )}
+
+    <!-- Fonts: Preconnect & High-Performance Non-blocking Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+    </noscript>
 
     <!-- Theme Initialization Script -->
     <script is:inline>
@@ -205,20 +216,22 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
           <a href="/" class="flex items-center gap-2.5 sm:gap-3.5 group shrink-0" title="mufettis.org Akademi Anasayfa">
             <div class="relative flex items-center justify-center shrink-0">
               <img 
-                src="/brand/mufettis-emblem-light.png" 
+                src="/brand/mufettis-emblem-light.webp" 
                 alt="Müfettiş.org Amblemi" 
                 class="h-9 sm:h-11 xl:h-12 w-auto object-contain dark:hidden group-hover:scale-105 transition-transform drop-shadow-sm" 
                 width="44" 
                 height="50"
                 loading="eager"
+                decoding="async"
               />
               <img 
-                src="/brand/mufettis-emblem-dark.png" 
+                src="/brand/mufettis-emblem-dark.webp" 
                 alt="Müfettiş.org Amblemi" 
                 class="h-9 sm:h-11 xl:h-12 w-auto object-contain hidden dark:block group-hover:scale-105 transition-transform drop-shadow-md" 
                 width="44" 
                 height="50"
                 loading="eager"
+                decoding="async"
               />
             </div>
             <div class="flex flex-col">

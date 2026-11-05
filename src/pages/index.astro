@@ -1,6 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getAllPosts } from '../utils/posts';
+import fs from 'node:fs';
+import path from 'node:path';
+
+function getWebp(url?: string): string {
+  if (!url) return '';
+  const webp = url.replace(/\.(png|jpe?g)$/i, '.webp');
+  const disk = path.join(process.cwd(), 'public', webp.replace(/^\//, ''));
+  return fs.existsSync(disk) ? webp : url;
+}
 
 const posts = getAllPosts();
 
@@ -9,6 +18,7 @@ const blogPosts = posts.filter(p => p.post_type === 'post' && p.featured_image);
 
 // 1. Manşet (Lead Story + 4 Sub-Lead Deep Dives)
 const leadStory = blogPosts.find(p => p.slug.includes('2026-banka-mufettisi-maaslari')) || blogPosts[0];
+const leadImageWebp = getWebp(leadStory.featured_image);
 
 // Carefully select 4 diverse sub-stories covering SPL, MASAK, CIA, and Mali Analiz
 const splStory = blogPosts.find(p => p.slug !== leadStory.slug && p.categories?.some(c => c.slug.includes('spl')));
@@ -39,6 +49,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
 <Layout 
   title="Müfettiş | Sınav Hazırlık Notları, Makaleler ve Çözümlü Deneme Sınavları"
   description="Banka Müfettişliği, SPL Lisanslama, MASAK Uyum Görevlisi ve CIA sınavlarına hazırlık için kapsamlı ders notları, mevzuat özetleri ve çözümlü testler."
+  preloadImage={leadImageWebp}
 >
 
   <!-- ======================================================== -->
@@ -139,10 +150,14 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
           <!-- Görsel Alanı: Yazısız ve tertemiz sunum -->
           <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-950">
             <img 
-              src={leadStory.featured_image} 
+              src={leadImageWebp} 
               alt={leadStory.title} 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               loading="eager"
+              fetchpriority="high"
+              decoding="async"
+              width="1200"
+              height="675"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
 
@@ -203,10 +218,13 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
               <!-- Temiz Görsel Çerçevesi -->
               <div class="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 border-b border-slate-100 dark:border-slate-800">
                 <img 
-                  src={sub.featured_image} 
+                  src={getWebp(sub.featured_image)} 
                   alt={sub.title} 
                   class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="375"
                 />
                 <div class="absolute top-2 left-2">
                   <span class="inline-block text-[9.5px] font-black text-amber-300 bg-slate-950/80 backdrop-blur-md uppercase tracking-wider px-2 py-0.5 rounded-md border border-amber-500/30">
@@ -407,10 +425,13 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
         <div>
           <a href="/category/spl-ders-notlari/" class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
             <img 
-              src="/assets/categories/spl-sermaye-piyasasi.jpg" 
+              src="/assets/categories/spl-sermaye-piyasasi.webp" 
               alt="SPL Lisanslama Sınavları" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
               loading="lazy"
+              decoding="async"
+              width="600"
+              height="375"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
             
@@ -475,10 +496,13 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
         <div>
           <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
             <img 
-              src="/assets/categories/masak-uyum-denetim.jpg" 
+              src="/assets/categories/masak-uyum-denetim.webp" 
               alt="MASAK Uyum Görevlisi" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
               loading="lazy"
+              decoding="async"
+              width="600"
+              height="375"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
             
@@ -543,10 +567,13 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
         <div>
           <a href="/category/cia-ders-notlari/" class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
             <img 
-              src="/assets/categories/cia-ic-denetim.jpg" 
+              src="/assets/categories/cia-ic-denetim.webp" 
               alt="CIA Part 1 Sertifikasyon" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
               loading="lazy"
+              decoding="async"
+              width="600"
+              height="375"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
             
@@ -611,10 +638,13 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
         <div>
           <a href="/category/denetim-kutuphanesi/" class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
             <img 
-              src="/assets/categories/banka-mufettisligi.jpg" 
+              src="/assets/categories/banka-mufettisligi.webp" 
               alt="Banka Müfettişliği & Teftiş Kurulu" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
               loading="lazy"
+              decoding="async"
+              width="600"
+              height="375"
             />
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
             
@@ -836,10 +866,13 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
         <a href={item.url} class="group bg-white dark:bg-[#0c1827] rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:border-brand-500">
           <div class="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
             <img 
-              src={item.featured_image} 
+              src={getWebp(item.featured_image)} 
               alt={item.title} 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
+              decoding="async"
+              width="400"
+              height="250"
             />
           </div>
           <div class="p-5 flex-grow flex flex-col justify-between">
