@@ -211,12 +211,12 @@ const schemaArticle = {
               </div>
 
               <!-- Font Size Toggle -->
-              <button id="font-toggle-btn" type="button" title="Yazı Boyutunu Değiştir" class="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors font-black text-xs cursor-pointer">
+              <button id="font-toggle-btn" type="button" title="Yazı Boyutunu Değiştir" class="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors font-black text-xs cursor-pointer active:scale-95">
                 A+
               </button>
 
-              <!-- Print -->
-              <button id="print-btn" type="button" title="Yazdır veya PDF Kaydet" class="p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors text-xs cursor-pointer">
+              <!-- Print (Hidden on small mobile screens to keep toolbar one-line) -->
+              <button id="print-btn" type="button" title="Yazdır veya PDF Kaydet" class="hidden sm:inline-flex p-1.5 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-colors text-xs cursor-pointer active:scale-95">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
               </button>
             </div>
@@ -513,36 +513,38 @@ const schemaArticle = {
   </div>
 
   <!-- FLOATING EXAM HUD (SCORE TRACKER & SOUND ENGINE) - ONLY FOR QUIZZES -->
-  <div id="floating-exam-hud" class="fixed bottom-20 sm:bottom-6 inset-x-3 sm:inset-x-auto sm:right-6 sm:left-auto z-40 hidden max-w-xl bg-slate-950/95 backdrop-blur-md text-white px-4 sm:px-5 py-3 sm:py-3.5 rounded-2xl border-2 border-amber-500/50 shadow-2xl transition-all duration-300">
-    <div class="flex flex-wrap items-center gap-3.5 text-xs font-bold">
+  <div id="floating-exam-hud" class="fixed bottom-[calc(4.5rem+env(safe-area-inset-bottom))] sm:bottom-6 inset-x-2 sm:inset-x-auto sm:right-6 sm:left-auto z-40 hidden max-w-xl bg-slate-950/95 backdrop-blur-xl text-white px-3 sm:px-5 py-2.5 sm:py-3.5 rounded-2xl border-2 border-amber-500/50 shadow-2xl transition-all duration-300">
+    <div class="flex items-center justify-between gap-2 sm:gap-3.5 text-xs font-bold">
       
       <!-- Progress Indicator -->
-      <div class="flex items-center gap-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse"></span>
-        <span id="hud-answered" class="text-slate-300">0 / 0 Soru</span>
+      <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <span class="w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-amber-400 animate-pulse shrink-0"></span>
+        <span id="hud-answered" class="text-slate-300 text-[11px] sm:text-xs">0 / 0 Soru</span>
       </div>
 
       <!-- Live Score -->
-      <div class="flex items-center gap-1.5 text-emerald-400">
-        <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-        <span id="hud-correct">0</span>
-      </div>
-      <div class="flex items-center gap-1.5 text-rose-400">
-        <svg class="w-3.5 h-3.5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-        <span id="hud-wrong">0</span>
+      <div class="flex items-center gap-2 sm:gap-2.5 shrink-0">
+        <div class="flex items-center gap-1 text-emerald-400">
+          <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+          <span id="hud-correct">0</span>
+        </div>
+        <div class="flex items-center gap-1 text-rose-400">
+          <svg class="w-3.5 h-3.5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+          <span id="hud-wrong">0</span>
+        </div>
       </div>
 
       <!-- Mode & Sound Controls -->
-      <div class="flex items-center gap-1.5 ml-auto border-l border-slate-700 pl-3">
+      <div class="flex items-center gap-1 sm:gap-1.5 ml-auto border-l border-slate-700 pl-2 sm:pl-3 shrink-0">
         <!-- Sound Toggle -->
-        <button id="hud-sound-btn" type="button" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors cursor-pointer text-xs" title="Ses Efektlerini Aç/Kapat">
+        <button id="hud-sound-btn" type="button" class="p-1 sm:p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-slate-300 hover:text-white transition-colors cursor-pointer text-xs active:scale-90" title="Ses Efektlerini Aç/Kapat">
           <span id="sound-icon">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
           </span>
         </button>
 
         <!-- Timer Mode Toggle -->
-        <button id="hud-timer-btn" type="button" class="px-2.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-amber-300 font-bold text-[11px] transition-colors cursor-pointer flex items-center gap-1.5">
+        <button id="hud-timer-btn" type="button" class="px-2 sm:px-2.5 py-1 sm:py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-amber-300 font-bold text-[10.5px] sm:text-[11px] transition-colors cursor-pointer flex items-center gap-1 sm:gap-1.5 active:scale-95">
           <span id="timer-icon">
             <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"></circle><polyline points="12 6 12 12 16 14" stroke-width="2"></polyline></svg>
           </span>
@@ -550,8 +552,9 @@ const schemaArticle = {
         </button>
 
         <!-- Finish Button -->
-        <button id="hud-finish-btn" type="button" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[11px] transition-transform hover:scale-105 cursor-pointer shadow-sm flex items-center gap-1">
-          <span>Rapor</span>
+        <button id="hud-finish-btn" type="button" class="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-[10.5px] sm:text-[11px] transition-transform hover:scale-105 active:scale-95 cursor-pointer shadow-sm flex items-center gap-1 shrink-0">
+          <span class="hidden xs:inline">Rapor</span>
+          <span class="xs:hidden">Karne</span>
           <svg class="w-3.5 h-3.5 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
         </button>
       </div>
@@ -686,7 +689,9 @@ const schemaArticle = {
     }
 
     function updateHUD() {
-      if (hudAnswered) hudAnswered.textContent = `${answeredCount} / ${totalQuestions} Soru`;
+      if (hudAnswered) {
+        hudAnswered.innerHTML = `<span class="hidden sm:inline">${answeredCount} / ${totalQuestions} Soru</span><span class="sm:hidden">${answeredCount}/${totalQuestions}</span>`;
+      }
       if (hudCorrect) hudCorrect.textContent = `${correctCount}`;
       if (hudWrong) hudWrong.textContent = `${wrongCount}`;
 

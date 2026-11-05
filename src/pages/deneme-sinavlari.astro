@@ -65,21 +65,21 @@ const ciaQuizzes = quizList.filter(p => p.categories && p.categories.some(c => c
   <!-- Filter & Quiz Grid Section -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-28">
     
-    <!-- Filter Chips -->
+    <!-- Filter Chips (Touch Carousel on Mobile, Wrapped on Desktop) -->
     <div class="flex items-center justify-between pb-6 mb-8 border-b-2 border-slate-200 dark:border-slate-800 flex-wrap gap-4">
-      <div class="flex items-center gap-2 flex-wrap">
-        <button type="button" class="quiz-filter-btn active px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs transition-colors cursor-pointer shadow-sm" data-filter="all">
+      <div class="flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar pb-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap max-w-full">
+        <button type="button" class="quiz-filter-btn active px-4 py-2 rounded-xl bg-amber-500 text-slate-950 font-black text-xs transition-all cursor-pointer shadow-sm shrink-0 active:scale-95" data-filter="all">
           Tüm Sınavlar ({quizList.length})
         </button>
-        <button type="button" class="quiz-filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer inline-flex items-center gap-1.5" data-filter="spl">
+        <button type="button" class="quiz-filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-all cursor-pointer inline-flex items-center gap-1.5 shrink-0 active:scale-95" data-filter="spl">
           <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
           <span>SPL Lisanslama ({splQuizzes.length})</span>
         </button>
-        <button type="button" class="quiz-filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer inline-flex items-center gap-1.5" data-filter="masak">
+        <button type="button" class="quiz-filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-all cursor-pointer inline-flex items-center gap-1.5 shrink-0 active:scale-95" data-filter="masak">
           <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
           <span>MASAK Uyum ({masakQuizzes.length})</span>
         </button>
-        <button type="button" class="quiz-filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer inline-flex items-center gap-1.5" data-filter="cia">
+        <button type="button" class="quiz-filter-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-all cursor-pointer inline-flex items-center gap-1.5 shrink-0 active:scale-95" data-filter="cia">
           <svg class="w-3.5 h-3.5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
           <span>CIA Part 1 ({ciaQuizzes.length})</span>
         </button>

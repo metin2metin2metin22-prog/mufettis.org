@@ -323,6 +323,16 @@ html.dark .solution-card strong {
 /* 10. ELITE MOBILE-FIRST APP EXPERIENCE & ERGONOMICS       */
 /* ======================================================== */
 
+/* Prevent iOS Font Size Glitches & WebKit Highlight */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Safe Area Insets for iOS Home Indicator and Android Gestures */
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -332,8 +342,14 @@ html.dark .solution-card strong {
 }
 
 /* Fast Tap & Touch Manipulation (Prevents 300ms double-tap delay on mobile) */
-button, a, input, select, textarea, .quiz-option, .flashcard-container {
+button, a, input, select, textarea, .quiz-option, .flashcard-container, .interactive-quiz-card {
   touch-action: manipulation;
+}
+
+/* Modal and Drawer Overscroll Containment (Prevents background pull-down bounce) */
+#mobile-menu-panel, #saved-drawer-panel, #search-modal {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Custom Scrollbar Utilities for Momentum Horizontal Carousels */
@@ -353,8 +369,15 @@ button, a, input, select, textarea, .quiz-option, .flashcard-container {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   border-collapse: collapse;
-  margin: 1.75rem 0;
+  margin: 1.5rem 0;
   border-radius: 1rem;
+  scrollbar-width: thin;
+}
+
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .table-responsive-container {
@@ -388,8 +411,14 @@ button, a, input, select, textarea, .quiz-option, .flashcard-container {
   -webkit-backdrop-filter: blur(20px);
 }
 
-/* Drawer Smooth Slide */
-#mobile-menu-drawer.drawer-open > div {
-  transform: translateX(0);
+/* 3D Flashcard WebKit Optimizations */
+.flashcard-inner {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.flashcard-front, .flashcard-back {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
