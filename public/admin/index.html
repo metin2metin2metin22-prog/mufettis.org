@@ -108,6 +108,66 @@
       color: #7f1d1d;
     }
 
+    .preview-box .mufettis-success {
+      margin: 1.5rem 0;
+      padding: 1.25rem 1.5rem;
+      border-radius: 1rem;
+      border-left: 5px solid #10b981;
+      background-color: #06261b;
+      border-top: 1px solid #0d4a35;
+      border-right: 1px solid #0d4a35;
+      border-bottom: 1px solid #0d4a35;
+      color: #d1fae5;
+    }
+    .preview-light .preview-box .mufettis-success {
+      background-color: #ecfdf5;
+      border-left-color: #10b981;
+      border-color: #a7f3d0;
+      color: #064e3b;
+    }
+
+    .preview-box .mufettis-box {
+      margin: 1.75rem 0;
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 2px solid #1e3a5f;
+      background-color: #0b1a2d;
+    }
+    .preview-light .preview-box .mufettis-box {
+      background-color: #ffffff;
+      border-color: #cbd5e1;
+    }
+    .preview-box .mufettis-box-header {
+      background: linear-gradient(90deg, #0b2b46 0%, #103a60 50%, #071d30 100%);
+      color: #ffffff;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #163e66;
+    }
+    .preview-box .mufettis-box-body {
+      padding: 1.25rem;
+      color: #f1f5f9;
+    }
+    .preview-light .preview-box .mufettis-box-body {
+      color: #0f172a;
+    }
+
+    .preview-box .mufettis-mark, .preview-box mark {
+      background-color: #ca8a04;
+      color: #fef08a;
+      padding: 0.15rem 0.4rem;
+      border-radius: 0.375rem;
+      font-weight: 700;
+      border-bottom: 2px solid #eab308;
+    }
+    .preview-light .preview-box .mufettis-mark, .preview-light .preview-box mark {
+      background-color: #fef08a;
+      color: #713f12;
+      border-bottom-color: #ca8a04;
+    }
+
     .preview-box .interactive-quiz-card {
       margin: 2rem 0;
       padding: 1.5rem;
@@ -465,77 +525,169 @@
             </div>
           </div>
 
-          <!-- Kapak Görseli ve Hızlı Varlık Seçimi -->
-          <div>
-            <label class="block text-[11px] font-bold text-slate-400 mb-1">
-              Kapak Görseli URL:
-            </label>
-            <div class="flex gap-2">
+          <!-- Kapak Görseli ve Masaüstünden Kolay Yükleyici -->
+          <div class="space-y-2">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-black uppercase tracking-wider text-slate-300">
+                Kapak Görseli:
+              </label>
+              <button type="button" id="toggle-url-cover" class="text-[10.5px] text-sky-400 hover:text-sky-300 font-bold transition-colors">
+                URL ile girmek istiyorum ▾
+              </button>
+            </div>
+
+            <!-- 1. Masaüstünden Sürükle-Bırak / Dosya Seçici Kutusu -->
+            <div id="cover-dropzone" class="relative group border-2 border-dashed border-slate-700 hover:border-sky-400 bg-slate-900/60 hover:bg-slate-900 rounded-2xl p-4 text-center cursor-pointer transition-all">
+              <input type="file" id="cover-file-input" accept="image/png,image/jpeg,image/webp,image/gif" class="hidden">
+              
+              <div id="dropzone-empty" class="flex flex-col items-center justify-center py-2 space-y-2">
+                <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </div>
+                <div>
+                  <span class="text-xs font-bold text-white block">Masaüstünden veya Galeriden Kapak Resmi Seçin</span>
+                  <span class="text-[10.5px] text-slate-400">veya görseli buraya sürükleyip bırakın (PNG, JPG, WebP)</span>
+                </div>
+                <span class="inline-block px-3 py-1.5 rounded-xl bg-sky-500/20 text-sky-300 text-xs font-bold border border-sky-500/40">
+                  Dosya Seç
+                </span>
+              </div>
+
+              <!-- Aktif Yüklenen Resim Bilgi Kartı -->
+              <div id="dropzone-active" class="hidden flex items-center justify-between gap-3 p-1">
+                <div class="flex items-center gap-3 min-w-0">
+                  <img id="cover-thumb-preview" src="" alt="Thumbnail" class="w-16 h-12 rounded-xl object-cover border border-slate-700 shadow" />
+                  <div class="text-left min-w-0">
+                    <p id="cover-file-name" class="text-xs font-bold text-white truncate max-w-[200px] sm:max-w-xs">resim.jpg</p>
+                    <p id="cover-upload-status" class="text-[10.5px] text-emerald-400 font-medium">✓ Hazır</p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <button type="button" id="btn-change-cover" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold">
+                    Değiştir
+                  </button>
+                  <button type="button" id="btn-remove-cover" class="p-1.5 rounded-lg bg-rose-950/40 hover:bg-rose-900/60 text-rose-400 text-xs">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Gizlenebilir URL ve Hazır Varlık Bölümü -->
+            <div id="cover-url-wrap" class="hidden space-y-2 p-3 rounded-2xl bg-slate-900/40 border border-slate-800">
               <input 
                 id="post-image" 
                 type="text" 
                 placeholder="/assets/categories/spl-sermaye-piyasasi.jpg" 
-                class="flex-grow px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-white text-xs font-mono outline-none focus:border-sky-400"
+                class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-white text-xs font-mono outline-none focus:border-sky-400"
               />
-            </div>
-            <!-- Hızlı Hazır Asetler Butonları -->
-            <div class="flex flex-wrap items-center gap-1.5 mt-2 text-[10.5px]">
-              <span class="text-slate-500 font-bold">Hazır Kurumsal Varlıklar:</span>
-              <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 font-medium" data-img="/assets/categories/spl-sermaye-piyasasi.jpg">SPL Borsa Ekranı</button>
-              <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-emerald-300 font-medium" data-img="/assets/categories/masak-uyum-denetim.jpg">MASAK Adli Denetim</button>
-              <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 font-medium" data-img="/assets/categories/cia-ic-denetim.jpg">CIA Yönetim Kurulu</button>
-              <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 font-medium" data-img="/assets/categories/banka-mufettisligi.jpg">Banka Teftiş Sütunları</button>
+              <div class="flex flex-wrap items-center gap-1.5 text-[10.5px]">
+                <span class="text-slate-500 font-bold">Hazır Varlıklar:</span>
+                <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-sky-300 font-medium" data-img="/assets/categories/spl-sermaye-piyasasi.jpg">SPL Borsa</button>
+                <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-emerald-300 font-medium" data-img="/assets/categories/masak-uyum-denetim.jpg">MASAK Adli</button>
+                <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-amber-300 font-medium" data-img="/assets/categories/cia-ic-denetim.jpg">CIA Teftiş</button>
+                <button type="button" class="quick-img-btn px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 font-medium" data-img="/assets/categories/banka-mufettisligi.jpg">Banka</button>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- WordPress'ten Üstün Özel İçerik ve Blok Araç Çubuğu -->
-        <div class="bg-[#0b1626] rounded-2xl p-3 border border-slate-800 space-y-2">
-          <div class="flex items-center justify-between">
-            <span class="text-[11px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-              <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              Özel Teftiş & Sınav Blokları (Tek Tıkla Ekle):
+        <!-- ============================================== -->
+        <!-- ÖZEL TEFTİŞ, VURGU VE SHORTCODE ARAÇ ÇUBUĞU    -->
+        <!-- ============================================== -->
+        <div class="bg-[#0b1626] rounded-2xl p-3.5 border border-slate-800 space-y-3 shadow-lg">
+          
+          <!-- Başlık ve İpucu -->
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+            <span class="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>Özel Teftiş Blokları & Dikkat Noktaları (Shortcode):</span>
             </span>
-            <span class="text-[10px] text-slate-500">İmlecin olduğu yere ekler</span>
+            <span class="text-[10.5px] text-slate-400 font-medium">Metni seçip tıklayabilir veya boş ekleyebilirsiniz</span>
           </div>
 
-          <div class="flex flex-wrap gap-1.5">
-            <button type="button" id="insert-note" class="px-2.5 py-1 rounded-lg bg-sky-950/80 hover:bg-sky-900 border border-sky-500/40 text-sky-300 text-xs font-bold transition-all flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              + Müfettiş Notu
+          <!-- 1. Satır: Renkli Dikkat & Teftiş Kutuları -->
+          <div class="flex flex-wrap items-center gap-1.5">
+            <button type="button" id="btn-insert-service" class="px-2.5 py-1.5 rounded-xl bg-amber-950/70 hover:bg-amber-900/80 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Altın Hafıza Çivisi & Püf Noktası (Sarı/Altın Renkli Kutu)">
+              <span class="w-2 h-2 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50"></span>
+              <span>+ Altın Hafıza Çivisi</span>
             </button>
 
-            <button type="button" id="insert-service" class="px-2.5 py-1 rounded-lg bg-amber-950/80 hover:bg-amber-900 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-              + Hafıza Çivisi
+            <button type="button" id="btn-insert-warning" class="px-2.5 py-1.5 rounded-xl bg-rose-950/70 hover:bg-rose-900/80 border border-rose-500/40 text-rose-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Kritik Uyarı & Sınav Tuzağı (Kırmızı/Bordo Dikkat Kutusu)">
+              <span class="w-2 h-2 rounded-full bg-rose-400 shadow-sm shadow-rose-400/50"></span>
+              <span>+ Kritik Sınav Tuzağı</span>
             </button>
 
-            <button type="button" id="insert-quiz" class="px-2.5 py-1 rounded-lg bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 text-purple-300 text-xs font-bold transition-all flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              + Çözümlü Test Sorusu
+            <button type="button" id="btn-insert-note" class="px-2.5 py-1.5 rounded-xl bg-sky-950/70 hover:bg-sky-900/80 border border-sky-500/40 text-sky-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Müfettiş Notu & Mevzuat Özeti (Mavi Kutu)">
+              <span class="w-2 h-2 rounded-full bg-sky-400 shadow-sm shadow-sky-400/50"></span>
+              <span>+ Müfettiş Notu</span>
             </button>
 
-            <button type="button" id="insert-warning" class="px-2.5 py-1 rounded-lg bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-300 text-xs font-bold transition-all flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
-              + Dikkat / Uyarı
+            <button type="button" id="btn-insert-success" class="px-2.5 py-1.5 rounded-xl bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-500/40 text-emerald-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Mevzuat Çözümü & Doğru Cevap (Yeşil Kutu)">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/50"></span>
+              <span>+ Mevzuat Çözümü</span>
             </button>
 
-            <button type="button" id="insert-table" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold transition-all flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              + Karşılaştırma Tablosu
+            <button type="button" id="btn-insert-box" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Başlıklı Kurumsal İnceleme Paneli">
+              <span>📋</span>
+              <span>+ İnceleme Paneli</span>
+            </button>
+
+            <button type="button" id="btn-insert-quiz" class="px-2.5 py-1.5 rounded-xl bg-purple-950/70 hover:bg-purple-900/80 border border-purple-500/40 text-purple-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="İnteraktif 4 Şıklı Test Sorusu">
+              <span>🟣</span>
+              <span>+ Çözümlü Test Sorusu</span>
             </button>
           </div>
 
-          <!-- Standart Biçimlendirme Araçları -->
-          <div class="flex flex-wrap items-center gap-1 pt-2 border-t border-slate-800/80 text-xs">
+          <!-- 2. Satır: Fosforlu Vurgu Kalemleri, Resim ve Standart Biçimlendirme -->
+          <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-800/80 text-xs">
+            <!-- Vurgu Kalemleri -->
+            <button type="button" id="btn-mark-yellow" class="px-2 py-1 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 font-bold flex items-center gap-1" title="Seçili metni fosforlu sarı ile vurgula">
+              <span>🖍️</span>
+              <span>Sarı Fosfor</span>
+            </button>
+
+            <button type="button" id="btn-mark-green" class="px-2 py-1 rounded-lg bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-300 border border-emerald-400/40 font-bold flex items-center gap-1" title="Seçili metni yeşil ile vurgula">
+              <span>🟩</span>
+              <span>Yeşil Vurgu</span>
+            </button>
+
+            <button type="button" id="btn-mark-blue" class="px-2 py-1 rounded-lg bg-sky-400/20 hover:bg-sky-400/30 text-sky-300 border border-sky-400/40 font-bold flex items-center gap-1" title="Seçili metni mavi ile vurgula">
+              <span>🟦</span>
+              <span>Mavi Vurgu</span>
+            </button>
+
+            <button type="button" id="btn-mark-red" class="px-2 py-1 rounded-lg bg-rose-400/20 hover:bg-rose-400/30 text-rose-300 border border-rose-400/40 font-bold flex items-center gap-1" title="Seçili metni kırmızı ile vurgula">
+              <span>🟥</span>
+              <span>Kırmızı Vurgu</span>
+            </button>
+
+            <span class="w-px h-4 bg-slate-800 mx-1"></span>
+
+            <!-- Yazı İçi Masaüstü Resim Ekleme Düğmesi -->
+            <input type="file" id="body-file-input" accept="image/*" class="hidden">
+            <button type="button" id="btn-insert-body-img" class="px-2.5 py-1 rounded-lg bg-teal-950/70 hover:bg-teal-900 border border-teal-500/40 text-teal-300 font-bold flex items-center gap-1" title="Masaüstünden resim seçip yazı içine doğrudan ekler">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span>+ Yazı İçi Resim</span>
+            </button>
+
+            <button type="button" id="btn-insert-table" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold flex items-center gap-1" title="Karşılaştırma Tablosu Ekle">
+              <span>📊 Tablo</span>
+            </button>
+
+            <button type="button" id="btn-insert-quote" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold flex items-center gap-1" title="Kanun / Mevzuat Maddesi Alıntısı">
+              <span>⚖️ Kanun Maddesi</span>
+            </button>
+
+            <span class="w-px h-4 bg-slate-800 mx-1"></span>
+
+            <!-- Markdown Araçları -->
             <button type="button" classfmt="**" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Kalın">B</button>
             <button type="button" classfmt="*" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 italic font-serif" title="İtalik">I</button>
             <button type="button" classfmt="## " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="H2 Başlık">H2</button>
             <button type="button" classfmt="### " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="H3 Başlık">H3</button>
-            <button type="button" classfmt="> " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Alıntı">Alıntı</button>
-            <button type="button" classfmt="- " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Liste">Liste</button>
+            <button type="button" classfmt="- " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Madde İmi">Liste</button>
             <button type="button" classfmt="[Bağlantı Metni](https://...)" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-sky-400 font-semibold" title="Link Ekle">Link</button>
-            <button type="button" classfmt="<mark class='mufettis-mark'>Vurgulanan Metin</mark>" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-amber-300 font-semibold" title="Fosforlu Vurgu">Fosforlu</button>
           </div>
         </div>
 
@@ -1065,57 +1217,364 @@
       el.addEventListener('input', renderPreview);
     });
 
-    // Formatting Toolbar Helpers
-    function insertAtCursor(before, after = '') {
+    // --- GITHUB GÖRSEL YÜKLEME MOTORU (BASE64 -> GITHUB API) ---
+    async function uploadImageToGitHub(file) {
+      const token = localStorage.getItem('mufettis_github_token');
+      if (!token) {
+        throw new Error('Görseli GitHub deposuna doğrudan yüklemek için önce GitHub ile giriş yapılmalıdır.');
+      }
+
+      // Convert file to Base64
+      const base64Data = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const res = reader.result;
+          const b64 = res.split(',')[1];
+          resolve(b64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+
+      const ext = file.name.split('.').pop() || 'jpg';
+      const cleanName = `${Date.now()}-${generateSlug(file.name.replace(/\.[^/.]+$/, ''))}.${ext}`;
+      const repo = "metin2metin2metin22-prog/mufettis.org";
+      const targetPath = `public/wp-content/uploads/2026/11/${cleanName}`;
+      const apiUrl = `https://api.github.com/repos/${repo}/contents/${targetPath}`;
+
+      const resp = await fetch(apiUrl, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/vnd.github.v3+json'
+        },
+        body: JSON.stringify({
+          message: `upload(media): ${cleanName} görseli yüklendi`,
+          content: base64Data,
+          branch: 'main'
+        })
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json();
+        throw new Error(err.message || 'Görsel GitHub\'a yüklenemedi.');
+      }
+
+      return `/wp-content/uploads/2026/11/${cleanName}`;
+    }
+
+    // --- KAPAK GÖRSELİ YÜKLEME VE SÜRÜKLE-BIRAK YÖNETİMİ ---
+    const coverDropzone = document.getElementById('cover-dropzone');
+    const coverFileInput = document.getElementById('cover-file-input');
+    const dropzoneEmpty = document.getElementById('dropzone-empty');
+    const dropzoneActive = document.getElementById('dropzone-active');
+    const coverThumbPreview = document.getElementById('cover-thumb-preview');
+    const coverFileName = document.getElementById('cover-file-name');
+    const coverUploadStatus = document.getElementById('cover-upload-status');
+    const btnRemoveCover = document.getElementById('btn-remove-cover');
+    const btnChangeCover = document.getElementById('btn-change-cover');
+    const toggleUrlCover = document.getElementById('toggle-url-cover');
+    const coverUrlWrap = document.getElementById('cover-url-wrap');
+
+    toggleUrlCover?.addEventListener('click', () => {
+      coverUrlWrap.classList.toggle('hidden');
+    });
+
+    coverDropzone?.addEventListener('click', (e) => {
+      if (e.target.closest('#btn-remove-cover') || e.target.closest('#btn-change-cover')) return;
+      coverFileInput.click();
+    });
+
+    btnChangeCover?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      coverFileInput.click();
+    });
+
+    btnRemoveCover?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      postImage.value = '';
+      coverFileInput.value = '';
+      dropzoneActive.classList.add('hidden');
+      dropzoneEmpty.classList.remove('hidden');
+      renderPreview();
+    });
+
+    coverDropzone?.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      coverDropzone.classList.add('border-sky-400', 'bg-slate-900');
+    });
+
+    coverDropzone?.addEventListener('dragleave', () => {
+      coverDropzone.classList.remove('border-sky-400', 'bg-slate-900');
+    });
+
+    coverDropzone?.addEventListener('drop', (e) => {
+      e.preventDefault();
+      coverDropzone.classList.remove('border-sky-400', 'bg-slate-900');
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+        handleCoverFile(e.dataTransfer.files[0]);
+      }
+    });
+
+    coverFileInput?.addEventListener('change', () => {
+      if (coverFileInput.files && coverFileInput.files[0]) {
+        handleCoverFile(coverFileInput.files[0]);
+      }
+    });
+
+    async function handleCoverFile(file) {
+      if (!file.type.startsWith('image/')) {
+        alert('Lütfen geçerli bir resim dosyası seçin (PNG, JPG, WebP).');
+        return;
+      }
+
+      // 1. Anında yerel önizleme göster
+      const localUrl = URL.createObjectURL(file);
+      coverThumbPreview.src = localUrl;
+      coverFileName.textContent = `${file.name} (${Math.round(file.size / 1024)} KB)`;
+      coverUploadStatus.innerHTML = '<span class="animate-spin inline-block mr-1">⌛</span> GitHub\'a yükleniyor...';
+      coverUploadStatus.className = 'text-[10.5px] text-amber-400 font-medium';
+      dropzoneEmpty.classList.add('hidden');
+      dropzoneActive.classList.remove('hidden');
+
+      // Önizlemeyi yerel görsel ile güncelle
+      postImage.value = localUrl;
+      renderPreview();
+
+      // 2. Arka planda GitHub'a yükle
+      try {
+        const ghUrl = await uploadImageToGitHub(file);
+        postImage.value = ghUrl;
+        coverUploadStatus.textContent = '✓ GitHub\'a Yüklendi';
+        coverUploadStatus.className = 'text-[10.5px] text-emerald-400 font-bold';
+        renderPreview();
+      } catch (err) {
+        coverUploadStatus.textContent = `Yükleme hatası: ${err.message}`;
+        coverUploadStatus.className = 'text-[10.5px] text-rose-400 font-medium';
+      }
+    }
+
+    // --- YAZI İÇİNE MASAÜSTÜNDEN RESİM EKLEME DÜĞMESİ ---
+    const btnInsertBodyImg = document.getElementById('btn-insert-body-img');
+    const bodyFileInput = document.getElementById('body-file-input');
+
+    btnInsertBodyImg?.addEventListener('click', () => {
+      bodyFileInput.click();
+    });
+
+    bodyFileInput?.addEventListener('change', async () => {
+      if (bodyFileInput.files && bodyFileInput.files[0]) {
+        const file = bodyFileInput.files[0];
+        btnInsertBodyImg.disabled = true;
+        const originalText = btnInsertBodyImg.innerHTML;
+        btnInsertBodyImg.innerHTML = '<span class="animate-spin inline-block mr-1">⌛</span> Yükleniyor...';
+        try {
+          const ghUrl = await uploadImageToGitHub(file);
+          const cleanDesc = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+          wrapOrInsert(`\n\n![${cleanDesc}](${ghUrl})\n<p class="text-xs text-center text-slate-400 italic mt-1">Görsel: ${cleanDesc}</p>\n\n`, '', '');
+        } catch (err) {
+          alert(`Görsel yüklenemedi: ${err.message}`);
+        } finally {
+          btnInsertBodyImg.disabled = false;
+          btnInsertBodyImg.innerHTML = originalText;
+          bodyFileInput.value = '';
+        }
+      }
+    });
+
+    // --- METİN İÇİNE EKLEME VE SARMA (WRAP OR INSERT) YARDIMCISI ---
+    function wrapOrInsert(before, after = '', defaultText = '') {
       const start = postContent.selectionStart;
       const end = postContent.selectionEnd;
       const val = postContent.value;
       const selected = val.substring(start, end);
-      postContent.value = val.substring(0, start) + before + selected + after + val.substring(end);
+      const textToWrap = selected || defaultText;
+      const insertion = before + textToWrap + after;
+      postContent.value = val.substring(0, start) + insertion + val.substring(end);
       postContent.focus();
-      postContent.setSelectionRange(start + before.length, end + before.length);
+      postContent.setSelectionRange(start + before.length, start + before.length + textToWrap.length);
       renderPreview();
     }
 
+    function insertAtCursor(before, after = '') {
+      wrapOrInsert(before, after, '');
+    }
+
+    // Standart Markdown Biçimlendirme Düğmeleri
     document.querySelectorAll('.fmt-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const fmt = btn.getAttribute('classfmt');
-        insertAtCursor(fmt, fmt);
+        wrapOrInsert(fmt, fmt, 'metin');
       });
     });
 
     document.querySelectorAll('.fmt-prefix-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const fmt = btn.getAttribute('classfmt');
-        insertAtCursor('\n' + fmt);
+        wrapOrInsert('\n' + fmt, '', 'Başlık');
       });
     });
 
-    // Custom Editorial Snippets
-    document.getElementById('insert-note').addEventListener('click', () => {
-      const template = `\n<div class="mufettis-note">\n  <div class="flex items-start gap-3">\n    <div class="font-bold text-sky-400">Sınav Notu:</div>\n    <div>Buraya SPK / Banka mevzuatında adayların en çok karıştırdığı kritik noktayı yazın...</div>\n  </div>\n</div>\n`;
-      insertAtCursor(template);
+    // --- ÖZEL TEFTİŞ VE SHORTCODE BUTONLARI ---
+    document.getElementById('btn-insert-service')?.addEventListener('click', () => {
+      wrapOrInsert('\n:::hafiza\n', '\n:::\n', 'Hafıza Çivisi & Altın Kural: Sınavda bu kavram ile diğeri arasındaki temel ayrım teslim ve ifa zamanlamasıdır.');
     });
 
-    document.getElementById('insert-service').addEventListener('click', () => {
-      const template = `\n<div class="mufettis-service">\n  <h4 class="font-black text-amber-300 text-sm mb-1">Hafıza Çivisi & Püf Noktası:</h4>\n  <p>Sınavda bu kavram ile diğeri arasındaki temel ayrım teslim ve ifa zamanlamasıdır.</p>\n</div>\n`;
-      insertAtCursor(template);
+    document.getElementById('btn-insert-warning')?.addEventListener('click', () => {
+      wrapOrInsert('\n:::dikkat\n', '\n:::\n', 'DİKKAT - Sınav Tuzağı: 5549 Sayılı Kanun 13. maddesi uyarınca bildirim süresi gecikirse idari para cezası uygulanır!');
     });
 
-    document.getElementById('insert-warning').addEventListener('click', () => {
-      const template = `\n<div class="mufettis-warning">\n  <div class="font-bold text-rose-400 mb-1">Dikkat - Ceza & Sorumluluk Maddesi:</div>\n  <p>5549 Sayılı Kanun 13. maddesi uyarınca uyum görevlisinin bildirim süresi gecikirse idari para cezası uygulanır.</p>\n</div>\n`;
-      insertAtCursor(template);
+    document.getElementById('btn-insert-note')?.addEventListener('click', () => {
+      wrapOrInsert('\n:::not\n', '\n:::\n', 'Müfettiş Notu & Mevzuat Özeti: Bu bildirim süresi 10 iş günüdür ve teftiş raporuna doğrudan intikal ettirilir.');
     });
 
-    document.getElementById('insert-quiz').addEventListener('click', () => {
-      const template = `\n<div class="interactive-quiz-card">\n  <p class="font-bold text-white mb-3">Soru: Aşağıdakilerden hangisi organize vadeli piyasaların özelliklerinden biridir?</p>\n  <ul class="space-y-1.5 text-xs text-slate-300 mb-4">\n    <li><strong>A)</strong> Tezgahüstü piyasada işlem görmesi</li>\n    <li><strong>B)</strong> Standart sözleşmeler ve Takasbank teminat sistemi</li>\n    <li><strong>C)</strong> Karşı taraf riskinin yüksek olması</li>\n    <li><strong>D)</strong> Esnek vade yapısına sahip olması</li>\n  </ul>\n  <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs">\n    <strong>Doğru Cevap: B</strong> — Borsa İstanbul VİOP bünyesinde işlemler merkezi karşı taraf güvencesiyle yürütülür.\n  </div>\n</div>\n`;
-      insertAtCursor(template);
+    document.getElementById('btn-insert-success')?.addEventListener('click', () => {
+      wrapOrInsert('\n:::basari\n', '\n:::\n', 'Mevzuat Çözümü & Doğru Cevap: SPKn Madde 102 uyarınca doğru işlem şekli Borsa İstanbul Takasbank güvencesindedir.');
     });
 
-    document.getElementById('insert-table').addEventListener('click', () => {
+    document.getElementById('btn-insert-box')?.addEventListener('click', () => {
+      wrapOrInsert('\n:::kutu[2026 Mevzuat İnceleme Raporu]\n', '\n:::\n', 'Buraya denetim bulgularını ve mevzuat karşılaştırma maddelerini ekleyin.');
+    });
+
+    document.getElementById('btn-insert-quiz')?.addEventListener('click', () => {
+      const template = `\n<div class="interactive-quiz-card">\n  <p class="font-bold text-white mb-2">Soru: Aşağıdakilerden hangisi organize vadeli piyasaların özelliklerinden biridir?</p>\n  <ul class="space-y-1 text-slate-300 text-xs mb-3">\n    <li><strong>A)</strong> Tezgahüstü piyasada işlem görmesi</li>\n    <li><strong>B)</strong> Standart sözleşmeler ve Takasbank teminat sistemi</li>\n    <li><strong>C)</strong> Karşı taraf riskinin yüksek olması</li>\n    <li><strong>D)</strong> Esnek vade yapısına sahip olması</li>\n  </ul>\n  <div class="p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs">\n    <strong>Doğru Cevap: B</strong> — Borsa İstanbul VİOP bünyesinde işlemler merkezi karşı taraf güvencesiyle yürütülür.\n  </div>\n</div>\n`;
+      wrapOrInsert('', '', template);
+    });
+
+    document.getElementById('btn-insert-table')?.addEventListener('click', () => {
       const template = `\n| İnceleme Kriteri | Spot Piyasa | Vadeli Piyasa (VİOP) |\n| :--- | :--- | :--- |\n| **İşlem Zamanlaması** | T+2 Teslimat | Gelecekteki Vade Tarihi |\n| **Teminat Mekanizması** | Nakit / Takas | Başlangıç ve Sürdürme Teminatı |\n| **Kaldıraç Etkisi** | Yok (1x) | Mevcut (3x - 10x) |\n`;
-      insertAtCursor(template);
+      wrapOrInsert('', '', template);
     });
+
+    document.getElementById('btn-insert-quote')?.addEventListener('click', () => {
+      wrapOrInsert('\n> **Kanun Maddesi:**\n> ', '\n', '5549 Sayılı Kanun Madde 4 uyarınca yükümlüler şüpheli işlemleri gecikmeksizin bildirmekle yükümlüdür.');
+    });
+
+    // Fosforlu Renk Vurgu Kalemleri
+    document.getElementById('btn-mark-yellow')?.addEventListener('click', () => {
+      wrapOrInsert('==', '==', 'vurgulanacak metin');
+    });
+
+    document.getElementById('btn-mark-green')?.addEventListener('click', () => {
+      wrapOrInsert('[yesil-vurgu]', '[/yesil-vurgu]', 'yeşil vurgu');
+    });
+
+    document.getElementById('btn-mark-blue')?.addEventListener('click', () => {
+      wrapOrInsert('[mavi-vurgu]', '[/mavi-vurgu]', 'mavi vurgu');
+    });
+
+    document.getElementById('btn-mark-red')?.addEventListener('click', () => {
+      wrapOrInsert('[kirmizi-vurgu]', '[/kirmizi-vurgu]', 'kritik vurgu');
+    });
+
+
+    // --- SHORTCODE PARSER (CANLI ÖNİZLEME MOTORU İÇİN) ---
+    function parseEditorialShortcodes(rawText) {
+      if (!rawText) return '';
+      let out = rawText;
+
+      // 1. ==highlight== -> <mark class="mufettis-mark">$1</mark>
+      out = out.replace(/==([^=\n]+)==/g, '<mark class="mufettis-mark">$1</mark>');
+      out = out.replace(/\[vurgu\]([\s\S]*?)\[\/vurgu\]/gi, '<mark class="mufettis-mark">$1</mark>');
+
+      // 2. Renkli Satır İçi Vurgular
+      out = out.replace(/\[yesil-vurgu\]([\s\S]*?)\[\/yesil-vurgu\]/gi, '<span class="inline-block px-1.5 py-0.5 rounded font-bold bg-emerald-950 text-emerald-300 border border-emerald-700/60">$1</span>');
+      out = out.replace(/\[mavi-vurgu\]([\s\S]*?)\[\/mavi-vurgu\]/gi, '<span class="inline-block px-1.5 py-0.5 rounded font-bold bg-sky-950 text-sky-300 border border-sky-700/60">$1</span>');
+      out = out.replace(/\[kirmizi-vurgu\]([\s\S]*?)\[\/kirmizi-vurgu\]/gi, '<span class="inline-block px-1.5 py-0.5 rounded font-bold bg-rose-950 text-rose-300 border border-rose-700/60">$1</span>');
+
+      // 3. [not]...[/not] and :::not ... :::
+      out = out.replace(/\[not\]([\s\S]*?)\[\/not\]/gi, (_m, c) => `
+<div class="mufettis-note my-5">
+  <div class="font-bold text-sky-400 mb-1 flex items-center gap-1.5">
+    <svg class="w-4 h-4 inline-block text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span>Müfettiş Notu & Mevzuat Özeti:</span>
+  </div>
+  <div class="text-slate-200">${c.trim()}</div>
+</div>`);
+      out = out.replace(/:::not\n?([\s\S]*?)\n?:::/gi, (_m, c) => `
+<div class="mufettis-note my-5">
+  <div class="font-bold text-sky-400 mb-1 flex items-center gap-1.5">
+    <svg class="w-4 h-4 inline-block text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span>Müfettiş Notu & Mevzuat Özeti:</span>
+  </div>
+  <div class="text-slate-200">${c.trim()}</div>
+</div>`);
+
+      // 4. [dikkat] or [uyari] or :::dikkat or :::uyari
+      out = out.replace(/\[(?:dikkat|uyari)\]([\s\S]*?)\[\/(?:dikkat|uyari)\]/gi, (_m, c) => `
+<div class="mufettis-warning my-5">
+  <div class="font-bold text-rose-400 mb-1 flex items-center gap-1.5">
+    <svg class="w-4 h-4 inline-block text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+    <span>DİKKAT - Sınav Tuzağı & Hukuki Sorumluluk:</span>
+  </div>
+  <div class="text-rose-100">${c.trim()}</div>
+</div>`);
+      out = out.replace(/:::(?:dikkat|uyari)\n?([\s\S]*?)\n?:::/gi, (_m, c) => `
+<div class="mufettis-warning my-5">
+  <div class="font-bold text-rose-400 mb-1 flex items-center gap-1.5">
+    <svg class="w-4 h-4 inline-block text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+    <span>DİKKAT - Sınav Tuzağı & Hukuki Sorumluluk:</span>
+  </div>
+  <div class="text-rose-100">${c.trim()}</div>
+</div>`);
+
+      // 5. [hafiza] or [puf] or :::hafiza or :::puf
+      out = out.replace(/\[(?:hafiza|puf)\]([\s\S]*?)\[\/(?:hafiza|puf)\]/gi, (_m, c) => `
+<div class="mufettis-service my-5">
+  <h4 class="font-black text-amber-300 text-sm mb-1.5 flex items-center gap-1.5">
+    <svg class="w-4 h-4 inline-block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    <span>Hafıza Çivisi & Altın Kural:</span>
+  </h4>
+  <div class="text-amber-100">${c.trim()}</div>
+</div>`);
+      out = out.replace(/:::(?:hafiza|puf)\n?([\s\S]*?)\n?:::/gi, (_m, c) => `
+<div class="mufettis-service my-5">
+  <h4 class="font-black text-amber-300 text-sm mb-1.5 flex items-center gap-1.5">
+    <svg class="w-4 h-4 inline-block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+    <span>Hafıza Çivisi & Altın Kural:</span>
+  </h4>
+  <div class="text-amber-100">${c.trim()}</div>
+</div>`);
+
+      // 6. [basari] or :::basari
+      out = out.replace(/\[basari\]([\s\S]*?)\[\/basari\]/gi, (_m, c) => `
+<div class="mufettis-success my-5">
+  <div class="font-bold text-emerald-400 mb-1 flex items-center gap-1.5">
+    <svg class="w-4 h-4 inline-block text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span>Mevzuat Çözümü & Doğru Cevap:</span>
+  </div>
+  <div class="text-emerald-100">${c.trim()}</div>
+</div>`);
+      out = out.replace(/:::basari\n?([\s\S]*?)\n?:::/gi, (_m, c) => `
+<div class="mufettis-success my-5">
+  <div class="font-bold text-emerald-400 mb-1 flex items-center gap-1.5">
+    <svg class="w-4 h-4 inline-block text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span>Mevzuat Çözümü & Doğru Cevap:</span>
+  </div>
+  <div class="text-emerald-100">${c.trim()}</div>
+</div>`);
+
+      // 7. [kutu baslik="..."] or :::kutu[...]
+      out = out.replace(/\[kutu\s+baslik="([^"]+)"\]([\s\S]*?)\[\/kutu\]/gi, (_m, title, c) => `
+<div class="mufettis-box my-6">
+  <div class="mufettis-box-header">
+    <span class="font-bold text-sm text-white">${title}</span>
+    <span class="text-xs text-sky-300 font-mono">İnceleme Raporu</span>
+  </div>
+  <div class="mufettis-box-body">${c.trim()}</div>
+</div>`);
+      out = out.replace(/:::kutu\[([^\]]+)\]\n?([\s\S]*?)\n?:::/gi, (_m, title, c) => `
+<div class="mufettis-box my-6">
+  <div class="mufettis-box-header">
+    <span class="font-bold text-sm text-white">${title}</span>
+    <span class="text-xs text-sky-300 font-mono">İnceleme Raporu</span>
+  </div>
+  <div class="mufettis-box-body">${c.trim()}</div>
+</div>`);
+
+      return out;
+    }
 
 
     // --- C. RENDER VE ÖNİZLEME MOTORU ---
@@ -1160,10 +1619,14 @@
       previewReadTime.textContent = `${mins} dk okuma`;
       descCharCount.textContent = `${desc.length} / 160 karakter`;
 
-      // Render Markdown / HTML safely
+      // Render Markdown / HTML safely with shortcodes processed
       if (content.trim()) {
-        const rawHtml = marked.parse(content);
-        const cleanHtml = DOMPurify.sanitize(rawHtml, { ADD_TAGS: ['mark', 'svg', 'path'] });
+        const parsedShortcodes = parseEditorialShortcodes(content);
+        const rawHtml = marked.parse(parsedShortcodes);
+        const cleanHtml = DOMPurify.sanitize(rawHtml, { 
+          ADD_TAGS: ['mark', 'svg', 'path', 'details', 'summary'],
+          ADD_ATTR: ['class', 'style', 'target', 'viewBox', 'fill', 'stroke', 'stroke-width', 'stroke-linecap', 'stroke-linejoin', 'd']
+        });
         previewBody.innerHTML = cleanHtml;
       } else {
         previewBody.innerHTML = '<p class="text-slate-500 italic">Yazmaya başladığınızda makalenizin mufettis.org üzerindeki birebir görünümü burada anlık olarak canlanacaktır...</p>';
@@ -1250,6 +1713,16 @@
           postKeyword.value = data.keyword || '';
           postContent.value = data.content || '';
           if (data.slug) isSlugManual = true;
+
+          // Sync cover preview card if image was saved
+          if (data.image) {
+            coverThumbPreview.src = data.image;
+            coverFileName.textContent = data.image.split('/').pop() || 'Kapak Görseli';
+            coverUploadStatus.textContent = '✓ Kayıtlı Görsel';
+            coverUploadStatus.className = 'text-[10.5px] text-emerald-400 font-bold';
+            dropzoneEmpty.classList.add('hidden');
+            dropzoneActive.classList.remove('hidden');
+          }
         } catch (e) {}
       }
     }
@@ -1265,6 +1738,9 @@
         postKeyword.value = '';
         postContent.value = '';
         isSlugManual = false;
+        dropzoneActive.classList.add('hidden');
+        dropzoneEmpty.classList.remove('hidden');
+        if (coverFileInput) coverFileInput.value = '';
         renderPreview();
       }
     });
