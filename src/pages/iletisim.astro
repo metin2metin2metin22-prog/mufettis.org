@@ -9,18 +9,30 @@ import Layout from '../layouts/Layout.astro';
   <!-- ======================================================== -->
   <!-- HERO / PAGE HEADER                                       -->
   <!-- ======================================================== -->
-  <section class="relative pt-10 sm:pt-14 pb-10 overflow-hidden bg-gradient-to-b from-[#081524] via-[#050f1b] to-transparent border-b border-slate-200 dark:border-slate-800/80">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="relative pt-12 sm:pt-16 pb-12 sm:pb-16 overflow-hidden bg-gradient-to-b from-[#07192a] via-[#092237] to-[#05111d] border-b border-brand-900/80 text-white">
+    <!-- Ambient Glow & Accents -->
+    <div class="absolute right-0 top-0 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute left-1/4 -bottom-10 w-72 h-72 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-slate-400 mb-5">
+        <a href="/" class="hover:text-white transition-colors">Anasayfa</a>
+        <span>/</span>
+        <span class="text-white font-bold">İletişim & Bize Ulaşın</span>
+      </nav>
+
       <div class="max-w-3xl">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20 text-xs font-black uppercase tracking-wider mb-3">
-          <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/15 text-sky-300 border border-sky-400/30 text-xs font-black uppercase tracking-wider mb-4 shadow-sm backdrop-blur-xs">
+          <svg class="w-3.5 h-3.5 text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
           <span>Müfettiş.org Kurumsal İletişim</span>
         </div>
 
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
           Bize Ulaşın & Geri Bildirim
         </h1>
-        <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+        <p class="mt-4 text-sm sm:text-base text-slate-300 leading-relaxed font-normal">
           Banka Teftiş Kurulları, Sermaye Piyasası Lisanslama (SPL), MASAK mevzuatı ve İç Denetim (CIA) süreçlerine ilişkin her türlü soru, mevzuat düzeltmesi, sınav sorusu bildirimi veya iş birliği talebinizi doğrudan editoryal kurulumuza iletebilirsiniz.
         </p>
       </div>
