@@ -2,18 +2,73 @@
 import Layout from '../layouts/Layout.astro';
 import { getAllPosts } from '../utils/posts';
 import '../styles/components.css';
+import { balanceHtml } from '../utils/balanceHtml';
 
 export async function getStaticPaths() {
   const posts = getAllPosts();
-  return posts
+  const paths: any[] = [];
+  const seenSlugs = new Set();
+
+  posts
     .filter(post => post.slug !== 'iletisim')
-    .map(post => ({
-      params: { slug: post.slug },
-      props: { post }
-    }));
+    .forEach(post => {
+      // 1. Original slug
+      if (!seenSlugs.has(post.slug)) {
+        seenSlugs.add(post.slug);
+        paths.push({
+          params: { slug: post.slug },
+          props: { post }
+        });
+      }
+
+      // 2. Decoded slug (ensures server-decoded URLs like %e2%85%b0 match flawlessly)
+      const decodedSlug = decodeURIComponent(post.slug);
+      if (decodedSlug !== post.slug && !seenSlugs.has(decodedSlug)) {
+        seenSlugs.add(decodedSlug);
+        paths.push({
+          params: { slug: decodedSlug },
+          props: { post }
+        });
+      }
+
+      // 3. Normalized Roman numeral aliases for CIA Part 1 tests to ensure 100% link reliability
+      if (post.slug.includes('%e2%85%b0%e2%85%b0%e2%85%b0')) {
+        const aliases = [
+          'cia-part-1-deneme-sorulari-20-soru-cozumlu-ve-aciklamali-test-3',
+          'cia-part-1-deneme-sorulari-20-soru-cozumlu-ve-aciklamali-test-iii'
+        ];
+        aliases.forEach(alias => {
+          if (!seenSlugs.has(alias)) {
+            seenSlugs.add(alias);
+            paths.push({
+              params: { slug: alias },
+              props: { post }
+            });
+          }
+        });
+      }
+      if (post.slug.includes('%e2%85%b0-blogunu-sec')) {
+        const aliases = [
+          'cia-part-1-deneme-sorulari-20-soru-cozumlu-ve-aciklamali-test-2',
+          'cia-part-1-deneme-sorulari-20-soru-cozumlu-ve-aciklamali-test-ii'
+        ];
+        aliases.forEach(alias => {
+          if (!seenSlugs.has(alias)) {
+            seenSlugs.add(alias);
+            paths.push({
+              params: { slug: alias },
+              props: { post }
+            });
+          }
+        });
+      }
+    });
+
+  return paths;
 }
 
 const { post } = Astro.props;
+const articleContent = balanceHtml(post.content);
 const posts = getAllPosts();
 
 // Related posts & Next/Prev navigation
@@ -150,7 +205,10 @@ const schemaArticle = {
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
       
       <!-- Main Content (8 Cols) -->
-      <article class="lg:col-span-8">
+      
+
+
+<article class="lg:col-span-8 min-w-0">
         
         <!-- Post Header -->
         <header class="mb-7">
@@ -257,7 +315,7 @@ const schemaArticle = {
           id="article-body" 
           class="prose prose-slate dark:prose-invert max-w-none text-base sm:text-[17px] leading-[1.85] text-slate-800 dark:text-slate-200 prose-headings:font-black prose-headings:tracking-tight prose-headings:text-slate-900 dark:prose-headings:text-white prose-h2:text-2xl sm:prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-5 prose-h3:text-xl prose-a:text-brand-600 dark:prose-a:text-sky-400 prose-a:font-bold hover:prose-a:underline prose-img:rounded-3xl prose-img:shadow-lg prose-table:border-collapse prose-table:border prose-table:border-slate-300 dark:prose-table:border-slate-700 prose-th:bg-slate-100 dark:prose-th:bg-slate-800 prose-th:p-3 prose-td:p-3"
         >
-          <div set:html={post.content} />
+          <div set:html={articleContent} />
         </div>
 
         <!-- EXAM KARNE / SCORE SUMMARY CARD (Only shows if questions exist) -->
@@ -432,7 +490,7 @@ const schemaArticle = {
       </article>
 
       <!-- Right Column: Sticky Sidebar (4 Cols) -->
-      <aside class="lg:col-span-4 space-y-8">
+      <aside class="lg:col-span-4 min-w-0 space-y-8">
         
         <!-- Table of Contents Widget (Auto-Generated with Scroll Spy) -->
         <div id="toc-card" class="hidden bg-white dark:bg-[#0c1827] rounded-3xl p-6 border-2 border-slate-200 dark:border-slate-800 shadow-sm sticky top-24">
@@ -1047,7 +1105,8 @@ const schemaArticle = {
     const tocList = document.getElementById('toc-list');
 
     if (articleBody && tocCard && tocList) {
-      const headings = articleBody.querySelectorAll('h2, h3');
+      const allHeadings = Array.from(articleBody.querySelectorAll('h2, h3'));
+      const headings = allHeadings.filter(h => !h.closest('.interactive-quiz-card'));
       if (headings.length >= 2) {
         tocCard.classList.remove('hidden');
         
@@ -1201,6 +1260,7 @@ const schemaArticle = {
     });
 
     // 7. Auto-wrap Tables for Smooth Mobile Horizontal Scrolling
+    
     document.querySelectorAll('#article-body table').forEach((table) => {
       if (!table.parentElement?.classList.contains('table-responsive-container')) {
         const wrapper = document.createElement('div');
