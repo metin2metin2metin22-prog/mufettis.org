@@ -295,7 +295,7 @@ html.dark .solution-card strong {
 
 /* 9. Clean Print Stylesheet */
 @media print {
-  header, footer, #floating-exam-hud, #toc-card, #search-modal, .toolbar-actions, #read-progress {
+  header, footer, #floating-exam-hud, #toc-card, #search-modal, .toolbar-actions, #read-progress, #mobile-bottom-dock {
     display: none !important;
   }
   body {
@@ -318,3 +318,78 @@ html.dark .solution-card strong {
     border: 1px solid #ccc !important;
   }
 }
+
+/* ======================================================== */
+/* 10. ELITE MOBILE-FIRST APP EXPERIENCE & ERGONOMICS       */
+/* ======================================================== */
+
+/* Safe Area Insets for iOS Home Indicator and Android Gestures */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Fast Tap & Touch Manipulation (Prevents 300ms double-tap delay on mobile) */
+button, a, input, select, textarea, .quiz-option, .flashcard-container {
+  touch-action: manipulation;
+}
+
+/* Custom Scrollbar Utilities for Momentum Horizontal Carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Responsive Table Wrapper for Mobile Screens */
+.prose table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-collapse: collapse;
+  margin: 1.75rem 0;
+  border-radius: 1rem;
+}
+
+.table-responsive-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: 1.75rem 0;
+  border-radius: 1rem;
+}
+
+.table-responsive-container table {
+  margin: 0 !important;
+}
+
+/* Mobile Quiz Card Option Polish (Min 48px Touch Target) */
+.quiz-option {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.quiz-option:active {
+  transform: scale(0.985);
+}
+
+/* Mobile Bottom Dock Glassmorphism */
+#mobile-bottom-dock {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Drawer Smooth Slide */
+#mobile-menu-drawer.drawer-open > div {
+  transform: translateX(0);
+}
+

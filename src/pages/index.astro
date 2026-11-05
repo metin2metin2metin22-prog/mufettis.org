@@ -66,7 +66,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
           </div>
           
           <!-- Editoryal Metin Bloğu (Yüksek Kontrast, Görsel Üstüne Çakışmayan Alan) -->
-          <div class="p-6 sm:p-7 flex flex-col justify-between flex-grow border-t border-slate-100 dark:border-slate-800">
+          <div class="p-4 sm:p-6 sm:p-7 flex flex-col justify-between flex-grow border-t border-slate-100 dark:border-slate-800">
             <div>
               <div class="flex items-center gap-2 mb-3">
                 <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-sm border border-emerald-200 dark:border-emerald-800/60">
@@ -159,28 +159,28 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
           </div>
         </div>
 
-        <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto">
-          <a href="/category/spl-ders-notlari/" class="px-3.5 py-2 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-800 hover:bg-sky-600 hover:text-white dark:hover:bg-sky-600 font-bold text-xs transition-colors flex items-center gap-1.5">
+        <div class="flex items-center gap-2 w-full lg:w-auto overflow-x-auto whitespace-nowrap no-scrollbar pb-1.5 pt-0.5 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+          <a href="/category/spl-ders-notlari/" class="shrink-0 px-3.5 py-2 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-800 hover:bg-sky-600 hover:text-white dark:hover:bg-sky-600 font-bold text-xs transition-colors flex items-center gap-1.5 active:scale-95">
             <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
             <span>SPL Lisanslama ({splPosts.length})</span>
           </a>
           
-          <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="px-3.5 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-600 font-bold text-xs transition-colors flex items-center gap-1.5">
+          <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="shrink-0 px-3.5 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-600 font-bold text-xs transition-colors flex items-center gap-1.5 active:scale-95">
             <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
             <span>MASAK Uyum ({masakPosts.length})</span>
           </a>
 
-          <a href="/category/cia-ders-notlari/" class="px-3.5 py-2 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 font-bold text-xs transition-colors flex items-center gap-1.5">
+          <a href="/category/cia-ders-notlari/" class="shrink-0 px-3.5 py-2 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 font-bold text-xs transition-colors flex items-center gap-1.5 active:scale-95">
             <svg class="w-3.5 h-3.5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
             <span>CIA Part 1 ({ciaPosts.length})</span>
           </a>
 
-          <a href="/category/denetim-kutuphanesi/" class="px-3.5 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-600 font-bold text-xs transition-colors flex items-center gap-1.5">
+          <a href="/category/denetim-kutuphanesi/" class="shrink-0 px-3.5 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-600 font-bold text-xs transition-colors flex items-center gap-1.5 active:scale-95">
             <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
             <span>Banka Denetimi ({bankaPosts.length})</span>
           </a>
 
-          <a href="/deneme-sinavlari/" class="px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all flex items-center gap-1.5 ml-auto">
+          <a href="/deneme-sinavlari/" class="shrink-0 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all flex items-center gap-1.5 ml-auto active:scale-95">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             <span>12+ Çözümlü Deneme</span>
           </a>
