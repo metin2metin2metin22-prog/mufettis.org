@@ -1410,31 +1410,73 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
           const saved = JSON.parse(localStorage.getItem('mufettis_saved_questions') || '[]');
           if (saved.length === 0) {
             savedList.innerHTML = `
-              <div class="text-center py-12 text-slate-400">
-                <svg class="w-10 h-10 mx-auto mb-3 text-amber-500/50" fill="currentColor" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                <p class="font-bold text-slate-700 dark:text-slate-300">Henüz kayıtlı soru yok.</p>
-                <p class="text-xs text-slate-500 mt-1">Sınav çözerken zorlandığınız soruların üstündeki "Kaydet" butonuna basarak buraya ekleyebilirsiniz.</p>
+              <div class="text-center py-12 px-4 text-slate-400">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500 shadow-sm">
+                  <svg class="w-8 h-8 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                </div>
+                <p class="font-extrabold text-sm sm:text-base text-slate-800 dark:text-slate-200">Henüz kayıtlı soru bulunmuyor.</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 max-w-xs mx-auto leading-relaxed">
+                  Deneme sınavlarında yanlış çözdüğünüz veya <strong class="text-amber-500">yıldızladığınız</strong> sorular burada toplanır; tek tıkla doğrudan o soruya odaklanarak tekrar çözebilirsiniz.
+                </p>
               </div>
             `;
             return;
           }
 
-          savedList.innerHTML = saved.map((item: any, idx: number) => `
-            <div class="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start justify-between gap-3 group">
-              <a href="${item.url}" class="flex-grow min-w-0">
-                <span class="text-[10px] font-bold text-amber-500 block mb-0.5">Soru Kaydı #${idx + 1}</span>
-                <h4 class="font-bold text-xs text-slate-800 dark:text-slate-200 group-hover:text-amber-500 line-clamp-2 transition-colors">
-                  ${item.title}
-                </h4>
-              </a>
-              <button type="button" class="delete-saved-item text-slate-400 hover:text-rose-500 p-1 cursor-pointer" data-idx="${idx}" title="Sil">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-              </button>
-            </div>
-          `).join('');
+          savedList.innerHTML = saved.map((item: any, idx: number) => {
+            const isWrong = (item.reason === 'wrong');
+            const qNum = item.qNum || (idx + 1);
+            const examTitle = item.examTitle || 'Deneme Sınavı';
+            const shortTitle = item.title || `Soru #${qNum}`;
+            const targetUrl = item.url || (item.path ? `${item.path}#${item.id || ('soru-' + qNum)}` : '#');
+            const targetPath = item.path || (item.url ? item.url.split('#')[0] : '');
+            const cardId = item.id || `soru-${qNum}`;
 
+            const badgeColor = isWrong 
+              ? 'bg-rose-50 text-rose-600 dark:bg-rose-950/60 dark:text-rose-300 border-rose-200 dark:border-rose-900/80' 
+              : 'bg-amber-50 text-amber-600 dark:bg-amber-950/60 dark:text-amber-300 border-amber-200 dark:border-amber-900/80';
+            const badgeLabel = isWrong ? '❌ Hatalı Çözüm' : '⭐ Kaydedilen';
+
+            return `
+              <div class="p-4 rounded-2xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500/60 transition-all duration-200 shadow-xs flex flex-col justify-between gap-3 group" data-card-id="${cardId}" data-target-path="${targetPath}">
+                <div>
+                  <div class="flex items-center justify-between gap-2 mb-2">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      <span class="px-2 py-0.5 rounded-md text-[10px] font-bold border ${badgeColor}">
+                        ${badgeLabel}
+                      </span>
+                      <span class="px-2 py-0.5 rounded-md text-[10px] font-black bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+                        Soru ${qNum}
+                      </span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                      <span class="text-[10px] text-slate-400 font-medium">${item.date || ''}</span>
+                      <button type="button" class="delete-saved-item text-slate-400 hover:text-rose-500 p-1 rounded-lg hover:bg-rose-50 dark:hover:bg-rose-950/40 cursor-pointer transition-colors" data-idx="${idx}" title="Bu soruyu defterden sil">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 block truncate mb-1">
+                    ${examTitle}
+                  </span>
+                  <h4 class="font-bold text-xs text-slate-900 dark:text-white line-clamp-2 leading-relaxed">
+                    ${shortTitle}
+                  </h4>
+                </div>
+
+                <a href="${targetUrl}" class="retry-question-link w-full py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all active:scale-[0.98]">
+                  <span>Soruyu Tekrar Çöz</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+                </a>
+              </div>
+            `;
+          }).join('');
+
+          // Bind delete buttons
           savedList.querySelectorAll('.delete-saved-item').forEach(b => {
             b.addEventListener('click', (e) => {
+              e.stopPropagation();
               const idx = parseInt((e.currentTarget as HTMLElement).getAttribute('data-idx') || '0', 10);
               const saved = JSON.parse(localStorage.getItem('mufettis_saved_questions') || '[]');
               saved.splice(idx, 1);
@@ -1443,6 +1485,25 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
               renderSavedQuestions();
             });
           });
+
+          // Bind retry links so they close the drawer and trigger smooth focus even on the same page
+          savedList.querySelectorAll('.retry-question-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+              closeSavedDrawer();
+              const href = (link as HTMLAnchorElement).getAttribute('href') || '';
+              const [path, hash] = href.split('#');
+              if (hash && (window.location.pathname === path || !path)) {
+                e.preventDefault();
+                if (window.location.hash !== '#' + hash) {
+                  window.location.hash = hash;
+                } else {
+                  // Trigger manually if hash hasn't changed
+                  window.dispatchEvent(new Event('hashchange'));
+                }
+              }
+            });
+          });
+
         } catch (e) {}
       }
 
@@ -1479,12 +1540,18 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
       savedOverlay?.addEventListener('click', closeSavedDrawer);
 
       clearSavedBtn?.addEventListener('click', () => {
-        if (confirm('Tüm kayıtlı soruları temizlemek istediğinize emin misiniz?')) {
+        if (confirm('Hata Defterinizdeki tüm kayıtlı soruları temizlemek istediğinize emin misiniz?')) {
           localStorage.removeItem('mufettis_saved_questions');
           updateSavedBadge();
           renderSavedQuestions();
         }
       });
+
+      // Global drawer bindings for interactive quiz cross-calls
+      (window as any).updateSavedBadge = updateSavedBadge;
+      (window as any).renderSavedQuestions = renderSavedQuestions;
+      (window as any).openSavedDrawer = openSavedDrawer;
+      (window as any).closeSavedDrawer = closeSavedDrawer;
 
       updateSavedBadge();
 

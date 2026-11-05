@@ -724,7 +724,13 @@ const schemaArticle = {
       scoreCard?.scrollIntoView({ behavior: 'smooth' });
     });
 
-    quizCards.forEach((card) => {
+    quizCards.forEach((card, cardIndex) => {
+      const qNum = card.getAttribute('data-question-num') || (cardIndex + 1).toString();
+      const cardId = `soru-${qNum}`;
+      card.id = cardId;
+      card.setAttribute('data-card-id', cardId);
+      card.setAttribute('data-question-num', qNum);
+
       const correctAnswer = (card.getAttribute('data-correct-answer') || 'A').trim().toUpperCase();
       const optionButtons = card.querySelectorAll('.quiz-option-btn');
       const feedbackBox = card.querySelector('.quiz-feedback-box');
@@ -735,22 +741,87 @@ const schemaArticle = {
       const statusDot = card.querySelector('.status-dot');
       const resetBtn = card.querySelector('.quiz-reset-btn');
       const starBtn = card.querySelector('.quiz-star-btn');
-      const questionTitle = card.querySelector('.question-stem h3')?.textContent || 'Sınav Sorusu';
+
+      const pageTitle = document.querySelector('h1')?.textContent?.trim() || 'Deneme Sınavı';
+      const stemEl = card.querySelector('.question-stem');
+      const rawStem = stemEl ? (stemEl.textContent || '') : (card.querySelector('.question-stem h3')?.textContent || 'Sınav Sorusu');
+      const cleanStem = rawStem.replace(/\s+/g, ' ').trim();
+      const shortStem = cleanStem.length > 110 ? cleanStem.slice(0, 110) + '...' : (cleanStem || `Soru #${qNum}`);
+      const questionUrl = `${window.location.pathname}#${cardId}`;
+
+      function saveToHataDefteri(reason: 'wrong' | 'starred') {
+        try {
+          const saved = JSON.parse(localStorage.getItem('mufettis_saved_questions') || '[]');
+          const existingIdx = saved.findIndex((s: any) => (s.id === cardId && s.path === window.location.pathname) || s.url === questionUrl);
+          const itemData = {
+            id: cardId,
+            qNum: qNum,
+            examTitle: pageTitle,
+            title: shortStem,
+            path: window.location.pathname,
+            url: questionUrl,
+            date: new Date().toLocaleDateString('tr-TR'),
+            reason: reason
+          };
+          if (existingIdx >= 0) {
+            saved[existingIdx] = itemData;
+          } else {
+            saved.push(itemData);
+          }
+          localStorage.setItem('mufettis_saved_questions', JSON.stringify(saved));
+          if (typeof (window as any).updateSavedBadge === 'function') {
+            (window as any).updateSavedBadge();
+          }
+        } catch (e) {}
+      }
+
+      function removeFromHataDefteri() {
+        try {
+          const saved = JSON.parse(localStorage.getItem('mufettis_saved_questions') || '[]');
+          const existingIdx = saved.findIndex((s: any) => (s.id === cardId && s.path === window.location.pathname) || s.url === questionUrl || s.title === shortStem);
+          if (existingIdx >= 0) {
+            saved.splice(existingIdx, 1);
+            localStorage.setItem('mufettis_saved_questions', JSON.stringify(saved));
+            if (typeof (window as any).updateSavedBadge === 'function') {
+              (window as any).updateSavedBadge();
+            }
+            return true;
+          }
+        } catch (e) {}
+        return false;
+      }
+
+      // Initial check if this card is already starred in Hata Defteri
+      try {
+        const saved = JSON.parse(localStorage.getItem('mufettis_saved_questions') || '[]');
+        if (saved.some((s: any) => (s.id === cardId && s.path === window.location.pathname) || s.url === questionUrl)) {
+          starBtn?.classList.remove('text-slate-400');
+          starBtn?.classList.add('text-amber-500');
+        }
+      } catch (e) {}
 
       // Star / Bookmark handling (LocalStorage)
       starBtn?.addEventListener('click', (e) => {
         e.stopPropagation();
-        const saved = JSON.parse(localStorage.getItem('mufettis_saved_questions') || '[]');
-        const exists = saved.some((s: any) => s.title === questionTitle);
-        if (exists) {
-          const filtered = saved.filter((s: any) => s.title !== questionTitle);
-          localStorage.setItem('mufettis_saved_questions', JSON.stringify(filtered));
-          showToast('Soru Hata Defterinizden çıkarıldı.');
-        } else {
-          saved.push({ title: questionTitle, url: window.location.href, date: new Date().toLocaleDateString('tr-TR') });
-          localStorage.setItem('mufettis_saved_questions', JSON.stringify(saved));
-          showToast('Soru Hata Defterinize Kaydedildi!');
-        }
+        try {
+          const saved = JSON.parse(localStorage.getItem('mufettis_saved_questions') || '[]');
+          const existingIdx = saved.findIndex((s: any) => (s.id === cardId && s.path === window.location.pathname) || s.url === questionUrl);
+          if (existingIdx >= 0) {
+            saved.splice(existingIdx, 1);
+            localStorage.setItem('mufettis_saved_questions', JSON.stringify(saved));
+            showToast(`Soru ${qNum} Hata Defterinizden çıkarıldı.`);
+            starBtn.classList.remove('text-amber-500');
+            starBtn.classList.add('text-slate-400');
+          } else {
+            saveToHataDefteri('starred');
+            showToast(`Soru ${qNum} Hata Defterinize kaydedildi!`);
+            starBtn.classList.add('text-amber-500');
+            starBtn.classList.remove('text-slate-400');
+          }
+          if (typeof (window as any).updateSavedBadge === 'function') {
+            (window as any).updateSavedBadge();
+          }
+        } catch (e) {}
       });
 
       let isAnswered = false;
@@ -776,6 +847,23 @@ const schemaArticle = {
             correctCount++;
             playAudio('correct');
 
+            // If this question was previously in Hata Defteri, celebrate and remove it
+            const wasRemoved = removeFromHataDefteri();
+            if (wasRemoved) {
+              starBtn?.classList.remove('text-amber-500');
+              starBtn?.classList.add('text-slate-400');
+              showToast(`🎉 Harika! Soru ${qNum} başarıyla kavrandı ve Hata Defterinden temizlendi!`);
+
+              const focusBadge = card.querySelector('.hata-defteri-focus-badge');
+              if (focusBadge) {
+                focusBadge.className = 'hata-defteri-focus-badge mb-3.5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold text-xs shadow-md transition-all duration-300';
+                focusBadge.innerHTML = `
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                  <span>Hata Defteri: Soru Başarıyla Çözüldü ve Temizlendi ✓</span>
+                `;
+              }
+            }
+
             // Selected Option Styling
             btn.classList.add('bg-emerald-50', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-950', 'dark:text-emerald-100');
             const badge = btn.querySelector('.option-badge');
@@ -800,14 +888,10 @@ const schemaArticle = {
             wrongCount++;
             playAudio('wrong');
 
-            // Automatically save to Hata Defteri on wrong answer
-            try {
-              const saved = JSON.parse(localStorage.getItem('mufettis_saved_questions') || '[]');
-              if (!saved.some((s: any) => s.title === questionTitle)) {
-                saved.push({ title: questionTitle, url: window.location.href, date: new Date().toLocaleDateString('tr-TR') });
-                localStorage.setItem('mufettis_saved_questions', JSON.stringify(saved));
-              }
-            } catch (e) {}
+            // Automatically save to Hata Defteri on wrong answer with full deep-link metadata
+            saveToHataDefteri('wrong');
+            starBtn?.classList.add('text-amber-500');
+            starBtn?.classList.remove('text-slate-400');
 
             // Selected Option Styling
             btn.classList.add('bg-rose-50', 'dark:bg-rose-950/40', 'border-rose-500', 'text-rose-950', 'dark:text-rose-100');
@@ -889,7 +973,6 @@ const schemaArticle = {
         updateHUD();
       });
     });
-
     // Reset All Questions Handler
     resetAllBtn?.addEventListener('click', () => {
       quizCards.forEach(card => {
@@ -899,6 +982,60 @@ const schemaArticle = {
       scoreCard?.classList.add('hidden');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // ==========================================
+    // DEEP-LINKING HATA DEFTERİ FOCUS & SPOTLIGHT
+    // ==========================================
+    function handleQuestionDeepLink() {
+      const hash = window.location.hash;
+      if (!hash || !hash.startsWith('#soru-')) return;
+
+      const targetId = hash.substring(1);
+      const targetCard = document.getElementById(targetId);
+      if (!targetCard) return;
+
+      setTimeout(() => {
+        const headerOffset = 130;
+        const elPos = targetCard.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: Math.max(0, elPos - headerOffset),
+          behavior: 'smooth'
+        });
+
+        // Add vibrant spotlight aura
+        targetCard.classList.add('ring-4', 'ring-amber-400', 'dark:ring-amber-500', 'shadow-2xl', 'border-amber-400', 'dark:border-amber-500');
+
+        // Add spotlight banner badge if not exists
+        if (!targetCard.querySelector('.hata-defteri-focus-badge')) {
+          const focusBadge = document.createElement('div');
+          focusBadge.className = 'hata-defteri-focus-badge mb-3.5 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-white font-extrabold text-xs shadow-md animate-pulse';
+          focusBadge.innerHTML = `
+            <svg class="w-4 h-4 text-white shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <span>Hata Defteri Odak Noktası — Bu Soruyu Tekrar Çözün</span>
+          `;
+          const stem = targetCard.querySelector('.question-stem');
+          if (stem) {
+            stem.parentNode?.insertBefore(focusBadge, stem);
+          } else {
+            targetCard.prepend(focusBadge);
+          }
+        }
+
+        // Auto unlock/reset question if already answered so user can immediately re-solve
+        const resetBtn = targetCard.querySelector('.quiz-reset-btn') as HTMLButtonElement;
+        const statusText = targetCard.querySelector('.status-text')?.textContent || '';
+        if (statusText.includes('Yanlış') || statusText.includes('Doğru')) {
+          resetBtn?.click();
+        }
+
+        setTimeout(() => {
+          targetCard.classList.remove('ring-4', 'ring-amber-400', 'dark:ring-amber-500', 'shadow-2xl');
+        }, 7000);
+      }, 200);
+    }
+
+    window.addEventListener('load', handleQuestionDeepLink);
+    window.addEventListener('hashchange', handleQuestionDeepLink);
 
     // ==========================================
     // 2. AUTO-GENERATED TABLE OF CONTENTS WITH SCROLL SPY
