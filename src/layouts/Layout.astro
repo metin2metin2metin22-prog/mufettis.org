@@ -388,11 +388,19 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
           <!-- Search Trigger, Admin Button & Mobile Menu Toggle -->
           <div class="flex items-center gap-2.5">
             
-            <!-- Quick Search Bar Trigger -->
-            <button id="search-trigger" type="button" aria-label="Ara" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 transition-all flex items-center gap-3 border border-slate-200 dark:border-slate-700/60 text-xs font-semibold shadow-xs cursor-pointer">
-              <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-              <span class="hidden sm:inline text-slate-500 dark:text-slate-400 font-medium">Hızlı Konu / Soru Ara...</span>
-              <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-bold text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded shadow-xs">Ctrl K</kbd>
+            <!-- Quick Search Bar Trigger (Sade & Kompakt) -->
+            <button 
+              id="search-trigger" 
+              type="button" 
+              aria-label="Arama Yap" 
+              title="Hızlı Ara (Ctrl + K)" 
+              class="h-9 px-2.5 sm:px-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/80 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-all flex items-center justify-center gap-1.5 border border-slate-200 dark:border-slate-700/60 text-xs font-semibold shadow-xs cursor-pointer shrink-0 whitespace-nowrap active:scale-95"
+            >
+              <svg class="w-4 h-4 text-slate-500 dark:text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+              </svg>
+              <span class="text-xs font-medium text-slate-600 dark:text-slate-300">Ara</span>
+              <kbd class="hidden 2xl:inline-block px-1.5 py-0.5 text-[9px] font-mono font-bold text-slate-400 dark:text-slate-500 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded shadow-2xs">Ctrl K</kbd>
             </button>
 
             <!-- Admin Link (Free Decap CMS) -->
