@@ -1,18 +1,27 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getAllPosts } from '../utils/posts';
-import categories from '../data/categories.json';
 
 const posts = getAllPosts();
 
-// Filter actual blog articles
+// Filter actual blog articles with cover images
 const blogPosts = posts.filter(p => p.post_type === 'post' && p.featured_image);
 
-// 1. Manşet (5 Lead Stories with Cover Images)
+// 1. Manşet (Lead Story + 4 Sub-Lead Deep Dives)
 const leadStory = blogPosts.find(p => p.slug.includes('2026-banka-mufettisi-maaslari')) || blogPosts[0];
-const subManset = blogPosts
-  .filter(p => p.slug !== leadStory.slug)
-  .slice(0, 4);
+
+// Carefully select 4 diverse sub-stories covering SPL, MASAK, CIA, and Mali Analiz
+const splStory = blogPosts.find(p => p.slug !== leadStory.slug && p.categories?.some(c => c.slug.includes('spl')));
+const masakStory = blogPosts.find(p => p.slug !== leadStory.slug && p.categories?.some(c => c.slug.includes('masak')));
+const ciaStory = blogPosts.find(p => p.slug !== leadStory.slug && p.categories?.some(c => c.slug.includes('cia')));
+const financialStory = blogPosts.find(p => p.slug !== leadStory.slug && (p.slug.includes('cek-riski') || p.categories?.some(c => c.slug.includes('mali'))));
+
+const subManset = [
+  splStory || blogPosts[1],
+  masakStory || blogPosts[2],
+  ciaStory || blogPosts[3],
+  financialStory || blogPosts[4]
+].filter((item, index, self) => item && self.findIndex(t => t.slug === item.slug) === index);
 
 // 2. Interactive Quizzes & Exams (12 sets)
 const quizList = blogPosts.filter(p => p.is_quiz);
@@ -22,26 +31,180 @@ const splPosts = blogPosts.filter(p => p.categories && p.categories.some(c => c.
 const masakPosts = blogPosts.filter(p => p.categories && p.categories.some(c => c.slug.includes('masak')));
 const ciaPosts = blogPosts.filter(p => p.categories && p.categories.some(c => c.slug.includes('cia')));
 const bankaPosts = blogPosts.filter(p => p.categories && p.categories.some(c => c.slug.includes('banka') || c.slug.includes('kariyer') || c.slug.includes('denetim')));
-const maliPosts = blogPosts.filter(p => p.categories && p.categories.some(c => c.slug.includes('mali') || c.slug.includes('bilanco')));
 
-// Latest Articles
-const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
+// 4. Latest Articles
+const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug).slice(0, 8);
 ---
 
 <Layout 
   title="Müfettiş | Sınav Hazırlık Notları, Makaleler ve Çözümlü Deneme Sınavları"
   description="Banka Müfettişliği, SPL Lisanslama, MASAK Uyum Görevlisi ve CIA sınavlarına hazırlık için kapsamlı ders notları, mevzuat özetleri ve çözümlü testler."
 >
-  
-  <!-- HERO: MANŞET & AKILLI DERS ARAMA -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2">
+
+  <!-- ======================================================== -->
+  <!-- 1. HERO COMMAND CENTER & INSTITUTIONAL AUTHORITY STRIP  -->
+  <!-- ======================================================== -->
+  <section class="relative overflow-hidden pt-4 sm:pt-8 pb-8 sm:pb-12 border-b border-slate-200/90 dark:border-slate-800/90 bg-gradient-to-b from-white via-slate-50/70 to-slate-100/50 dark:from-[#06101c] dark:via-[#071322] dark:to-[#040b14] transition-colors">
     
-    <!-- EDITORIAL 5'Lİ MANŞET GRID (Kusursuz Tipografik Ayrım, Sıfır Metin Çakışması) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+    <!-- Ambient Radial Glow Effects (Subtle Lighting) -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[360px] bg-gradient-to-r from-sky-500/10 via-amber-500/10 to-indigo-500/10 blur-3xl pointer-events-none -z-10"></div>
+    <div class="absolute top-1/3 -right-20 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Top Institutional Verification Pill -->
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-5">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 shadow-xs text-[11px] font-bold">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span class="tracking-wide text-slate-700 dark:text-slate-300">2026 Resmî Müfredat & Tebliğ Güncellemeleriyle Birebir Uyumlu</span>
+        </div>
+
+        <div class="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+          <span class="inline-flex items-center gap-1 text-amber-500 dark:text-amber-400 font-bold">
+            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+            <span>Bağımsız Açık Akademi</span>
+          </span>
+          <span>•</span>
+          <span>Reklamsız & Ücretsiz</span>
+        </div>
+      </div>
+
+      <!-- Main Headline & Subtitle -->
+      <div class="max-w-4xl">
+        <h1 class="text-3xl sm:text-5xl lg:text-[56px] font-black text-slate-900 dark:text-white tracking-tight leading-[1.12] mb-4">
+          Banka Müfettişliği, SPL ve MASAK Sınavlarında <span class="bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-sky-500 to-emerald-500 dark:from-amber-400 dark:via-sky-400 dark:to-emerald-400">Zirveye Ulaşın.</span>
+        </h1>
+        
+        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-lg leading-relaxed max-w-3xl font-normal">
+          SPK SPL Lisanslama, MASAK Uyum Görevlisi Yetkilendirme ve IIA CIA Part 1 sınavlarına hazırlananlar ile teftiş kurulu adayları için Türkiye'nin en kapsamlı çözümlü deneme sınavları, kanun gerekçeli ders notları ve 2026 maaş simülasyonları.
+        </p>
+      </div>
+
+      <!-- Interactive Omnibar Search (Raycast / Apple Style Command Launcher) -->
+      <div class="mt-7 max-w-3xl">
+        <div class="relative group">
+          <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-600 via-amber-500 to-emerald-500 rounded-2xl sm:rounded-3xl blur-sm opacity-35 group-hover:opacity-60 transition duration-300"></div>
+          
+          <button 
+            type="button" 
+            onclick="document.getElementById('search-trigger')?.click()" 
+            class="relative w-full p-3.5 sm:p-4.5 bg-white dark:bg-[#0c1827] rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl flex items-center justify-between gap-3 text-left cursor-pointer active:scale-[0.99] transition-transform"
+          >
+            <div class="flex items-center gap-3 sm:gap-3.5 min-w-0">
+              <div class="w-9 h-9 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-sky-400 flex items-center justify-center shrink-0 border border-brand-200 dark:border-brand-800">
+                <svg class="w-5 h-5 text-brand-600 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <span class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 truncate">Sınav konusu, kanun maddesi veya ders notu arayın...</span>
+                <span class="text-[10.5px] text-slate-400 font-medium hidden sm:block">Örn: "5549 SK", "Takas T+2", "Üç Hat Modeli", "2026 Maaş"</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
+                <kbd class="font-mono">Ctrl</kbd> + <kbd class="font-mono">K</kbd>
+              </span>
+              <span class="px-3.5 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-black text-xs shadow-sm flex items-center gap-1">
+                <span>Ara</span>
+                <span class="hidden xs:inline">→</span>
+              </span>
+            </div>
+          </button>
+        </div>
+
+        <!-- Quick Jump Filter Chips -->
+        <div class="mt-3.5 flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar pb-1 text-xs">
+          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0">Popüler:</span>
+          <a href="/maas-hesaplayici/" class="shrink-0 px-3 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 font-bold hover:scale-105 transition-transform flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+            <span>2026 Maaş Hesaplayıcı</span>
+          </a>
+          <a href="/deneme-sinavlari/" class="shrink-0 px-3 py-1 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 font-bold hover:scale-105 transition-transform flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-amber-500 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span>12+ Çözümlü Deneme</span>
+          </a>
+          <a href="/bilgi-kartlari/" class="shrink-0 px-3 py-1 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 font-bold hover:scale-105 transition-transform flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <span>3D Akıl Kartları</span>
+          </a>
+          <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="shrink-0 px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-semibold hover:text-brand-600 transition-colors">
+            MASAK 5549 SK
+          </a>
+          <a href="/category/spl-ders-notlari/" class="shrink-0 px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-semibold hover:text-brand-600 transition-colors">
+            SPL Takas & Saklama
+          </a>
+        </div>
+      </div>
+
+      <!-- 4 Key Institutional Metrics Strip (Bespoke Glassmorphic Cards) -->
+      <div class="mt-9 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+        
+        <div class="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0 border border-amber-500/20">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <div>
+            <span class="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">200+ Soru</span>
+            <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight block mt-0.5">Mevzuat Gerekçeli Çözümler</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center shrink-0 border border-sky-500/20">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <span class="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">12+ Deneme</span>
+            <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight block mt-0.5">Gerçek Sınav Simülatörü</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/20">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <span class="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">16 Maaş & Turne</span>
+            <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight block mt-0.5">2026 Fiili Bordro Skalası</span>
+          </div>
+        </div>
+
+        <div class="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-start gap-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0 border border-purple-500/20">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <div>
+            <span class="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">%100 Açık</span>
+            <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight block mt-0.5">Ücretsiz & Kayıtsız Erişim</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 2. EDITORIAL 5'Lİ MANŞET & ARAŞTIRMA MASASI (FT STYLE)   -->
+  <!-- ======================================================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-4">
+    
+    <div class="flex items-center justify-between pb-3.5 mb-7 border-b-2 border-slate-200 dark:border-slate-800">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-6 rounded-sm bg-amber-500"></span>
+        <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase">
+          Editoryal Araştırma Masası & Manşetler
+        </h2>
+      </div>
+      <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold hidden sm:inline">Denetim ve Teftiş Kurulu Dosyaları</span>
+    </div>
+
+    <!-- 5'li Magazin Düzeni: 7 Kolon Ana Dosya + 5 Kolon Yan Dosyalar -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
       
       <!-- Ana Manşet (Lead Story - 7 Kolon) -->
       <div class="lg:col-span-7 flex flex-col">
-        <a href={leadStory.url} class="group flex flex-col h-full rounded-2xl overflow-hidden shadow-xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500/60 dark:hover:border-amber-400/60 transition-all duration-300">
+        <a href={leadStory.url} class="group flex flex-col h-full rounded-3xl overflow-hidden shadow-lg bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500/80 dark:hover:border-amber-400/80 transition-all duration-300 hover:shadow-2xl hover:shadow-amber-500/10">
           
           <!-- Görsel Alanı: Yazısız ve tertemiz sunum -->
           <div class="relative aspect-[16/9] w-full overflow-hidden bg-slate-950">
@@ -51,45 +214,48 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               loading="eager"
             />
-            <div class="absolute top-3.5 left-3.5 flex flex-wrap gap-2">
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-sm bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-xs font-black uppercase tracking-wider shadow-md">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+
+            <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-xs font-black uppercase tracking-wider shadow-lg">
                 <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                 <span>Özel Araştırma Dosyası</span>
               </span>
             </div>
-            <div class="absolute bottom-3 right-3">
-              <span class="inline-flex items-center gap-1.5 text-xs text-white font-bold bg-slate-950/80 backdrop-blur-md px-2.5 py-1 rounded-sm border border-white/10 shadow-sm">
+            
+            <div class="absolute bottom-3.5 right-4">
+              <span class="inline-flex items-center gap-1.5 text-xs text-white font-bold bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10 shadow-sm">
                 <svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span>{leadStory.reading_time} dk okuma</span>
               </span>
             </div>
           </div>
           
-          <!-- Editoryal Metin Bloğu (Yüksek Kontrast, Görsel Üstüne Çakışmayan Alan) -->
-          <div class="p-4 sm:p-6 sm:p-7 flex flex-col justify-between flex-grow border-t border-slate-100 dark:border-slate-800">
+          <!-- Editoryal Metin Bloğu -->
+          <div class="p-5 sm:p-7 flex flex-col justify-between flex-grow">
             <div>
               <div class="flex items-center gap-2 mb-3">
-                <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-sm border border-emerald-200 dark:border-emerald-800/60">
+                <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/60">
                   <svg class="w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                  <span>2026 Güncel Veriler</span>
+                  <span>2026 Resmî Veriler</span>
                 </span>
                 <span class="text-xs text-slate-300 dark:text-slate-600">•</span>
                 <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">Banka Teftiş Kurulu Dosyası</span>
               </div>
               
-              <h2 class="text-xl sm:text-2xl lg:text-[25px] font-black text-slate-900 dark:text-white leading-tight group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors">
+              <h3 class="text-xl sm:text-2xl lg:text-[26px] font-black text-slate-900 dark:text-white leading-tight group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors">
                 {leadStory.title}
-              </h2>
+              </h3>
               
-              <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-3 line-clamp-2 leading-relaxed font-normal">
+              <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-3 line-clamp-3 leading-relaxed font-normal">
                 {leadStory.excerpt}
               </p>
             </div>
 
-            <div class="mt-5 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-              <span class="text-xs font-bold text-brand-600 dark:text-sky-400 flex items-center gap-1">
-                Kapsamlı Raporu İncele
-                <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="text-xs sm:text-sm font-bold text-brand-600 dark:text-sky-400 flex items-center gap-1 group-hover:gap-2 transition-all">
+                <span>Kapsamlı Raporu İncele</span>
+                <span>→</span>
               </span>
               <span class="text-[11px] text-slate-400 dark:text-slate-500 font-medium">mufettis.org Özel Analiz</span>
             </div>
@@ -102,9 +268,9 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
         {subManset.map((sub) => {
           const cat = sub.categories && sub.categories[0] ? sub.categories[0].name : 'Ders Notu';
           return (
-            <a href={sub.url} class="group flex flex-col justify-between rounded-2xl overflow-hidden shadow-sm hover:shadow-md bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500/60 dark:hover:border-amber-400/60 transition-all duration-300">
+            <a href={sub.url} class="group flex flex-col justify-between rounded-3xl overflow-hidden shadow-sm hover:shadow-xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500/80 dark:hover:border-amber-400/80 transition-all duration-300">
               
-              <!-- Temiz Görsel Çerçevesi (Üzerinde metin baskısı yok) -->
+              <!-- Temiz Görsel Çerçevesi -->
               <div class="relative aspect-[16/10] w-full overflow-hidden bg-slate-950 border-b border-slate-100 dark:border-slate-800">
                 <img 
                   src={sub.featured_image} 
@@ -113,29 +279,28 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
                   loading="lazy"
                 />
                 <div class="absolute top-2 left-2">
-                  <span class="inline-block text-[9.5px] font-black text-amber-300 bg-slate-950/80 backdrop-blur-md uppercase tracking-wider px-2 py-0.5 rounded-sm border border-amber-500/30">
+                  <span class="inline-block text-[9.5px] font-black text-amber-300 bg-slate-950/80 backdrop-blur-md uppercase tracking-wider px-2 py-0.5 rounded-md border border-amber-500/30">
                     {cat}
                   </span>
                 </div>
                 <div class="absolute bottom-2 right-2">
-                  <span class="inline-flex items-center gap-1 text-[9px] text-white/90 bg-black/70 backdrop-blur-sm px-1.5 py-0.5 rounded-sm">
+                  <span class="inline-flex items-center gap-1 text-[9px] text-white/90 bg-black/70 backdrop-blur-sm px-2 py-0.5 rounded-md">
                     <svg class="w-2.5 h-2.5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span>{sub.reading_time} dk</span>
                   </span>
                 </div>
               </div>
               
-              <!-- Ayrılmış Metin Bloğu -->
-              <div class="p-3.5 flex flex-col justify-between flex-grow">
-                <h3 class="text-xs sm:text-[13px] font-bold text-slate-900 dark:text-white leading-snug group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors line-clamp-2">
+              <!-- Editoryal Başlık Bloğu -->
+              <div class="p-4 flex flex-col justify-between flex-grow">
+                <h4 class="text-xs sm:text-[13.5px] font-bold text-slate-900 dark:text-white leading-snug group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors line-clamp-2">
                   {sub.title}
-                </h3>
-                <div class="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
-                  <span class="text-[10px] font-bold text-slate-400 dark:text-slate-500 group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors flex items-center gap-0.5">
-                    İncele
-                    <svg class="w-3 h-3 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </h4>
+                <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                  <span class="text-[11px] font-bold text-brand-600 dark:text-sky-400 group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors flex items-center gap-0.5">
+                    İncele →
                   </span>
-                  <span class="text-[9.5px] text-slate-400 dark:text-slate-500">2026</span>
+                  <span class="text-[9.5px] text-slate-400 dark:text-slate-500 font-bold">2026</span>
                 </div>
               </div>
             </a>
@@ -144,59 +309,148 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
       </div>
 
     </div>
-
-    <!-- AKILLI DERS VE SINAV SEÇİCİ BANT (HIZLI ERİŞİM) -->
-    <div class="mt-6 bg-white dark:bg-[#0c1827] rounded-none sm:rounded-2xl p-5 sm:p-6 border-2 border-slate-200 dark:border-slate-800 shadow-md">
-      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-        
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-2xl bg-brand-50 dark:bg-brand-950/80 text-brand-600 dark:text-sky-400 flex items-center justify-center font-black text-lg border border-brand-200 dark:border-brand-800">
-            <svg class="w-5 h-5 text-brand-600 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
-          </div>
-          <div>
-            <h3 class="text-sm font-black text-slate-900 dark:text-white uppercase tracking-wider">Hızlı Sınav Hazırlık Hub</h3>
-            <p class="text-xs text-slate-500 dark:text-slate-400">Çalışmak istediğiniz alanı seçip doğrudan ilgili notlara veya denemelere geçin:</p>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 w-full lg:w-auto overflow-x-auto whitespace-nowrap no-scrollbar pb-1.5 pt-0.5 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
-          <a href="/category/spl-ders-notlari/" class="shrink-0 px-3.5 py-2 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-300 border border-sky-200 dark:border-sky-800 hover:bg-sky-600 hover:text-white dark:hover:bg-sky-600 font-bold text-xs transition-colors flex items-center gap-1.5 active:scale-95">
-            <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-            <span>SPL Lisanslama ({splPosts.length})</span>
-          </a>
-          
-          <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="shrink-0 px-3.5 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-600 hover:text-white dark:hover:bg-emerald-600 font-bold text-xs transition-colors flex items-center gap-1.5 active:scale-95">
-            <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-            <span>MASAK Uyum ({masakPosts.length})</span>
-          </a>
-
-          <a href="/category/cia-ders-notlari/" class="shrink-0 px-3.5 py-2 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-purple-800 dark:text-purple-300 border border-purple-200 dark:border-purple-800 hover:bg-purple-600 hover:text-white dark:hover:bg-purple-600 font-bold text-xs transition-colors flex items-center gap-1.5 active:scale-95">
-            <svg class="w-3.5 h-3.5 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
-            <span>CIA Part 1 ({ciaPosts.length})</span>
-          </a>
-
-          <a href="/category/denetim-kutuphanesi/" class="shrink-0 px-3.5 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 hover:bg-amber-600 hover:text-white dark:hover:bg-amber-600 font-bold text-xs transition-colors flex items-center gap-1.5 active:scale-95">
-            <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-            <span>Banka Denetimi ({bankaPosts.length})</span>
-          </a>
-
-          <a href="/deneme-sinavlari/" class="shrink-0 px-4 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-md transition-all flex items-center gap-1.5 ml-auto active:scale-95">
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>12+ Çözümlü Deneme</span>
-          </a>
-        </div>
-
-      </div>
-    </div>
-
   </section>
 
-  <!-- 4 BÜYÜK DİSİPLİN: KATEGORİ REHBERİ (Bespoke Category Showcase) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
+  <!-- ======================================================== -->
+  <!-- 3. İNTERAKTİF GÜÇ ÜÇLÜSÜ (3 MASTER TOOL SHOWCASE)        -->
+  <!-- ======================================================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 sm:mt-18">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+      <!-- TOOL 1: 2026 MAAŞ HESAPLAYICI -->
+      <div class="group relative rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-emerald-950/40 via-[#071926] to-[#040f18] border-2 border-emerald-500/30 hover:border-emerald-400 transition-all duration-300 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/30 group-hover:scale-110 transition-transform">
+              <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              Bordro Motoru
+            </span>
+          </div>
+
+          <h3 class="text-xl font-black text-white mb-2 group-hover:text-emerald-300 transition-colors">
+            2026 Banka Müfettişi Maaş Hesaplayıcı
+          </h3>
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+            Kamu, özel ve katılım bankaları ile BDDK/SPK müfettiş yardımcısı, yetkili ve başmüfettiş maaşlarını turne harcırahı ve dil tazminatıyla simüle edin.
+          </p>
+
+          <div class="space-y-1.5 text-xs text-slate-300 font-semibold mb-6">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>16 Maaş ve Performans Primi Dağılımı</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>GVK 24 Vergiden Muaf Turne Harcırahı</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span>YDS & CIA Mesleki Sertifika Primleri</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="/maas-hesaplayici/" class="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs text-center transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
+          <span>Maaşını Hemen Hesapla</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <!-- TOOL 2: 3D AKIL KARTLARI -->
+      <div class="group relative rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-sky-950/40 via-[#071926] to-[#040f18] border-2 border-sky-500/30 hover:border-sky-400 transition-all duration-300 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-400 flex items-center justify-center border border-sky-500/30 group-hover:scale-110 transition-transform">
+              <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-sky-500/20 text-sky-300 border border-sky-500/30">
+              Hafıza Çivileri
+            </span>
+          </div>
+
+          <h3 class="text-xl font-black text-white mb-2 group-hover:text-sky-300 transition-colors">
+            3D Çevrilebilir Sınav Akıl Kartları
+          </h3>
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+            Telefonda veya bilgisayarda hızlı tekrar yapın. Kartın üzerine dokunarak doğru mevzuat cevabını görün, sınav öncesi hafızanızı pekiştirin.
+          </p>
+
+          <div class="space-y-1.5 text-xs text-slate-300 font-semibold mb-6">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+              <span>MASAK ŞİB Süreleri & KYC Kuralları</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+              <span>SPK Sermaye Piyasası Araçları Püf Noktaları</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+              <span>IIA Üç Hat Modeli ve İç Denetim Standartları</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="/bilgi-kartlari/" class="w-full py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs text-center transition-all shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
+          <span>Akıl Kartlarını Aç & Çalış</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <!-- TOOL 3: GERÇEK SINAV SİMÜLATÖRÜ -->
+      <div class="group relative rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-amber-950/40 via-[#071926] to-[#040f18] border-2 border-amber-500/30 hover:border-amber-400 transition-all duration-300 shadow-xl flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-4">
+            <span class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/30 group-hover:scale-110 transition-transform">
+              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </span>
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              Sınav Simülatörü
+            </span>
+          </div>
+
+          <h3 class="text-xl font-black text-white mb-2 group-hover:text-amber-300 transition-colors">
+            12+ Çözümlü Deneme Sınavı
+          </h3>
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+            Soruları çözerken anında doğru/yanlış sesi ve kanun gerekçesini görün. Süre sayacı ve sınav sonu performans karnesiyle seviyenizi ölçün.
+          </p>
+
+          <div class="space-y-1.5 text-xs text-slate-300 font-semibold mb-6">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              <span>200+ Çözümlü ve Açıklamalı Soru</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              <span>30 Dakika Geri Sayım ve Süre Motoru</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              <span>Hata Defteri Entegrasyonu (Yanlışları Sakla)</span>
+            </div>
+          </div>
+        </div>
+
+        <a href="/deneme-sinavlari/" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs text-center transition-all shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2">
+          <span>Deneme Sınavı Başlat</span>
+          <span>→</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================================================== -->
+  <!-- 4. 4 BÜYÜK DİSİPLİN: KATEGORİ REHBERİ (MASTER ACADEMY)   -->
+  <!-- ======================================================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-22">
     <div class="mb-10">
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 dark:bg-brand-950/80 text-brand-700 dark:text-sky-300 border border-brand-200 dark:border-brand-800 text-xs font-black uppercase tracking-wider mb-3">
         <svg class="w-3.5 h-3.5 text-brand-600 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        <span>Resmi Müfredat ve Sertifikasyonlar</span>
+        <span>Resmî Müfredat ve Sertifikasyonlar</span>
       </div>
       <h2 class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
         Sınav ve Kariyer Odakları
@@ -211,7 +465,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
       <!-- CARD 1: SPL LİSANSLAMA -->
       <div class="group relative rounded-3xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between hover:border-sky-500">
         <div>
-          <!-- Visual Editorial Cover -->
           <a href="/category/spl-ders-notlari/" class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
             <img 
               src="/assets/categories/spl-sermaye-piyasasi.jpg" 
@@ -234,7 +487,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
             </div>
           </a>
 
-          <!-- Content Body -->
           <div class="p-6">
             <span class="text-[10px] font-black uppercase tracking-wider text-sky-600 dark:text-sky-400 block mb-1">
               Sermaye Piyasası Araçları & Borsa
@@ -248,14 +500,12 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
               Sermaye Piyasası Araçları 1, Takas Saklama ve Operasyon, Yatırım Kuruluşları ve Meslek Kuralları ders notları.
             </p>
 
-            <!-- Topic Pills -->
             <div class="flex flex-wrap gap-1.5 mb-5">
               <span class="px-2 py-1 rounded-lg bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-900 text-sky-800 dark:text-sky-300 text-[10.5px] font-bold">SPK Araçları 1</span>
               <span class="px-2 py-1 rounded-lg bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-900 text-sky-800 dark:text-sky-300 text-[10.5px] font-bold">Takas & Saklama</span>
               <span class="px-2 py-1 rounded-lg bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-900 text-sky-800 dark:text-sky-300 text-[10.5px] font-bold">Yatırım Kuruluşları</span>
             </div>
 
-            <!-- Stats -->
             <div class="space-y-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3.5 mb-5">
               <div class="flex items-center justify-between">
                 <span class="text-slate-400 font-normal">Müfredat Notu:</span>
@@ -269,7 +519,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
           </div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="p-6 pt-0 space-y-2">
           <a href="/category/spl-ders-notlari/" class="block w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs text-center transition-colors shadow-sm">
             Tüm SPL Notlarını İncele →
@@ -284,7 +533,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
       <!-- CARD 2: MASAK UYUM GÖREVLİSİ -->
       <div class="group relative rounded-3xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between hover:border-emerald-500">
         <div>
-          <!-- Visual Editorial Cover -->
           <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
             <img 
               src="/assets/categories/masak-uyum-denetim.jpg" 
@@ -307,7 +555,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
             </div>
           </a>
 
-          <!-- Content Body -->
           <div class="p-6">
             <span class="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">
               Mali Suçlar ve Aklama ile Mücadele
@@ -321,14 +568,12 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
               5549 Sayılı Kanun, Suç Gelirlerinin Aklanması, Şüpheli İşlem Bildirimleri (ŞİB), Modül 1 ve Modül 2 sınav hazırlığı.
             </p>
 
-            <!-- Topic Pills -->
             <div class="flex flex-wrap gap-1.5 mb-5">
               <span class="px-2 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300 text-[10.5px] font-bold">5549 SK Mevzuat</span>
               <span class="px-2 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300 text-[10.5px] font-bold">Şüpheli İşlem (ŞİB)</span>
               <span class="px-2 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-900 text-emerald-800 dark:text-emerald-300 text-[10.5px] font-bold">AML/CFT Risk</span>
             </div>
 
-            <!-- Stats -->
             <div class="space-y-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3.5 mb-5">
               <div class="flex items-center justify-between">
                 <span class="text-slate-400 font-normal">Müfredat Notu:</span>
@@ -342,7 +587,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
           </div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="p-6 pt-0 space-y-2">
           <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="block w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs text-center transition-colors shadow-sm">
             MASAK Notlarını Gör →
@@ -357,7 +601,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
       <!-- CARD 3: CIA PART 1 -->
       <div class="group relative rounded-3xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between hover:border-purple-500">
         <div>
-          <!-- Visual Editorial Cover -->
           <a href="/category/cia-ders-notlari/" class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
             <img 
               src="/assets/categories/cia-ic-denetim.jpg" 
@@ -380,7 +623,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
             </div>
           </a>
 
-          <!-- Content Body -->
           <div class="p-6">
             <span class="text-[10px] font-black uppercase tracking-wider text-purple-600 dark:text-purple-400 block mb-1">
               Uluslararası İç Denetim Standartları
@@ -394,14 +636,12 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
               İç Denetimin Temelleri, Üç Hat Modeli, Bağımsızlık ve Objektiflik, Kurumsal Yönetişim ve Kontrol Ortamı.
             </p>
 
-            <!-- Topic Pills -->
             <div class="flex flex-wrap gap-1.5 mb-5">
               <span class="px-2 py-1 rounded-lg bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-900 text-purple-800 dark:text-purple-300 text-[10.5px] font-bold">IIA Standartları</span>
               <span class="px-2 py-1 rounded-lg bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-900 text-purple-800 dark:text-purple-300 text-[10.5px] font-bold">Üç Hat Modeli</span>
               <span class="px-2 py-1 rounded-lg bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-900 text-purple-800 dark:text-purple-300 text-[10.5px] font-bold">COSO Çerçevesi</span>
             </div>
 
-            <!-- Stats -->
             <div class="space-y-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3.5 mb-5">
               <div class="flex items-center justify-between">
                 <span class="text-slate-400 font-normal">Müfredat Notu:</span>
@@ -415,7 +655,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
           </div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="p-6 pt-0 space-y-2">
           <a href="/category/cia-ders-notlari/" class="block w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs text-center transition-colors shadow-sm">
             CIA Konu Notlarını Gör →
@@ -430,7 +669,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
       <!-- CARD 4: BANKA MÜFETTİŞLİĞİ & DENETİM -->
       <div class="group relative rounded-3xl bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between hover:border-amber-500">
         <div>
-          <!-- Visual Editorial Cover -->
           <a href="/category/denetim-kutuphanesi/" class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
             <img 
               src="/assets/categories/banka-mufettisligi.jpg" 
@@ -453,7 +691,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
             </div>
           </a>
 
-          <!-- Content Body -->
           <div class="p-6">
             <span class="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 block mb-1">
               Banka Müfettişliği & Denetim
@@ -467,14 +704,12 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
               2026 Maaş Rehberi, Teftiş Kurulu Sınavları, Dolandırıcılık Tespiti, Kırmızı Bayraklar ve Mülakat Hazırlığı.
             </p>
 
-            <!-- Topic Pills -->
             <div class="flex flex-wrap gap-1.5 mb-5">
               <span class="px-2 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900 text-amber-800 dark:text-amber-300 text-[10.5px] font-bold">Müfettiş Yardımcılığı</span>
               <span class="px-2 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900 text-amber-800 dark:text-amber-300 text-[10.5px] font-bold">2026 Net Maaşlar</span>
               <span class="px-2 py-1 rounded-lg bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-900 text-amber-800 dark:text-amber-300 text-[10.5px] font-bold">Vaka & Dolandırıcılık</span>
             </div>
 
-            <!-- Stats -->
             <div class="space-y-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3.5 mb-5">
               <div class="flex items-center justify-between">
                 <span class="text-slate-400 font-normal">Rehber & Dosya:</span>
@@ -488,7 +723,6 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
           </div>
         </div>
 
-        <!-- Action Buttons -->
         <div class="p-6 pt-0 space-y-2">
           <a href="/category/denetim-kutuphanesi/" class="block w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs text-center transition-colors shadow-sm">
             Banka Denetimi Notları →
@@ -503,11 +737,13 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
     </div>
   </section>
 
-  <!-- İNTERAKTİF DENEME SINAVLARI MODÜLÜ (Sınav Simülatörü Hub) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
-    <div class="bg-gradient-to-br from-[#07192a] via-[#0a233a] to-[#05111d] rounded-3xl p-6 sm:p-12 border-2 border-brand-800 shadow-2xl text-white relative overflow-hidden">
+  <!-- ======================================================== -->
+  <!-- 5. İNTERAKTİF DENEME SINAVLARI MODÜLÜ (DARK LUXURY HUB)   -->
+  <!-- ======================================================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-18 sm:mt-24">
+    <div class="bg-gradient-to-br from-[#061422] via-[#092237] to-[#040e18] rounded-3xl p-6 sm:p-12 border-2 border-brand-800 shadow-2xl text-white relative overflow-hidden">
       
-      <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-10 pb-8 border-b border-brand-800/80 relative z-10">
         <div>
@@ -523,7 +759,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
           </p>
         </div>
         
-        <a href="/deneme-sinavlari/" class="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/20 whitespace-nowrap transition-transform hover:-translate-y-0.5 shrink-0 flex items-center gap-2">
+        <a href="/deneme-sinavlari/" class="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/20 whitespace-nowrap transition-transform hover:-translate-y-0.5 shrink-0 flex items-center gap-2 active:scale-95">
           <span>Tüm 12+ Denemeyi Listele</span>
           <span>→</span>
         </a>
@@ -582,161 +818,82 @@ const latestNews = blogPosts.filter(p => !p.is_quiz).slice(0, 8);
     </div>
   </section>
 
-  <!-- KATEGORİ MODÜLÜ 1: SPL LİSANSLAMA (Magazin Bloğu) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
-    <div class="flex items-center justify-between pb-4 mb-7 border-b-2 border-sky-600">
-      <div class="flex items-center gap-3">
-        <span class="w-4 h-8 rounded-sm bg-sky-600 inline-block shadow-sm"></span>
-        <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase">
-            SPL Lisanslama Sınav Notları
-          </h2>
-          <span class="text-xs text-slate-500 dark:text-slate-400">Sermaye Piyasası Araçları, Takas, Yatırım Kuruluşları</span>
-        </div>
+  <!-- ======================================================== -->
+  <!-- 6. MÜFETTİŞ.ORG GÜVEN VE METODOLOJİ (INSTITUTIONAL TRUST) -->
+  <!-- ======================================================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-18 sm:mt-24">
+    <div class="p-7 sm:p-12 rounded-3xl bg-slate-100 dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 shadow-sm">
+      <div class="max-w-3xl mb-8">
+        <span class="text-xs font-black uppercase tracking-wider text-brand-600 dark:text-sky-400 block mb-1">
+          Neden mufettis.org?
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
+          Adayların Başarısını Güvenceye Alan 4 Temel İlke
+        </h2>
       </div>
-      <a href="/category/spl-ders-notlari/" class="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1">
-        Tümünü Gör ({splPosts.length}) →
-      </a>
-    </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {splPosts.slice(0, 4).map(post => (
-        <a href={post.url} class="group bg-white dark:bg-[#0c1827] rounded-3xl border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:border-sky-500">
-          <div class="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
-            <img 
-              src={post.featured_image} 
-              alt={post.title} 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
-            <div class="absolute bottom-2.5 left-2.5">
-              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold">
-                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span>{post.reading_time} dk</span>
-              </span>
-            </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center font-black mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
           </div>
-          <div class="p-5 flex-grow flex flex-col justify-between">
-            <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-[15px] leading-snug group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors line-clamp-2">
-              {post.title}
-            </h3>
-            <span class="text-[11px] font-bold text-slate-400 group-hover:text-sky-600 dark:group-hover:text-sky-400 mt-4 block">
-              Ders Notunu İncele →
-            </span>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1.5">Resmî Kanun & Tebliğler</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            5411, 6362, 5549 sayılı kanunlar ve BDDK/SPK/MASAK tebliğlerine birebir uyumlu kaynak metinler.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
           </div>
-        </a>
-      ))}
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1.5">Müfettiş Çözüm Analizi</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Her test sorusunun altında sadece doğru cevap değil, fıkra ve tebliğ gerekçeleri madde madde açıklanır.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-black mb-3">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+          </div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1.5">Akıllı Hata Defteri</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Yanlış çözülen veya kaydedilen sorular tarayıcınızda saklanır; sınav sabahı tek tuşla tekrar edebilirsiniz.
+          </p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
+          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-black mb-3">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1.5">Tarafsız & %100 Ücretsiz</h4>
+          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+            Reklamsız, abonelik ve ödeme duvarı barındırmayan, kamu yararı gözeten bağımsız eğitim vizyonu.
+          </p>
+        </div>
+
+      </div>
     </div>
   </section>
 
-  <!-- KATEGORİ MODÜLÜ 2: MASAK UYUM GÖREVLİSİ (Magazin Bloğu) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-18">
-    <div class="flex items-center justify-between pb-4 mb-7 border-b-2 border-emerald-600">
-      <div class="flex items-center gap-3">
-        <span class="w-4 h-8 rounded-sm bg-emerald-600 inline-block shadow-sm"></span>
-        <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase">
-            MASAK Uyum Görevlisi Yetkilendirme
-          </h2>
-          <span class="text-xs text-slate-500 dark:text-slate-400">5549 Sayılı Kanun, Suç Gelirlerinin Aklanması & Modül Notları</span>
-        </div>
-      </div>
-      <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1">
-        Tümünü Gör ({masakPosts.length}) →
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {masakPosts.slice(0, 4).map(post => (
-        <a href={post.url} class="group bg-white dark:bg-[#0c1827] rounded-3xl border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:border-emerald-500">
-          <div class="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
-            <img 
-              src={post.featured_image} 
-              alt={post.title} 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
-            <div class="absolute bottom-2.5 left-2.5">
-              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold">
-                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span>{post.reading_time} dk</span>
-              </span>
-            </div>
-          </div>
-          <div class="p-5 flex-grow flex flex-col justify-between">
-            <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-[15px] leading-snug group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-2">
-              {post.title}
-            </h3>
-            <span class="text-[11px] font-bold text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 mt-4 block">
-              Ders Notunu İncele →
-            </span>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- KATEGORİ MODÜLÜ 3: CIA PART 1 (Magazin Bloğu) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-18">
-    <div class="flex items-center justify-between pb-4 mb-7 border-b-2 border-purple-600">
-      <div class="flex items-center gap-3">
-        <span class="w-4 h-8 rounded-sm bg-purple-600 inline-block shadow-sm"></span>
-        <div>
-          <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight uppercase">
-            CIA Part 1 Sertifikasyon Notları
-          </h2>
-          <span class="text-xs text-slate-500 dark:text-slate-400">IIA Standartları, Üç Hat Modeli, Risk ve Yönetişim</span>
-        </div>
-      </div>
-      <a href="/category/cia-ders-notlari/" class="text-xs font-bold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
-        Tümünü Gör ({ciaPosts.length}) →
-      </a>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-      {ciaPosts.slice(0, 4).map(post => (
-        <a href={post.url} class="group bg-white dark:bg-[#0c1827] rounded-3xl border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:border-purple-500">
-          <div class="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
-            <img 
-              src={post.featured_image} 
-              alt={post.title} 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              loading="lazy"
-            />
-            <div class="absolute bottom-2.5 left-2.5">
-              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold">
-                <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span>{post.reading_time} dk</span>
-              </span>
-            </div>
-          </div>
-          <div class="p-5 flex-grow flex flex-col justify-between">
-            <h3 class="font-bold text-slate-900 dark:text-white text-sm sm:text-[15px] leading-snug group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">
-              {post.title}
-            </h3>
-            <span class="text-[11px] font-bold text-slate-400 group-hover:text-purple-600 dark:group-hover:text-purple-400 mt-4 block">
-              Ders Notunu İncele →
-            </span>
-          </div>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <!-- SON YAYINLANAN DERS NOTLARI VE MAKALELER (Grid) -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20">
+  <!-- ======================================================== -->
+  <!-- 7. SON EKLENEN REHBERLER & EĞİTİM NOTLARI                -->
+  <!-- ======================================================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-18 sm:mt-24 mb-16">
     <div class="flex items-center justify-between pb-4 mb-8 border-b border-slate-200 dark:border-slate-800">
       <div>
         <h2 class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
           Son Eklenen Ders Notları & Rehberler
         </h2>
-        <span class="text-xs text-slate-500 dark:text-slate-400">Tüm kategorilerden güncel eğitim materyalleri</span>
+        <span class="text-xs text-slate-500 dark:text-slate-400">Tüm kategorilerden en güncel eğitim materyalleri</span>
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {latestNews.map(item => (
-        <a href={item.url} class="group bg-white dark:bg-[#0c1827] rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between hover:border-brand-500">
+        <a href={item.url} class="group bg-white dark:bg-[#0c1827] rounded-3xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:border-brand-500">
           <div class="relative aspect-[16/10] overflow-hidden bg-slate-100 dark:bg-slate-800">
             <img 
               src={item.featured_image} 

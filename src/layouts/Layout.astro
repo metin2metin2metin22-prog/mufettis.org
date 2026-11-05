@@ -1168,6 +1168,16 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
 
       input?.addEventListener('input', performSearch);
 
+      // Global Access to Search Engine for Hero Omnibar & Jump Chips
+      (window as any).openSearchModal = openSearch;
+      (window as any).openSearchWithQuery = function(q: string) {
+        openSearch();
+        if (input) {
+          input.value = q;
+          performSearch();
+        }
+      };
+
       // 4. Hata Defterim Drawer Logic (Smooth Glide + Lock Scroll)
       const savedDrawer = document.getElementById('saved-questions-drawer');
       const savedOverlay = document.getElementById('saved-drawer-overlay');
