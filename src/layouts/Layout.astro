@@ -46,6 +46,7 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
     <link rel="icon" type="image/png" sizes="16x16" href="/brand/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/brand/apple-touch-icon.png" />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" type="application/rss+xml" title="Müfettiş.org Mevzuat Akışı" href="/rss.xml" />
 
     <!-- Primary Meta Tags -->
     <title>{fullTitle}</title>
@@ -638,7 +639,7 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
                 <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.45a1.6 1.6 0 1 0 0 3.2 1.6 1.6 0 0 0 0-3.2z"/></svg>
                 <span>Müfettiş & Denetçi Ağı</span>
               </a>
-              <a href="/sitemap-index.xml" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 hover:text-white transition-colors border border-white/10">
+              <a href="/rss.xml" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 hover:text-white transition-colors border border-white/10" title="Müfettiş.org Güncel Mevzuat RSS Akışı">
                 <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19 7.38 20 6.18 20C5 20 4 19 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>
                 <span>Mevzuat Akışı</span>
               </a>
@@ -1515,6 +1516,13 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
       newsletterForm?.addEventListener('submit', (e) => {
         e.preventDefault();
         if (newsletterEmail && newsletterEmail.value) {
+          try {
+            const raw = localStorage.getItem('mufettis_newsletter_subscribers');
+            const list = raw ? JSON.parse(raw) : [];
+            list.push({ email: newsletterEmail.value, date: new Date().toISOString() });
+            localStorage.setItem('mufettis_newsletter_subscribers', JSON.stringify(list));
+          } catch(err) {}
+
           if (newsletterStatus) {
             newsletterStatus.innerHTML = `<span class="text-emerald-400 font-bold flex items-center gap-1.5"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Kaydınız başarıyla oluşturuldu! İlk e-bülteniniz Pazartesi günü iletilecektir.</span>`;
           }

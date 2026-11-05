@@ -855,47 +855,55 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
-          <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center font-black mb-3">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 dark:hover:border-sky-500/50 transition-all duration-300 shadow-2xs group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-50 to-sky-100/60 dark:from-sky-500/15 dark:to-sky-950/30 border border-sky-200/80 dark:border-sky-500/20 p-2 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300 shadow-2xs">
+              <img src="/assets/icons/3d-shield.webp" alt="Resmî Kanun & Tebliğler" class="w-full h-full object-contain drop-shadow-sm" width="48" height="48" loading="lazy" decoding="async" />
+            </div>
+            <h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">Resmî Kanun & Tebliğler</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              5411, 6362, 5549 sayılı kanunlar ve BDDK/SPK/MASAK tebliğlerine birebir uyumlu kaynak metinler.
+            </p>
           </div>
-          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1.5">Resmî Kanun & Tebliğler</h4>
-          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            5411, 6362, 5549 sayılı kanunlar ve BDDK/SPK/MASAK tebliğlerine birebir uyumlu kaynak metinler.
-          </p>
         </div>
 
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-black mb-3">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 shadow-2xs group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/60 dark:from-blue-500/15 dark:to-blue-950/30 border border-blue-200/80 dark:border-blue-500/20 p-2 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300 shadow-2xs">
+              <img src="/assets/icons/3d-notebook.webp" alt="Müfettiş Çözüm Analizi" class="w-full h-full object-contain drop-shadow-sm" width="48" height="48" loading="lazy" decoding="async" />
+            </div>
+            <h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Müfettiş Çözüm Analizi</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Her test sorusunun altında sadece doğru cevap değil, fıkra ve tebliğ gerekçeleri madde madde açıklanır.
+            </p>
           </div>
-          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1.5">Müfettiş Çözüm Analizi</h4>
-          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            Her test sorusunun altında sadece doğru cevap değil, fıkra ve tebliğ gerekçeleri madde madde açıklanır.
-          </p>
         </div>
 
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-black mb-3">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+        <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-amber-500/50 dark:hover:border-amber-500/50 transition-all duration-300 shadow-2xs group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100/60 dark:from-amber-500/15 dark:to-amber-950/30 border border-amber-200/80 dark:border-amber-500/20 p-2 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300 shadow-2xs">
+              <img src="/assets/icons/3d-bookmark-star.webp" alt="Akıllı Hata Defteri" class="w-full h-full object-contain drop-shadow-sm" width="48" height="48" loading="lazy" decoding="async" />
+            </div>
+            <h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Akıllı Hata Defteri</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Yanlış çözülen veya kaydedilen sorular tarayıcınızda saklanır; sınav sabahı tek tuşla tekrar edebilirsiniz.
+            </p>
           </div>
-          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1.5">Akıllı Hata Defteri</h4>
-          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            Yanlış çözülen veya kaydedilen sorular tarayıcınızda saklanır; sınav sabahı tek tuşla tekrar edebilirsiniz.
-          </p>
         </div>
 
-        <div class="p-5 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800">
-          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center font-black mb-3">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <div class="p-5 sm:p-6 rounded-2xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 hover:border-purple-500/50 dark:hover:border-purple-500/50 transition-all duration-300 shadow-2xs group flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/60 dark:from-purple-500/15 dark:to-purple-950/30 border border-purple-200/80 dark:border-purple-500/20 p-2 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300 shadow-2xs">
+              <img src="/assets/icons/3d-flash.webp" alt="Tarafsız & %100 Ücretsiz" class="w-full h-full object-contain drop-shadow-sm" width="48" height="48" loading="lazy" decoding="async" />
+            </div>
+            <h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Tarafsız & %100 Ücretsiz</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+              Reklamsız, abonelik ve ödeme duvarı barındırmayan, kamu yararı gözeten bağımsız eğitim vizyonu.
+            </p>
           </div>
-          <h4 class="font-bold text-sm text-slate-900 dark:text-white mb-1.5">Tarafsız & %100 Ücretsiz</h4>
-          <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
-            Reklamsız, abonelik ve ödeme duvarı barındırmayan, kamu yararı gözeten bağımsız eğitim vizyonu.
-          </p>
         </div>
 
-      </div>
+      </div></div>
     </div>
   </section>
 
