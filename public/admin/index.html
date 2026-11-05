@@ -417,7 +417,29 @@
         </div>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Studio Tabs Switcher -->
+        <div class="flex items-center gap-1 p-1 bg-slate-900 border border-slate-800 rounded-xl mr-2">
+          <button 
+            id="tab-btn-editor" 
+            type="button" 
+            class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 bg-sky-600 text-white shadow-sm cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+            <span>Yazı Editörü</span>
+          </button>
+
+          <button 
+            id="tab-btn-inbox" 
+            type="button" 
+            class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-1.5 relative cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+            <span>Gelen Mesajlar</span>
+            <span id="inbox-unread-badge" class="px-1.5 py-0.2 rounded-full bg-rose-500 text-white font-extrabold text-[9.5px]">0</span>
+          </button>
+        </div>
+
+        <!-- Action Buttons -->
       <div class="flex items-center gap-2">
         <a 
           href="/admin/decap.html" 
@@ -472,7 +494,7 @@
     </header>
 
     <!-- Main Workspace Grid -->
-    <main class="flex-grow grid grid-cols-1 lg:grid-cols-12 min-h-0">
+    <main id="view-editor" class="flex-grow grid grid-cols-1 lg:grid-cols-12 min-h-0">
       
       <!-- ===================================== -->
       <!-- SOL PANEL: YAZI FORMU VE EDİTÖR (7 KOLON) -->
@@ -875,6 +897,140 @@
       </div>
 
     </main>
+
+    <!-- ========================================== -->
+    <!-- GELEN MESAJLAR KUTUSU (INBOX WORKSPACE)     -->
+    <!-- ========================================== -->
+    <div id="view-inbox" class="hidden flex-grow flex flex-col p-4 sm:p-8 max-w-7xl mx-auto w-full space-y-6">
+      
+      <!-- Top Bar: Title & Search/Filters -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-800">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 text-[10.5px] font-black uppercase tracking-wider mb-1.5">
+            <span class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"></span>
+            <span>Canlı Gelen Kutusu</span>
+          </div>
+          <h2 class="text-2xl font-black text-white tracking-tight">Gelen İletişim Mesajları</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Ziyaretçilerin /iletisim/ sayfasından gönderdiği soru, mevzuat ve iş birliği talepleri.</p>
+        </div>
+
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <!-- Refresh Button -->
+          <button id="btn-refresh-inbox" type="button" class="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-700/80 hover:bg-slate-800 text-white text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer active:scale-95 shadow-xs">
+            <svg id="refresh-spinner" class="w-3.5 h-3.5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+            <span>Yenile</span>
+          </button>
+
+          <!-- Status Filter -->
+          <select id="inbox-status-filter" class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-white text-xs font-bold outline-none focus:border-sky-400 cursor-pointer">
+            <option value="all">Tüm Durumlar</option>
+            <option value="unread">Sadece Okunmamışlar</option>
+            <option value="read">Okunmuşlar</option>
+          </select>
+
+          <!-- Category Filter -->
+          <select id="inbox-cat-filter" class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-700/80 text-white text-xs font-bold outline-none focus:border-sky-400 cursor-pointer">
+            <option value="all">Tüm Konular</option>
+            <option value="Soru & Çözüm Gerekçesi Bildirimi">Soru & Çözüm</option>
+            <option value="Mevzuat & Hata Düzeltmesi">Mevzuat Düzeltmesi</option>
+            <option value="Banka Teftiş Sınavı Duyurusu">Banka Teftiş İlanı</option>
+            <option value="İş Birliği & Sponsorluk">İş Birliği</option>
+            <option value="Genel Görüş & Teşekkür">Genel Görüş</option>
+            <option value="Diğer">Diğer</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- KPI Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="p-4 rounded-2xl bg-[#0b1626] border border-slate-800 flex items-center justify-between shadow-xs">
+          <div>
+            <span class="text-[11px] font-bold text-slate-400 block mb-0.5">Toplam Mesaj</span>
+            <span id="kpi-total-messages" class="text-2xl font-black text-white">0</span>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-slate-800 text-sky-400 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-[#0b1626] border border-slate-800 flex items-center justify-between shadow-xs">
+          <div>
+            <span class="text-[11px] font-bold text-slate-400 block mb-0.5">Okunmamış Mesajlar</span>
+            <span id="kpi-unread-messages" class="text-2xl font-black text-rose-400">0</span>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-[#0b1626] border border-slate-800 flex items-center justify-between shadow-xs">
+          <div>
+            <span class="text-[11px] font-bold text-slate-400 block mb-0.5">Son Mesaj Tarihi</span>
+            <span id="kpi-latest-date" class="text-sm font-bold text-slate-200">-</span>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-slate-800 text-emerald-400 flex items-center justify-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Messages List Container -->
+      <div id="inbox-messages-list" class="space-y-3">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+
+    <!-- Message Detail Modal -->
+    <div id="message-detail-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+      <div class="w-full max-w-2xl rounded-3xl bg-[#0b1626] border-2 border-slate-700 shadow-2xl p-6 sm:p-8 flex flex-col justify-between max-h-[90vh] overflow-y-auto">
+        <div>
+          <!-- Modal Header -->
+          <div class="flex items-center justify-between pb-4 border-b border-slate-800 mb-5">
+            <div class="flex items-center gap-3">
+              <span id="modal-msg-avatar" class="w-10 h-10 rounded-2xl bg-sky-500/20 text-sky-400 font-black text-sm flex items-center justify-center border border-sky-500/30">M</span>
+              <div>
+                <h3 id="modal-msg-name" class="font-extrabold text-base text-white leading-tight">Gönderen Adı</h3>
+                <span id="modal-msg-email" class="text-xs text-sky-400 font-mono">mail@banka.com.tr</span>
+              </div>
+            </div>
+            <button id="modal-close-btn" type="button" class="p-2 rounded-xl bg-slate-800 text-slate-400 hover:text-white cursor-pointer active:scale-95 transition-transform">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+          </div>
+
+          <!-- Metadata Badges -->
+          <div class="flex flex-wrap items-center gap-2 mb-4">
+            <span id="modal-msg-badge" class="px-2.5 py-1 rounded-lg text-xs font-bold border">Konu</span>
+            <span id="modal-msg-date" class="text-xs text-slate-400 font-medium">Tarih</span>
+          </div>
+
+          <!-- Message Body Content -->
+          <div class="p-5 rounded-2xl bg-slate-900 border border-slate-800 text-slate-200 text-sm leading-relaxed whitespace-pre-wrap font-sans" id="modal-msg-body">
+            Mesaj içeriği burada görüntülenecektir...
+          </div>
+        </div>
+
+        <!-- Action Buttons Footer -->
+        <div class="pt-5 border-t border-slate-800 mt-6 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2">
+            <button id="modal-toggle-read-btn" type="button" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition-colors flex items-center gap-1.5 cursor-pointer">
+              <span>Okundu Olarak İşaretle</span>
+            </button>
+            <button id="modal-delete-btn" type="button" class="px-3.5 py-2 rounded-xl bg-rose-950/60 hover:bg-rose-900/60 border border-rose-800/60 text-xs font-bold text-rose-400 transition-colors flex items-center gap-1.5 cursor-pointer">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              <span>Sil</span>
+            </button>
+          </div>
+
+          <a id="modal-reply-btn" href="#" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-brand-600 hover:from-sky-400 hover:to-brand-500 text-white font-extrabold text-xs shadow-md transition-all flex items-center gap-2 active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            <span>E-posta ile Yanıtla</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
 
   </div>
 
@@ -1946,8 +2102,261 @@ ${postContent.value}
       }
     });
 
+    
+    // ==========================================
+    // GELEN MESAJLAR KUTUSU (INBOX) YÖNETİM MOTORU
+    // ==========================================
+    const INBOX_BIN_URL = 'https://extendsclass.com/api/json-storage/bin/baecfdc';
+    let inboxMessages = [];
+    let activeModalMessageId = null;
+
+    const tabBtnEditor = document.getElementById('tab-btn-editor');
+    const tabBtnInbox = document.getElementById('tab-btn-inbox');
+    const viewEditor = document.getElementById('view-editor');
+    const viewInbox = document.getElementById('view-inbox');
+    const inboxUnreadBadge = document.getElementById('inbox-unread-badge');
+
+    const kpiTotal = document.getElementById('kpi-total-messages');
+    const kpiUnread = document.getElementById('kpi-unread-messages');
+    const kpiLatest = document.getElementById('kpi-latest-date');
+    const inboxList = document.getElementById('inbox-messages-list');
+    const btnRefreshInbox = document.getElementById('btn-refresh-inbox');
+    const refreshSpinner = document.getElementById('refresh-spinner');
+    const inboxStatusFilter = document.getElementById('inbox-status-filter');
+    const inboxCatFilter = document.getElementById('inbox-cat-filter');
+
+    const messageModal = document.getElementById('message-detail-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const modalName = document.getElementById('modal-msg-name');
+    const modalEmail = document.getElementById('modal-msg-email');
+    const modalAvatar = document.getElementById('modal-msg-avatar');
+    const modalBadge = document.getElementById('modal-msg-badge');
+    const modalDate = document.getElementById('modal-msg-date');
+    const modalBody = document.getElementById('modal-msg-body');
+    const modalReplyBtn = document.getElementById('modal-reply-btn');
+    const modalToggleReadBtn = document.getElementById('modal-toggle-read-btn');
+    const modalDeleteBtn = document.getElementById('modal-delete-btn');
+
+    // Tab Switching
+    function switchToTab(tab) {
+      if (tab === 'inbox') {
+        tabBtnInbox.classList.remove('text-slate-400');
+        tabBtnInbox.classList.add('bg-sky-600', 'text-white', 'shadow-sm');
+        tabBtnEditor.classList.remove('bg-sky-600', 'text-white', 'shadow-sm');
+        tabBtnEditor.classList.add('text-slate-400');
+
+        viewEditor.classList.add('hidden');
+        viewInbox.classList.remove('hidden');
+        loadInboxMessages();
+      } else {
+        tabBtnEditor.classList.remove('text-slate-400');
+        tabBtnEditor.classList.add('bg-sky-600', 'text-white', 'shadow-sm');
+        tabBtnInbox.classList.remove('bg-sky-600', 'text-white', 'shadow-sm');
+        tabBtnInbox.classList.add('text-slate-400');
+
+        viewInbox.classList.add('hidden');
+        viewEditor.classList.remove('hidden');
+      }
+    }
+
+    tabBtnEditor?.addEventListener('click', () => switchToTab('editor'));
+    tabBtnInbox?.addEventListener('click', () => switchToTab('inbox'));
+
+    // Fetch Messages from Cloud Storage Bin
+    async function loadInboxMessages() {
+      if (refreshSpinner) refreshSpinner.classList.add('animate-spin');
+      try {
+        const resp = await fetch(INBOX_BIN_URL);
+        if (resp.ok) {
+          const data = await resp.json();
+          inboxMessages = Array.isArray(data.messages) ? data.messages : [];
+          localStorage.setItem('mufettis_cached_messages', JSON.stringify(inboxMessages));
+        }
+      } catch (err) {
+        console.warn('Inbox fetch network fallback');
+        const cached = localStorage.getItem('mufettis_cached_messages');
+        if (cached) inboxMessages = JSON.parse(cached);
+      } finally {
+        if (refreshSpinner) refreshSpinner.classList.remove('animate-spin');
+        renderInbox();
+      }
+    }
+
+    // Save Updated Messages to Cloud Bin
+    async function persistInboxMessages() {
+      localStorage.setItem('mufettis_cached_messages', JSON.stringify(inboxMessages));
+      try {
+        await fetch(INBOX_BIN_URL, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system: 'mufettis.org contact inbox system',
+            last_updated: new Date().toISOString(),
+            messages: inboxMessages
+          })
+        });
+      } catch (err) {
+        console.error('Failed to sync inbox to cloud bin:', err);
+      }
+    }
+
+    // Render Inbox List & KPIs
+    function renderInbox() {
+      const statusFilter = inboxStatusFilter?.value || 'all';
+      const catFilter = inboxCatFilter?.value || 'all';
+
+      const unreadCount = inboxMessages.filter(m => m.status === 'unread').length;
+      if (inboxUnreadBadge) {
+        inboxUnreadBadge.textContent = unreadCount.toString();
+        inboxUnreadBadge.className = unreadCount > 0 
+          ? 'px-1.5 py-0.2 rounded-full bg-rose-500 text-white font-extrabold text-[9.5px] animate-pulse'
+          : 'px-1.5 py-0.2 rounded-full bg-slate-700 text-slate-300 font-bold text-[9.5px]';
+      }
+
+      if (kpiTotal) kpiTotal.textContent = inboxMessages.length.toString();
+      if (kpiUnread) kpiUnread.textContent = unreadCount.toString();
+      if (kpiLatest) kpiLatest.textContent = inboxMessages.length > 0 ? (inboxMessages[0].date || '-') : '-';
+
+      let filtered = inboxMessages.slice();
+      if (statusFilter === 'unread') {
+        filtered = filtered.filter(m => m.status === 'unread');
+      } else if (statusFilter === 'read') {
+        filtered = filtered.filter(m => m.status !== 'unread');
+      }
+
+      if (catFilter !== 'all') {
+        filtered = filtered.filter(m => m.subject === catFilter);
+      }
+
+      if (!inboxList) return;
+
+      if (filtered.length === 0) {
+        inboxList.innerHTML = `
+          <div class="text-center py-16 px-4 rounded-3xl bg-[#0b1626] border border-slate-800">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-slate-800 text-slate-500 flex items-center justify-center">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>
+            </div>
+            <h3 class="font-extrabold text-base text-white">Bu filtrede gösterilecek mesaj yok</h3>
+            <p class="text-xs text-slate-400 mt-1">Ziyaretçiler /iletisim/ sayfasından mesaj gönderdiğinde burada listelenecektir.</p>
+          </div>
+        `;
+        return;
+      }
+
+      inboxList.innerHTML = filtered.map(msg => {
+        const isUnread = (msg.status === 'unread');
+        const initial = (msg.name || 'M').charAt(0).toUpperCase();
+
+        let badgeBg = 'bg-sky-500/10 text-sky-400 border-sky-500/30';
+        if (msg.subject?.includes('Hata') || msg.subject?.includes('Düzeltme')) {
+          badgeBg = 'bg-rose-500/10 text-rose-400 border-rose-500/30';
+        } else if (msg.subject?.includes('Duyuru') || msg.subject?.includes('İlan')) {
+          badgeBg = 'bg-amber-500/10 text-amber-400 border-amber-500/30';
+        } else if (msg.subject?.includes('İş Birliği')) {
+          badgeBg = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30';
+        }
+
+        return `
+          <div class="p-4 sm:p-5 rounded-2xl bg-[#0b1626] border-2 ${isUnread ? 'border-sky-500/60 bg-[#0d1d33]' : 'border-slate-800'} hover:border-slate-700 transition-all shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 group cursor-pointer" data-id="${msg.id}">
+            <div class="flex items-start gap-3.5 min-w-0 flex-grow">
+              <div class="w-10 h-10 rounded-2xl ${isUnread ? 'bg-sky-500 text-white' : 'bg-slate-800 text-slate-400'} font-black text-sm flex items-center justify-center shrink-0 shadow-sm">
+                ${initial}
+              </div>
+              <div class="min-w-0 flex-grow">
+                <div class="flex items-center gap-2 flex-wrap mb-1">
+                  <span class="font-extrabold text-sm text-white">${msg.name || 'İsimsiz Gönderen'}</span>
+                  <span class="text-xs text-sky-400 font-mono">(${msg.email || 'e-posta yok'})</span>
+                  <span class="px-2 py-0.5 rounded-md text-[10.5px] font-bold border ${badgeBg}">${msg.subject || 'Genel'}</span>
+                  ${isUnread ? '<span class="px-2 py-0.5 rounded-md text-[10px] font-black bg-rose-500 text-white uppercase tracking-wider">YENİ</span>' : ''}
+                </div>
+                <p class="text-xs text-slate-300 line-clamp-1 leading-relaxed">
+                  ${msg.message || ''}
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 shrink-0 self-end sm:self-center">
+              <span class="text-[11px] text-slate-400 font-mono">${msg.date || ''}</span>
+              <button type="button" class="view-msg-btn px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-sky-600 text-white text-xs font-bold transition-colors cursor-pointer" data-id="${msg.id}">
+                İncele
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Bind card & view button click
+      inboxList.querySelectorAll('[data-id]').forEach(el => {
+        el.addEventListener('click', (e) => {
+          const id = el.getAttribute('data-id');
+          openMessageDetail(id);
+        });
+      });
+    }
+
+    // Open Message Detail Modal
+    function openMessageDetail(id) {
+      const msg = inboxMessages.find(m => m.id === id);
+      if (!msg) return;
+
+      activeModalMessageId = id;
+      modalName.textContent = msg.name || 'İsimsiz Gönderen';
+      modalEmail.textContent = msg.email || '';
+      modalAvatar.textContent = (msg.name || 'M').charAt(0).toUpperCase();
+      modalDate.textContent = msg.date || '';
+      modalBody.textContent = msg.message || '';
+
+      modalBadge.textContent = msg.subject || 'Genel';
+      modalBadge.className = 'px-2.5 py-1 rounded-lg text-xs font-bold border bg-sky-500/10 text-sky-400 border-sky-500/30';
+
+      modalReplyBtn.href = `mailto:${encodeURIComponent(msg.email)}?subject=${encodeURIComponent('Re: [Müfettiş.org] ' + msg.subject)}&body=${encodeURIComponent('\n\n--- ' + msg.name + ' tarafından gönderilen orijinal mesaj: ---\n' + msg.message)}`;
+
+      // Automatically mark as read when viewed
+      if (msg.status === 'unread') {
+        msg.status = 'read';
+        persistInboxMessages();
+        renderInbox();
+      }
+
+      modalToggleReadBtn.textContent = msg.status === 'unread' ? 'Okundu Olarak İşaretle' : 'Okunmadı Olarak İşaretle';
+      messageModal.classList.remove('hidden');
+    }
+
+    // Modal Action Bindings
+    modalCloseBtn?.addEventListener('click', () => {
+      messageModal.classList.add('hidden');
+    });
+
+    modalToggleReadBtn?.addEventListener('click', () => {
+      const msg = inboxMessages.find(m => m.id === activeModalMessageId);
+      if (msg) {
+        msg.status = (msg.status === 'unread') ? 'read' : 'unread';
+        persistInboxMessages();
+        renderInbox();
+        modalToggleReadBtn.textContent = msg.status === 'unread' ? 'Okundu Olarak İşaretle' : 'Okunmadı Olarak İşaretle';
+      }
+    });
+
+    modalDeleteBtn?.addEventListener('click', () => {
+      if (confirm('Bu mesajı silmek istediğinize emin misiniz?')) {
+        inboxMessages = inboxMessages.filter(m => m.id !== activeModalMessageId);
+        persistInboxMessages();
+        renderInbox();
+        messageModal.classList.add('hidden');
+      }
+    });
+
+    btnRefreshInbox?.addEventListener('click', loadInboxMessages);
+    inboxStatusFilter?.addEventListener('change', renderInbox);
+    inboxCatFilter?.addEventListener('change', renderInbox);
+
+    // Initial check for inbox count
+    loadInboxMessages();
+
+    
     // Initial check
     checkAuth();
+    if (window.location.hash === "#inbox") switchToTab("inbox");
     loadDraftLocally();
     renderPreview();
   </script>

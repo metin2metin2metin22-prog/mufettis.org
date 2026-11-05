@@ -5,10 +5,12 @@ import '../styles/components.css';
 
 export async function getStaticPaths() {
   const posts = getAllPosts();
-  return posts.map(post => ({
-    params: { slug: post.slug },
-    props: { post }
-  }));
+  return posts
+    .filter(post => post.slug !== 'iletisim')
+    .map(post => ({
+      params: { slug: post.slug },
+      props: { post }
+    }));
 }
 
 const { post } = Astro.props;
