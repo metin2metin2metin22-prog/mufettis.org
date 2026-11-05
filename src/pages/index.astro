@@ -42,143 +42,84 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
 >
 
   <!-- ======================================================== -->
-  <!-- 1. HERO COMMAND CENTER & INSTITUTIONAL AUTHORITY STRIP  -->
+  <!-- 1. RESMÎ MEVZUAT VE DENETİM PORTALI BAŞLIĞI & ARAMA       -->
   <!-- ======================================================== -->
-  <section class="relative overflow-hidden pt-4 sm:pt-8 pb-8 sm:pb-12 border-b border-slate-200/90 dark:border-slate-800/90 bg-gradient-to-b from-white via-slate-50/70 to-slate-100/50 dark:from-[#06101c] dark:via-[#071322] dark:to-[#040b14] transition-colors">
-    
-    <!-- Ambient Radial Glow Effects (Subtle Lighting) -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[360px] bg-gradient-to-r from-sky-500/10 via-amber-500/10 to-indigo-500/10 blur-3xl pointer-events-none -z-10"></div>
-    <div class="absolute top-1/3 -right-20 w-72 h-72 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none -z-10"></div>
-
+  <section class="relative overflow-hidden pt-4 sm:pt-6 pb-6 sm:pb-8 border-b border-slate-200/90 dark:border-slate-800/90 bg-slate-50/60 dark:bg-[#071322] transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <!-- Top Institutional Verification Pill -->
-      <div class="flex items-center justify-between flex-wrap gap-2 mb-5">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-slate-900/90 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 shadow-xs text-[11px] font-bold">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span class="tracking-wide text-slate-700 dark:text-slate-300">2026 Resmî Müfredat & Tebliğ Güncellemeleriyle Birebir Uyumlu</span>
+      <!-- Kurumsal Üst Kimlik Şeridi -->
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+        <div class="inline-flex items-center gap-2 text-xs font-semibold text-slate-600 dark:text-slate-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span class="tracking-wide">T.C. Mevzuat, Tebliğ ve Müfredat Uyumlu Resmî Denetim Kütüphanesi</span>
         </div>
-
-        <div class="hidden sm:flex items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
-          <span class="inline-flex items-center gap-1 text-amber-500 dark:text-amber-400 font-bold">
-            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-            <span>Bağımsız Açık Akademi</span>
-          </span>
-          <span>•</span>
-          <span>Reklamsız & Ücretsiz</span>
+        <div class="text-[11px] font-mono text-slate-400 dark:text-slate-500">
+          2026 Resmî Mevzuat & Tebliğ Sürümü
         </div>
       </div>
 
-      <!-- Main Headline & Subtitle -->
+      <!-- Resmî Portal Başlığı -->
       <div class="max-w-4xl">
-        <h1 class="text-3xl sm:text-5xl lg:text-[56px] font-black text-slate-900 dark:text-white tracking-tight leading-[1.12] mb-4">
-          Banka Müfettişliği, SPL ve MASAK Sınavlarında <span class="bg-clip-text text-transparent bg-gradient-to-r from-amber-500 via-sky-500 to-emerald-500 dark:from-amber-400 dark:via-sky-400 dark:to-emerald-400">Zirveye Ulaşın.</span>
+        <h1 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+          Banka Müfettişliği, SPL ve MASAK Mevzuat Kütüphanesi
         </h1>
-        
-        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-lg leading-relaxed max-w-3xl font-normal">
-          SPK SPL Lisanslama, MASAK Uyum Görevlisi Yetkilendirme ve IIA CIA Part 1 sınavlarına hazırlananlar ile teftiş kurulu adayları için Türkiye'nin en kapsamlı çözümlü deneme sınavları, kanun gerekçeli ders notları ve 2026 maaş simülasyonları.
+        <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed max-w-3xl">
+          Bankacılık Teftiş Kurulları, Sermaye Piyasası Lisanslama (SPL), Mali Suçları Araştırma Kurulu (MASAK) Yetkilendirme ve Uluslararası İç Denetçi (CIA) sınavlarına ilişkin güncel kanun metinleri, tebliğ gerekçeleri, ders notları ve çözümlü deneme sınavları.
         </p>
       </div>
 
-      <!-- Interactive Omnibar Search (Raycast / Apple Style Command Launcher) -->
-      <div class="mt-7 max-w-3xl">
+      <!-- Kurumsal Arama Sistemi (Mevzuat & Sınav Tarayıcı) -->
+      <div class="mt-5 max-w-3xl">
         <div class="relative group">
-          <div class="absolute -inset-0.5 bg-gradient-to-r from-brand-600 via-amber-500 to-emerald-500 rounded-2xl sm:rounded-3xl blur-sm opacity-35 group-hover:opacity-60 transition duration-300"></div>
-          
           <button 
             type="button" 
             onclick="document.getElementById('search-trigger')?.click()" 
-            class="relative w-full p-3.5 sm:p-4.5 bg-white dark:bg-[#0c1827] rounded-2xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 shadow-xl flex items-center justify-between gap-3 text-left cursor-pointer active:scale-[0.99] transition-transform"
+            class="w-full p-3 sm:p-3.5 bg-white dark:bg-[#0c1827] rounded-xl sm:rounded-2xl border border-slate-300 dark:border-slate-700/80 shadow-xs flex items-center justify-between gap-3 text-left cursor-pointer hover:border-slate-400 dark:hover:border-slate-600 transition-colors"
           >
-            <div class="flex items-center gap-3 sm:gap-3.5 min-w-0">
-              <div class="w-9 h-9 rounded-xl bg-brand-50 dark:bg-brand-950 text-brand-600 dark:text-sky-400 flex items-center justify-center shrink-0 border border-brand-200 dark:border-brand-800">
-                <svg class="w-5 h-5 text-brand-600 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-              </div>
+            <div class="flex items-center gap-3 min-w-0">
+              <svg class="w-4 h-4 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
               <div class="min-w-0">
-                <span class="block text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-100 truncate">Sınav konusu, kanun maddesi veya ders notu arayın...</span>
-                <span class="text-[10.5px] text-slate-400 font-medium hidden sm:block">Örn: "5549 SK", "Takas T+2", "Üç Hat Modeli", "2026 Maaş"</span>
+                <span class="block text-xs sm:text-sm text-slate-700 dark:text-slate-200 font-medium truncate">Mevzuat maddesi, kanun no, tebliğ veya ders notu arayın...</span>
               </div>
             </div>
 
             <div class="flex items-center gap-2 shrink-0">
-              <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
-                <kbd class="font-mono">Ctrl</kbd> + <kbd class="font-mono">K</kbd>
+              <span class="hidden sm:inline-flex items-center text-[10.5px] font-mono text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700">
+                Ctrl + K
               </span>
-              <span class="px-3.5 py-1.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-black text-xs shadow-sm flex items-center gap-1">
-                <span>Ara</span>
-                <span class="hidden xs:inline">→</span>
+              <span class="px-3.5 py-1 rounded-lg bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs shadow-xs">
+                Mevzuatta Ara
               </span>
             </div>
           </button>
         </div>
 
-        <!-- Quick Jump Filter Chips -->
-        <div class="mt-3.5 flex items-center gap-2 overflow-x-auto whitespace-nowrap no-scrollbar pb-1 text-xs">
-          <span class="text-[11px] font-bold text-slate-400 uppercase tracking-wider shrink-0">Popüler:</span>
-          <a href="/maas-hesaplayici/" class="shrink-0 px-3 py-1 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 font-bold hover:scale-105 transition-transform flex items-center gap-1">
-            <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-            <span>2026 Maaş Hesaplayıcı</span>
+        <!-- Hızlı Mevzuat & Modül Bağlantıları -->
+        <div class="mt-2.5 flex items-center gap-1.5 overflow-x-auto whitespace-nowrap no-scrollbar pb-1 text-xs">
+          <span class="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider shrink-0 mr-1">Hızlı Erişim:</span>
+          
+          <a href="/category/spl-ders-notlari/" class="shrink-0 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11.5px] font-medium transition-colors">
+            SPL Lisanslama Notları
           </a>
-          <a href="/deneme-sinavlari/" class="shrink-0 px-3 py-1 rounded-xl bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800 font-bold hover:scale-105 transition-transform flex items-center gap-1">
-            <svg class="w-3.5 h-3.5 text-amber-500 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>12+ Çözümlü Deneme</span>
+          <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="shrink-0 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11.5px] font-medium transition-colors">
+            MASAK 5549 SK & AML
           </a>
-          <a href="/bilgi-kartlari/" class="shrink-0 px-3 py-1 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 font-bold hover:scale-105 transition-transform flex items-center gap-1">
-            <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-            <span>3D Akıl Kartları</span>
+          <a href="/category/cia-ders-notlari/" class="shrink-0 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11.5px] font-medium transition-colors">
+            IIA Standartları & CIA
           </a>
-          <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="shrink-0 px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-semibold hover:text-brand-600 transition-colors">
-            MASAK 5549 SK
+          <a href="/category/kariyer-meslek-rehberi/" class="shrink-0 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11.5px] font-medium transition-colors">
+            Banka Müfettişliği Rehberi
           </a>
-          <a href="/category/spl-ders-notlari/" class="shrink-0 px-3 py-1 rounded-xl bg-slate-100 dark:bg-slate-800/90 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 font-semibold hover:text-brand-600 transition-colors">
-            SPL Takas & Saklama
+          <a href="/deneme-sinavlari/" class="shrink-0 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11.5px] font-medium transition-colors">
+            Çözümlü Sınavlar
+          </a>
+          <a href="/maas-hesaplayici/" class="shrink-0 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11.5px] font-medium transition-colors">
+            Maaş Skalası
+          </a>
+          <a href="/bilgi-kartlari/" class="shrink-0 px-2.5 py-1 rounded-lg bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-[11.5px] font-medium transition-colors">
+            Bilgi Kartları
           </a>
         </div>
-      </div>
-
-      <!-- 4 Key Institutional Metrics Strip (Bespoke Glassmorphic Cards) -->
-      <div class="mt-9 grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-        
-        <div class="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-start gap-3">
-          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0 border border-amber-500/20">
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          </div>
-          <div>
-            <span class="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">200+ Soru</span>
-            <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight block mt-0.5">Mevzuat Gerekçeli Çözümler</span>
-          </div>
-        </div>
-
-        <div class="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-start gap-3">
-          <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center shrink-0 border border-sky-500/20">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
-          <div>
-            <span class="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">12+ Deneme</span>
-            <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight block mt-0.5">Gerçek Sınav Simülatörü</span>
-          </div>
-        </div>
-
-        <div class="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-start gap-3">
-          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/20">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          </div>
-          <div>
-            <span class="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">16 Maaş & Turne</span>
-            <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight block mt-0.5">2026 Fiili Bordro Skalası</span>
-          </div>
-        </div>
-
-        <div class="p-4 sm:p-5 rounded-2xl bg-white/80 dark:bg-slate-900/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-sm flex items-start gap-3">
-          <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0 border border-purple-500/20">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-          </div>
-          <div>
-            <span class="block text-lg sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">%100 Açık</span>
-            <span class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight block mt-0.5">Ücretsiz & Kayıtsız Erişim</span>
-          </div>
-        </div>
-
       </div>
 
     </div>
@@ -312,130 +253,140 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
   </section>
 
   <!-- ======================================================== -->
-  <!-- 3. İNTERAKTİF GÜÇ ÜÇLÜSÜ (3 MASTER TOOL SHOWCASE)        -->
+  <!-- 3. DİJİTAL DENETİM VE MEVZUAT UYGULAMALARI               -->
   <!-- ======================================================== -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 sm:mt-18">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
+    <div class="flex items-center justify-between pb-3 mb-6 border-b border-slate-200 dark:border-slate-800">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-5 rounded-sm bg-brand-600 dark:bg-sky-500"></span>
+        <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white tracking-tight uppercase">
+          Dijital Denetim ve Mevzuat Uygulamaları
+        </h2>
+      </div>
+      <span class="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:inline">İnteraktif Sınav, Hesaplama ve Mevzuat Çalışma Modülleri</span>
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       
       <!-- TOOL 1: 2026 MAAŞ HESAPLAYICI -->
-      <div class="group relative rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-emerald-950/40 via-[#071926] to-[#040f18] border-2 border-emerald-500/30 hover:border-emerald-400 transition-all duration-300 shadow-xl flex flex-col justify-between">
+      <div class="group relative rounded-3xl p-6 sm:p-7 bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-emerald-500/80 dark:hover:border-emerald-500/80 transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="w-10 h-10 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/30 group-hover:scale-110 transition-transform">
-              <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span class="w-10 h-10 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-200 dark:border-emerald-800">
+              <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             </span>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-              Bordro Motoru
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+              Bordro & Tazminat Skalası
             </span>
           </div>
 
-          <h3 class="text-xl font-black text-white mb-2 group-hover:text-emerald-300 transition-colors">
-            2026 Banka Müfettişi Maaş Hesaplayıcı
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+            Banka Müfettişi Maaş ve Harcırah Hesaplayıcı
           </h3>
-          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
-            Kamu, özel ve katılım bankaları ile BDDK/SPK müfettiş yardımcısı, yetkili ve başmüfettiş maaşlarını turne harcırahı ve dil tazminatıyla simüle edin.
+          <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+            5411 sayılı Bankacılık Kanunu ve teftiş kurulu yönetmeliklerine göre kamu, özel ve katılım bankalarındaki unvan bazlı net bordro, turne harcırahı ve dil tazminatı simülasyonu.
           </p>
 
-          <div class="space-y-1.5 text-xs text-slate-300 font-semibold mb-6">
+          <div class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300 font-medium mb-6">
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              <span>16 Maaş ve Performans Primi Dağılımı</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span>16 Maaş ve Dönemsel İkramiye Dağılımı</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               <span>GVK 24 Vergiden Muaf Turne Harcırahı</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-              <span>YDS & CIA Mesleki Sertifika Primleri</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span>YDS & CIA Mesleki Sertifika Tazminatları</span>
             </div>
           </div>
         </div>
 
-        <a href="/maas-hesaplayici/" class="w-full py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs text-center transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2">
-          <span>Maaşını Hemen Hesapla</span>
+        <a href="/maas-hesaplayici/" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-colors shadow-sm flex items-center justify-center gap-1.5">
+          <span>Maaş Skalasını Hesapla</span>
           <span>→</span>
         </a>
       </div>
 
       <!-- TOOL 2: 3D AKIL KARTLARI -->
-      <div class="group relative rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-sky-950/40 via-[#071926] to-[#040f18] border-2 border-sky-500/30 hover:border-sky-400 transition-all duration-300 shadow-xl flex flex-col justify-between">
+      <div class="group relative rounded-3xl p-6 sm:p-7 bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-sky-500/80 dark:hover:border-sky-500/80 transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-400 flex items-center justify-center border border-sky-500/30 group-hover:scale-110 transition-transform">
-              <svg class="w-5 h-5 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <span class="w-10 h-10 rounded-2xl bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center border border-sky-200 dark:border-sky-800">
+              <svg class="w-5 h-5 text-sky-600 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
             </span>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-sky-500/20 text-sky-300 border border-sky-500/30">
-              Hafıza Çivileri
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
+              Mevzuat Bilgi Kartları
             </span>
           </div>
 
-          <h3 class="text-xl font-black text-white mb-2 group-hover:text-sky-300 transition-colors">
-            3D Çevrilebilir Sınav Akıl Kartları
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">
+            Mevzuat ve Denetim Bilgi Kartları
           </h3>
-          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
-            Telefonda veya bilgisayarda hızlı tekrar yapın. Kartın üzerine dokunarak doğru mevzuat cevabını görün, sınav öncesi hafızanızı pekiştirin.
+          <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+            MASAK KYC ve şüpheli işlem bildirim süreleri, SPK mevzuatı ve IIA Küresel Standartları özetlerini soru-cevap formatında interaktif kartlarla pekiştirin.
           </p>
 
-          <div class="space-y-1.5 text-xs text-slate-300 font-semibold mb-6">
+          <div class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300 font-medium mb-6">
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
-              <span>MASAK ŞİB Süreleri & KYC Kuralları</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+              <span>MASAK ŞİB Süreleri & Kimlik Tespiti (KYC)</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
               <span>SPK Sermaye Piyasası Araçları Püf Noktaları</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span>
+              <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
               <span>IIA Üç Hat Modeli ve İç Denetim Standartları</span>
             </div>
           </div>
         </div>
 
-        <a href="/bilgi-kartlari/" class="w-full py-3 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs text-center transition-all shadow-lg shadow-sky-600/30 flex items-center justify-center gap-2">
-          <span>Akıl Kartlarını Aç & Çalış</span>
+        <a href="/bilgi-kartlari/" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs text-center transition-colors shadow-sm flex items-center justify-center gap-1.5">
+          <span>Bilgi Kartlarını İncele</span>
           <span>→</span>
         </a>
       </div>
 
       <!-- TOOL 3: GERÇEK SINAV SİMÜLATÖRÜ -->
-      <div class="group relative rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-amber-950/40 via-[#071926] to-[#040f18] border-2 border-amber-500/30 hover:border-amber-400 transition-all duration-300 shadow-xl flex flex-col justify-between">
+      <div class="group relative rounded-3xl p-6 sm:p-7 bg-white dark:bg-[#0c1827] border-2 border-slate-200 dark:border-slate-800 hover:border-amber-500/80 dark:hover:border-amber-500/80 transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-4">
-            <span class="w-10 h-10 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/30 group-hover:scale-110 transition-transform">
-              <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span class="w-10 h-10 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-200 dark:border-amber-800">
+              <svg class="w-5 h-5 fill-current text-amber-600 dark:text-amber-400" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
             </span>
-            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30">
+            <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
               Sınav Simülatörü
             </span>
           </div>
 
-          <h3 class="text-xl font-black text-white mb-2 group-hover:text-amber-300 transition-colors">
-            12+ Çözümlü Deneme Sınavı
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+            Mevzuat Gerekçeli Deneme Sınavları
           </h3>
-          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
-            Soruları çözerken anında doğru/yanlış sesi ve kanun gerekçesini görün. Süre sayacı ve sınav sonu performans karnesiyle seviyenizi ölçün.
+          <p class="text-slate-600 dark:text-slate-300 text-xs sm:text-sm leading-relaxed mb-4">
+            SPL, MASAK ve CIA sınav müfredatlarına uygun deneme soruları. Her soruda ilgili kanun maddesi ve tebliğ dayanağıyla hazırlanmış resmî çözüm gerekçesi.
           </p>
 
-          <div class="space-y-1.5 text-xs text-slate-300 font-semibold mb-6">
+          <div class="space-y-1.5 text-xs text-slate-600 dark:text-slate-300 font-medium mb-6">
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              <span>200+ Çözümlü ve Açıklamalı Soru</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              <span>Kanun ve Tebliğ Gerekçeli Çözümler</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              <span>30 Dakika Geri Sayım ve Süre Motoru</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              <span>Sınav Süresi ve Performans Karnesi</span>
             </div>
             <div class="flex items-center gap-2">
-              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              <span>Hata Defteri Entegrasyonu (Yanlışları Sakla)</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              <span>Hata Defteri (Tekrar Listesine Kaydetme)</span>
             </div>
           </div>
         </div>
 
-        <a href="/deneme-sinavlari/" class="w-full py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs text-center transition-all shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2">
-          <span>Deneme Sınavı Başlat</span>
+        <a href="/deneme-sinavlari/" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs text-center transition-colors shadow-sm flex items-center justify-center gap-1.5">
+          <span>Deneme Sınavlarını Aç</span>
           <span>→</span>
         </a>
       </div>
@@ -444,19 +395,19 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
   </section>
 
   <!-- ======================================================== -->
-  <!-- 4. 4 BÜYÜK DİSİPLİN: KATEGORİ REHBERİ (MASTER ACADEMY)   -->
+  <!-- 4. 4 BÜYÜK DİSİPLİN: MEVZUAT VE SINAV KÜTÜPHANELERİ     -->
   <!-- ======================================================== -->
-  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-22">
-    <div class="mb-10">
-      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 dark:bg-brand-950/80 text-brand-700 dark:text-sky-300 border border-brand-200 dark:border-brand-800 text-xs font-black uppercase tracking-wider mb-3">
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 sm:mt-18">
+    <div class="mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 text-xs font-bold uppercase tracking-wider mb-2">
         <svg class="w-3.5 h-3.5 text-brand-600 dark:text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        <span>Resmî Müfredat ve Sertifikasyonlar</span>
+        <span>Mevzuat ve Sınav Müfredatları</span>
       </div>
-      <h2 class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-        Sınav ve Kariyer Odakları
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+        Temel Denetim ve Mevzuat Kütüphaneleri
       </h2>
-      <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base mt-1.5 max-w-2xl leading-relaxed">
-        Türkiye'de en çok tercih edilen denetim, uyum ve sermaye piyasası sınavlarına özel ayrılmış, güncel mevzuat ve çözümlü soru kütüphaneleri.
+      <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
+        Bankacılık teftiş kurulları, sermaye piyasaları ve kurumsal iç denetim standartlarına ilişkin mevzuat dokümanları ve sınav hazırlık setleri.
       </p>
     </div>
 
@@ -747,20 +698,20 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
 
       <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-10 pb-8 border-b border-brand-800/80 relative z-10">
         <div>
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/20 text-amber-300 text-xs font-black uppercase tracking-wider mb-3 border border-amber-500/40 shadow-sm">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-amber-500/20 text-amber-300 text-xs font-bold uppercase tracking-wider mb-2.5 border border-amber-500/30">
             <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>Gerçek Sınav Simülatörü</span>
+            <span>Mevzuat Sınav Simülatörü</span>
           </div>
-          <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Çözümlü ve Açıklamalı Deneme Sınavları
+          <h2 class="text-xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Mevzuat ve Sınav Çözüm Veritabanı
           </h2>
-          <p class="text-slate-300 text-xs sm:text-base mt-2 max-w-2xl leading-relaxed">
-            Soruları cevaplayın; sistem şıkka tıkladığınız anda yeşil/kırmızı yakarak doğru cevabı, ilgili kanun maddesini ve müfettiş gerekçesini göstersin.
+          <p class="text-slate-300 text-xs sm:text-sm mt-1.5 max-w-2xl leading-relaxed">
+            SPL, MASAK ve İç Denetim sınavlarına yönelik çözümlü testler; her soruda resmî kanun maddesi ve tebliğ dayanakları incelenebilir.
           </p>
         </div>
         
-        <a href="/deneme-sinavlari/" class="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm shadow-xl shadow-amber-500/20 whitespace-nowrap transition-transform hover:-translate-y-0.5 shrink-0 flex items-center gap-2 active:scale-95">
-          <span>Tüm 12+ Denemeyi Listele</span>
+        <a href="/deneme-sinavlari/" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs sm:text-sm whitespace-nowrap transition-colors shrink-0 flex items-center gap-1.5">
+          <span>Tüm Sınav Arşivi</span>
           <span>→</span>
         </a>
       </div>
