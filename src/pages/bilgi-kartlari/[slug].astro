@@ -39,7 +39,7 @@ const faqSchema = {
       "name": card.question,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": `${card.answer}\n\nResmî Kanun Dayanağı: ${card.legalBasis.lawName} (${card.legalBasis.article}). ${card.legalBasis.details}`
+        "text": `${card.answer}\n\nMevzuat Notu: ${card.legalNote}`
       }
     }
   ]
@@ -58,7 +58,7 @@ const breadcrumbSchema = {
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Akıl Kartları",
+      "name": "Bilgi Kartları",
       "item": "https://mufettis.org/bilgi-kartlari/"
     },
     {
@@ -72,275 +72,132 @@ const breadcrumbSchema = {
 ---
 
 <Layout 
-  title={`${card.title} | Müfettiş Bilgi Kartları`}
-  description={card.seoDescription}
+  title={`${card.title} - Bilgi Kartı | mufettis.org`}
+  description={`${card.question} - Banka Müfettişliği, SPL, MASAK ve CIA sınavları için interaktif bilgi kartı ve mevzuat özeti.`}
   canonical={`https://mufettis.org/bilgi-kartlari/${card.slug}/`}
 >
   <!-- Injected SEO Structured Data -->
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24">
     
     <!-- Top Breadcrumb -->
     <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6 overflow-x-auto whitespace-nowrap scrollbar-none pb-1">
       <a href="/" class="hover:text-brand-600 dark:hover:text-sky-400">Anasayfa</a>
       <span>/</span>
-      <a href="/bilgi-kartlari/" class="hover:text-brand-600 dark:hover:text-sky-400">Akıl Kartları</a>
+      <a href="/bilgi-kartlari/" class="hover:text-brand-600 dark:hover:text-sky-400">Bilgi Kartları</a>
       <span>/</span>
       <span class="text-slate-700 dark:text-slate-300 font-bold truncate">{card.title}</span>
     </nav>
 
-    <!-- Page Header & Badges -->
+    <!-- Header & Badges -->
     <header class="mb-8">
-      <div class="flex flex-wrap items-center gap-2 mb-3">
-        <span class="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/80 text-brand-700 dark:text-sky-300 border border-brand-200 dark:border-brand-800">
-          {card.category}
-        </span>
-        <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
-          {card.tag}
-        </span>
-        <span class="text-xs text-slate-400 font-bold ml-auto">
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-brand-50 dark:bg-brand-950/80 text-brand-700 dark:text-sky-300 border border-brand-200 dark:border-brand-800">
+            {card.category}
+          </span>
+          <span class="text-[11px] font-bold px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+            {card.tag}
+          </span>
+        </div>
+        <span class="text-xs text-slate-400 font-bold">
           Kart #{currentIndex} / {totalCards}
         </span>
       </div>
 
-      <h1 class="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight leading-snug">
+      <h1 class="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-snug">
         {card.title}
       </h1>
-
-      <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">
-        {card.seoDescription}
-      </p>
     </header>
 
-    <!-- SECTION 1: 3D INTERACTIVE FLIP CARD -->
-    <section class="mb-12">
-      <div class="perspective-1000 min-h-[320px] cursor-pointer" id="main-flip-container">
-        <div class="flashcard-inner relative w-full h-full min-h-[320px] transition-transform duration-500 transform-style-3d rounded-3xl border-2 border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl hover:border-brand-500">
-          
-          <!-- Front Face -->
-          <div class="flashcard-front absolute inset-0 backface-hidden rounded-3xl p-7 sm:p-9 bg-white dark:bg-[#0c1827] flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-black uppercase tracking-wider text-brand-600 dark:text-sky-400">
-                  SORU & TEMEL KAVRAM
-                </span>
-                <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-                  Kart #{currentIndex}
-                </span>
-              </div>
-              <h2 class="text-lg sm:text-2xl font-black text-slate-900 dark:text-white leading-snug">
-                {card.question}
-              </h2>
-            </div>
-
-            <div class="pt-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold">
-              <span class="text-brand-600 dark:text-sky-400 inline-flex items-center gap-1.5">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                Cevabı ve mevzuat özetini görmek için tıklayın
+    <!-- 3D INTERACTIVE FLIP CARD -->
+    <div class="perspective-1000 min-h-[340px] cursor-pointer mb-6" id="main-flip-container">
+      <div class="flashcard-inner relative w-full h-full min-h-[340px] transition-transform duration-500 transform-style-3d rounded-3xl border-2 border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl hover:border-brand-500">
+        
+        <!-- Front Face -->
+        <div class="flashcard-front absolute inset-0 backface-hidden rounded-3xl p-8 sm:p-10 bg-white dark:bg-[#0c1827] flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs font-black uppercase tracking-wider text-brand-600 dark:text-sky-400">
+                SORU
               </span>
-              <span class="text-slate-400">Çevir ↻</span>
+              <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                #{currentIndex}
+              </span>
             </div>
+            <h2 class="text-lg sm:text-2xl font-black text-slate-900 dark:text-white leading-snug">
+              {card.question}
+            </h2>
           </div>
 
-          <!-- Back Face -->
-          <div class="flashcard-back absolute inset-0 backface-hidden rotate-y-180 rounded-3xl p-7 sm:p-9 bg-gradient-to-br from-[#07192a] via-[#092237] to-[#05111d] text-white flex flex-col justify-between border-2 border-amber-500/50 shadow-2xl">
-            <div>
-              <div class="flex items-center justify-between mb-3 pb-2 border-b border-brand-800/80">
-                <span class="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-                  <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-                  Resmî Yanıt & Kural
-                </span>
-                <span class="text-xs text-slate-400 font-bold">#{currentIndex}</span>
-              </div>
-              <p class="text-slate-100 text-sm sm:text-base leading-relaxed whitespace-pre-line font-medium">
-                {card.answer}
-              </p>
-            </div>
+          <div class="pt-5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-bold">
+            <span class="text-brand-600 dark:text-sky-400 inline-flex items-center gap-1.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+              Cevabı görmek için dokunun
+            </span>
+            <span class="text-slate-400">Çevir ↻</span>
+          </div>
+        </div>
 
-            <div class="pt-4 border-t border-brand-800 flex items-center justify-between text-xs font-bold text-slate-400">
-              <span class="text-amber-400">Kartı geri çevirmek için tıklayın ↻</span>
-              <span class="text-slate-400">Aşağıda mevzuat dayanağını inceleyin ↓</span>
+        <!-- Back Face -->
+        <div class="flashcard-back absolute inset-0 backface-hidden rotate-y-180 rounded-3xl p-8 sm:p-10 bg-gradient-to-br from-[#07192a] via-[#092237] to-[#05111d] text-white flex flex-col justify-between border-2 border-amber-500/50 shadow-2xl">
+          <div>
+            <div class="flex items-center justify-between mb-3 pb-2 border-b border-brand-800/80">
+              <span class="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                Doğru Cevap & Özet
+              </span>
+              <span class="text-xs text-slate-400 font-bold">#{currentIndex}</span>
             </div>
+            <p class="text-slate-100 text-sm sm:text-base leading-relaxed whitespace-pre-line font-medium">
+              {card.answer}
+            </p>
           </div>
 
+          <div class="pt-4 border-t border-brand-800 flex items-center justify-between text-xs font-bold text-slate-400">
+            <span class="text-amber-400">Tekrar çevirmek için dokunun ↻</span>
+            <span class="text-slate-400">Mevzuat notu aşağıda ↓</span>
+          </div>
         </div>
+
       </div>
-      <p class="text-center text-xs text-slate-400 dark:text-slate-500 mt-2.5">
-        💡 İpucu: Kartı çevirerek sınav öncesi bilginizi test edebilir, aşağıda ayrıntılı kanun analizi ve çözümlü soruyu inceleyebilirsiniz.
-      </p>
-    </section>
+    </div>
 
-    <!-- SECTION 2: RESMÎ KANUN VE TEBLİĞ DAYANAĞI -->
-    <section class="mb-10 bg-white dark:bg-[#0c1827] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
-      <div class="flex items-center gap-3 mb-5">
-        <div class="w-10 h-10 rounded-2xl bg-sky-100 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center font-black text-lg shrink-0">
-          ⚖️
+    <!-- MEVZUAT NOTU -->
+    {card.legalNote && (
+      <div class="mb-10 p-5 rounded-2xl bg-white dark:bg-[#0c1827] border border-slate-200 dark:border-slate-800 shadow-xs">
+        <div class="flex items-center gap-2 mb-2 text-xs font-black uppercase tracking-wider text-slate-800 dark:text-slate-200">
+          <span>⚖️ Mevzuat & Dayanak Notu</span>
         </div>
-        <div>
-          <h2 class="text-xl font-black text-slate-900 dark:text-white">
-            Resmî Kanun & Tebliğ Dayanağı
-          </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400">
-            {card.legalBasis.lawName} — {card.legalBasis.article}
-          </p>
-        </div>
-      </div>
-
-      <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-6 font-medium">
-        {card.legalBasis.details}
-      </div>
-
-      <h3 class="text-sm font-black text-slate-900 dark:text-white mb-3 uppercase tracking-wider">
-        Müfettişin Bilmesi Gereken 4 Temel Kural
-      </h3>
-      <ul class="space-y-2.5">
-        {card.legalBasis.keyPoints.map((point) => (
-          <li class="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
-            <svg class="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
-            <span class="leading-relaxed">{point}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
-
-    <!-- SECTION 3: MÜFETTİŞİN SINAV TÜYOSU & ÇELDİRİCİ TUZAĞI -->
-    <section class="mb-10 bg-gradient-to-br from-amber-500/10 via-amber-500/5 to-transparent rounded-3xl p-6 sm:p-8 border-2 border-amber-500/30 dark:border-amber-500/20 shadow-sm relative overflow-hidden">
-      <div class="flex items-center gap-3 mb-4">
-        <div class="w-10 h-10 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-lg shrink-0 shadow-md">
-          🎯
-        </div>
-        <div>
-          <h2 class="text-xl font-black text-slate-900 dark:text-white">
-            {card.examTip.title}
-          </h2>
-          <span class="text-xs text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider">
-            Sınavlarda Sıkça Düşülen Tuzaklar
-          </span>
-        </div>
-      </div>
-
-      <p class="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed mb-5 font-medium">
-        {card.examTip.trapWarning}
-      </p>
-
-      <div class="p-4 rounded-2xl bg-white/80 dark:bg-slate-900/90 border border-amber-400/40 shadow-xs flex items-center gap-3">
-        <div class="w-2.5 h-10 rounded-full bg-amber-500 shrink-0"></div>
-        <p class="text-xs sm:text-sm font-extrabold text-amber-900 dark:text-amber-300 leading-snug">
-          {card.examTip.mnemonicOrRule}
+        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+          {card.legalNote}
         </p>
       </div>
-    </section>
+    )}
 
-    <!-- SECTION 4: PEKİŞTİRME TEST SORUSU (İNTERAKTİF) -->
-    <section class="mb-10 bg-white dark:bg-[#0c1827] rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm" id="practice-quiz-box">
-      <div class="flex items-center justify-between mb-5 pb-3 border-b border-slate-100 dark:border-slate-800">
-        <div class="flex items-center gap-2.5">
-          <span class="w-7 h-7 rounded-xl bg-brand-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
-            ?
-          </span>
-          <h2 class="text-lg sm:text-xl font-black text-slate-900 dark:text-white">
-            Pekiştirme Test Sorusu
-          </h2>
-        </div>
-        <button type="button" id="micro-quiz-reset" class="text-xs font-bold text-slate-400 hover:text-brand-600 dark:hover:text-sky-400 cursor-pointer hidden">
-          Tekrar Çöz ↻
-        </button>
-      </div>
-
-      <!-- Question Stem -->
-      <div class="p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 text-sm sm:text-[15px] font-bold text-slate-900 dark:text-white leading-relaxed mb-6">
-        {card.practiceQuestion.question}
-      </div>
-
-      <!-- Choices Grid -->
-      <div class="grid grid-cols-1 gap-3 mb-6" id="micro-options-container" data-correct={card.practiceQuestion.correctAnswer}>
-        {card.practiceQuestion.options.map((opt) => (
-          <button 
-            type="button" 
-            class="micro-opt-btn group w-full text-left py-3 px-4 sm:py-3.5 sm:px-5 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50/70 hover:bg-brand-50/50 dark:bg-slate-900/40 dark:hover:bg-brand-950/30 hover:border-brand-500 dark:hover:border-sky-500 transition-all duration-200 flex items-start gap-3.5 sm:gap-4 cursor-pointer focus:outline-none"
-            data-option={opt.key}
-          >
-            <span class="micro-badge inline-flex items-center justify-center w-8 h-8 rounded-xl bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 font-extrabold text-sm text-slate-700 dark:text-slate-300 group-hover:border-brand-500 group-hover:bg-brand-600 group-hover:text-white transition-all shrink-0 shadow-sm">
-              {opt.key}
-            </span>
-            <span class="text-sm sm:text-[15px] text-slate-800 dark:text-slate-200 leading-relaxed pt-0.5 font-medium group-hover:text-slate-950 dark:group-hover:text-white">
-              {opt.text}
-            </span>
-          </button>
-        ))}
-      </div>
-
-      <!-- Feedback Banner (Hidden by default) -->
-      <div id="micro-feedback-box" class="hidden p-5 rounded-2xl border-2 transition-all duration-300">
-        <div id="micro-feedback-title" class="text-sm font-black mb-2 flex items-center gap-2"></div>
-        <p class="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
-          {card.practiceQuestion.explanation}
-        </p>
-      </div>
-    </section>
-
-    <!-- SECTION 5: İLGİLİ ÇALIŞMA KAYNAKLARI (İÇ BAĞLANTILAR) -->
-    <section class="mb-12 grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <a 
-        href={`/${card.relatedArticleSlug}/`}
-        class="group p-5 rounded-2xl bg-white dark:bg-[#0c1827] border border-slate-200 dark:border-slate-800 hover:border-brand-500 shadow-sm transition-all flex flex-col justify-between"
-      >
-        <div>
-          <span class="text-[10px] font-black uppercase tracking-wider text-brand-600 dark:text-sky-400 block mb-1">
-            İlgili Konu Anlatımı
-          </span>
-          <h3 class="text-sm sm:text-base font-black text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 transition-colors">
-            {card.relatedArticleTitle}
-          </h3>
-        </div>
-        <span class="text-xs font-bold text-slate-400 mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-          Dersi İncele ➔
-        </span>
-      </a>
-
-      <a 
-        href={`/${card.relatedExamSlug}/`}
-        class="group p-5 rounded-2xl bg-white dark:bg-[#0c1827] border border-slate-200 dark:border-slate-800 hover:border-amber-500 shadow-sm transition-all flex flex-col justify-between"
-      >
-        <div>
-          <span class="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 block mb-1">
-            İlgili Deneme Sınavı
-          </span>
-          <h3 class="text-sm sm:text-base font-black text-slate-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-            {card.relatedExamTitle}
-          </h3>
-        </div>
-        <span class="text-xs font-bold text-slate-400 mt-4 inline-flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-          Deneme Sınavını Çöz ➔
-        </span>
-      </a>
-    </section>
-
-    <!-- BOTTOM CARD NAVIGATION -->
-    <footer class="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <!-- BOTTOM NAVIGATION -->
+    <footer class="pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 text-xs font-bold">
       <a 
         href={`/bilgi-kartlari/${prevCard.slug}/`}
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+        class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
       >
-        <span>← Önceki Kart</span>
-        <span class="text-slate-400 text-[11px]">({prevCard.title.slice(0, 24)}...)</span>
+        <span>← Önceki</span>
       </a>
 
       <a 
         href="/bilgi-kartlari/"
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-brand-600 text-white font-black text-xs hover:bg-brand-700 shadow-sm transition-all"
+        class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-brand-600 text-white hover:bg-brand-700 shadow-xs transition-all"
       >
-        <span>Tüm Kartlar (Çalışma Salonu)</span>
+        <span>Tüm Bilgi Kartları</span>
       </a>
 
       <a 
         href={`/bilgi-kartlari/${nextCard.slug}/`}
-        class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+        class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
       >
-        <span>Sonraki Kart →</span>
-        <span class="text-slate-400 text-[11px]">({nextCard.title.slice(0, 24)}...)</span>
+        <span>Sonraki →</span>
       </a>
     </footer>
 
@@ -371,95 +228,6 @@ const breadcrumbSchema = {
     flipContainer?.addEventListener('click', () => {
       const inner = flipContainer.querySelector('.flashcard-inner');
       inner?.classList.toggle('flashcard-flipped');
-    });
-
-    // Practice Quiz Handler
-    const quizBox = document.getElementById('practice-quiz-box');
-    const optContainer = document.getElementById('micro-options-container');
-    const optBtns = quizBox?.querySelectorAll('.micro-opt-btn');
-    const feedbackBox = document.getElementById('micro-feedback-box');
-    const feedbackTitle = document.getElementById('micro-feedback-title');
-    const resetBtn = document.getElementById('micro-quiz-reset');
-    const correctAnswer = optContainer?.getAttribute('data-correct') || 'A';
-
-    let answered = false;
-
-    optBtns?.forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (answered) return;
-        answered = true;
-
-        const selected = btn.getAttribute('data-option');
-        const isCorrect = (selected === correctAnswer);
-
-        // Disable options
-        optBtns.forEach(b => {
-          (b as HTMLButtonElement).disabled = true;
-          b.classList.remove('hover:border-brand-500', 'cursor-pointer');
-          b.classList.add('cursor-default');
-        });
-
-        // Show reset button
-        resetBtn?.classList.remove('hidden');
-
-        if (isCorrect) {
-          btn.classList.add('bg-emerald-50', 'dark:bg-emerald-950/40', 'border-emerald-500', 'text-emerald-950', 'dark:text-emerald-100');
-          const badge = btn.querySelector('.micro-badge');
-          if (badge) {
-            badge.className = 'micro-badge inline-flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-600 text-white border-2 border-emerald-600 font-extrabold text-sm shadow-md';
-            badge.innerHTML = `${selected} ✓`;
-          }
-
-          if (feedbackBox && feedbackTitle) {
-            feedbackBox.className = 'p-5 rounded-2xl border-2 bg-emerald-50 dark:bg-emerald-950/60 border-emerald-500 text-emerald-950 dark:text-emerald-100';
-            feedbackTitle.innerHTML = `<span class="text-emerald-600 dark:text-emerald-400 font-extrabold">🎉 Tebrikler! Doğru Seçenek (${correctAnswer})</span>`;
-            feedbackBox.classList.remove('hidden');
-          }
-        } else {
-          btn.classList.add('bg-rose-50', 'dark:bg-rose-950/40', 'border-rose-500', 'text-rose-950', 'dark:text-rose-100');
-          const badge = btn.querySelector('.micro-badge');
-          if (badge) {
-            badge.className = 'micro-badge inline-flex items-center justify-center w-8 h-8 rounded-xl bg-rose-600 text-white border-2 border-rose-600 font-extrabold text-sm shadow-md';
-            badge.innerHTML = `${selected} ✗`;
-          }
-
-          // Highlight correct option
-          optBtns.forEach(b => {
-            if (b.getAttribute('data-option') === correctAnswer) {
-              b.classList.add('bg-emerald-50', 'dark:bg-emerald-950/40', 'border-emerald-500');
-              const cBadge = b.querySelector('.micro-badge');
-              if (cBadge) {
-                cBadge.className = 'micro-badge inline-flex items-center justify-center w-8 h-8 rounded-xl bg-emerald-600 text-white border-2 border-emerald-600 font-extrabold text-sm shadow-md';
-                cBadge.innerHTML = `${correctAnswer} ✓`;
-              }
-            }
-          });
-
-          if (feedbackBox && feedbackTitle) {
-            feedbackBox.className = 'p-5 rounded-2xl border-2 bg-rose-50 dark:bg-rose-950/60 border-rose-500 text-rose-950 dark:text-rose-100';
-            feedbackTitle.innerHTML = `<span class="text-rose-600 dark:text-rose-400 font-extrabold">Yanlış Seçenek. Doğru Seçenek: (${correctAnswer})</span>`;
-            feedbackBox.classList.remove('hidden');
-          }
-        }
-      });
-    });
-
-    // Reset handler
-    resetBtn?.addEventListener('click', () => {
-      answered = false;
-      resetBtn.classList.add('hidden');
-      feedbackBox?.classList.add('hidden');
-
-      optBtns?.forEach(b => {
-        (b as HTMLButtonElement).disabled = false;
-        b.className = 'micro-opt-btn group w-full text-left py-3 px-4 sm:py-3.5 sm:px-5 rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-slate-50/70 hover:bg-brand-50/50 dark:bg-slate-900/40 dark:hover:bg-brand-950/30 hover:border-brand-500 dark:hover:border-sky-500 transition-all duration-200 flex items-start gap-3.5 sm:gap-4 cursor-pointer focus:outline-none';
-        const opt = b.getAttribute('data-option');
-        const badge = b.querySelector('.micro-badge');
-        if (badge) {
-          badge.className = 'micro-badge inline-flex items-center justify-center w-8 h-8 rounded-xl bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-700 font-extrabold text-sm text-slate-700 dark:text-slate-300 group-hover:border-brand-500 group-hover:bg-brand-600 group-hover:text-white transition-all shrink-0 shadow-sm';
-          badge.textContent = opt || '';
-        }
-      });
     });
   </script>
 </Layout>

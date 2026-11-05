@@ -4,8 +4,8 @@ import { flashcards } from '../data/flashcards';
 ---
 
 <Layout 
-  title="İnteraktif Sınav Bilgi Kartları (Flashcards) | SPL, MASAK, CIA"
-  description="Banka Müfettişliği, SPL, MASAK ve CIA sınavları için 3D çevrilebilir interaktif akıl ve hafıza kartları. Mevzuat tüyoları ve çözümlü sorular."
+  title="Bilgi Kartları | Banka Müfettişliği, SPL, MASAK, CIA Sınavları"
+  description="Banka Müfettişliği, SPL Lisanslama, MASAK Uyum ve CIA sınavları için 3D çevrilebilir interaktif bilgi kartları. Temel mevzuat maddelerini ve kanun sürelerini kolayca pekiştirin."
   canonical="https://mufettis.org/bilgi-kartlari/"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-28">
@@ -14,24 +14,24 @@ import { flashcards } from '../data/flashcards';
     <nav class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-6">
       <a href="/" class="hover:text-brand-600 dark:hover:text-sky-400">Anasayfa</a>
       <span>/</span>
-      <span class="text-slate-800 dark:text-slate-200 font-bold">İnteraktif Bilgi Kartları</span>
+      <span class="text-slate-800 dark:text-slate-200 font-bold">Bilgi Kartları</span>
     </nav>
 
     <!-- Header -->
     <header class="max-w-3xl mb-10">
       <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-50 dark:bg-brand-950/80 text-brand-700 dark:text-sky-300 border border-brand-200 dark:border-brand-800 text-xs font-black uppercase tracking-wider mb-3">
         <svg class="w-3.5 h-3.5 text-brand-600 dark:text-sky-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-        <span>3D Çevrilebilir Hafıza Kartları & Mikro Mevzuat Hub</span>
+        <span>İnteraktif Sınav Çalışması</span>
       </div>
       <h1 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
-        Sınav Akıl Kartları
+        Bilgi Kartları
       </h1>
       <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">
-        Telefonda veya bilgisayarda hızlı tekrar yapın. Kartın üzerine tıklayarak cevabı görün, öğrendiklerinizi pekiştirin veya doğrudan her konunun derinlemesine mevzuat ve çözümlü soru sayfasına geçin.
+        Telefonda veya bilgisayarda hızlı tekrar yapın. Kartın üzerine dokunarak cevabı görün, öğrendiklerinizi pekiştirin.
       </p>
     </header>
 
-    <!-- Filter Buttons (Smooth Horizontal Carousel on Mobile) -->
+    <!-- Filter Buttons (Horizontal Carousel on Mobile) -->
     <div class="flex items-center gap-2.5 pb-6 mb-8 border-b border-slate-200 dark:border-slate-800 overflow-x-auto whitespace-nowrap no-scrollbar scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 text-xs">
       <button type="button" class="fc-filter active px-4 py-2 rounded-xl bg-brand-600 text-white font-bold cursor-pointer shrink-0 active:scale-95 transition-transform" data-filter="all">Tüm Kartlar ({flashcards.length})</button>
       <button type="button" class="fc-filter px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold hover:bg-sky-100 dark:hover:bg-sky-950/60 cursor-pointer inline-flex items-center gap-1.5 shrink-0 active:scale-95 transition-transform" data-filter="spl">
@@ -55,8 +55,8 @@ import { flashcards } from '../data/flashcards';
     <!-- 3D Flashcards Grid -->
     <div id="flashcards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {flashcards.map((card, idx) => (
-        <div class="flashcard-container perspective-1000 min-h-[320px] cursor-pointer" data-category={card.catSlug}>
-          <div class="flashcard-inner relative w-full h-full min-h-[320px] transition-transform duration-500 transform-style-3d rounded-3xl border-2 border-slate-200 dark:border-slate-800 shadow-md hover:shadow-2xl hover:border-brand-500">
+        <div class="flashcard-container perspective-1000 min-h-[300px] cursor-pointer" data-category={card.catSlug}>
+          <div class="flashcard-inner relative w-full h-full min-h-[300px] transition-transform duration-500 transform-style-3d rounded-3xl border-2 border-slate-200 dark:border-slate-800 shadow-md hover:shadow-2xl hover:border-brand-500">
             
             <!-- Front Face -->
             <div class="flashcard-front absolute inset-0 backface-hidden rounded-3xl p-7 bg-white dark:bg-[#0c1827] flex flex-col justify-between">
@@ -81,7 +81,7 @@ import { flashcards } from '../data/flashcards';
               </div>
             </div>
 
-            <!-- Back Face (Answer + Micro-Hub Page Link) -->
+            <!-- Back Face (Answer) -->
             <div class="flashcard-back absolute inset-0 backface-hidden rotate-y-180 rounded-3xl p-7 bg-gradient-to-br from-[#07192a] via-[#092237] to-[#05111d] text-white flex flex-col justify-between border border-amber-500/40">
               <div>
                 <div class="flex items-center justify-between mb-3 pb-2 border-b border-brand-800/80">
@@ -91,22 +91,20 @@ import { flashcards } from '../data/flashcards';
                   </span>
                   <span class="text-xs text-slate-400 font-bold">#{idx + 1}</span>
                 </div>
-                <p class="text-slate-200 text-xs sm:text-[13.5px] leading-relaxed whitespace-pre-line font-medium line-clamp-4">
+                <p class="text-slate-200 text-xs sm:text-[14px] leading-relaxed whitespace-pre-line font-medium">
                   {card.answer}
                 </p>
               </div>
 
-              <div class="pt-3 border-t border-brand-800 flex flex-col gap-2">
+              <div class="pt-3 border-t border-brand-800 flex items-center justify-between text-xs font-bold">
                 <a 
                   href={`/bilgi-kartlari/${card.slug}/`} 
-                  class="w-full text-center py-2 px-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs inline-flex items-center justify-center gap-1.5 shadow-sm transition-transform active:scale-95"
+                  class="text-amber-400 hover:text-amber-300 font-semibold underline underline-offset-2 transition-colors"
                   onclick="event.stopPropagation();"
                 >
-                  <span>Mevzuat Dayanağı & Çözümlü Soru ➔</span>
+                  Sayfa Olarak Aç ➔
                 </a>
-                <div class="flex items-center justify-between text-[11px] font-medium text-slate-400">
-                  <span>Tekrar çevirmek için kart boşluğuna tıklayın ↻</span>
-                </div>
+                <span class="text-slate-400 text-[11px]">Tekrar çevir ↻</span>
               </div>
             </div>
 
@@ -141,7 +139,6 @@ import { flashcards } from '../data/flashcards';
     const cards = document.querySelectorAll('.flashcard-container');
     cards.forEach(card => {
       card.addEventListener('click', (e) => {
-        // Prevent flipping if clicking the dedicated link button
         if ((e.target as HTMLElement).closest('a')) return;
         const inner = card.querySelector('.flashcard-inner');
         inner?.classList.toggle('flashcard-flipped');
