@@ -422,3 +422,151 @@ button, a, input, select, textarea, .quiz-option, .flashcard-container, .interac
   backface-visibility: hidden;
 }
 
+/* ========================================================
+   MEVZUAT VE PARASAL SINIR GÜNCELLEME TOOLTIP BİLEŞENİ
+   Resmî Gazete ile güncellenen tutar ve kuralları gösterir
+   ======================================================== */
+.mevzuat-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  cursor: help;
+  text-decoration: underline dashed #f59e0b 2px;
+  text-underline-offset: 4px;
+  font-weight: 700;
+  color: inherit;
+  transition: all 0.2s ease;
+  vertical-align: baseline;
+  outline: none;
+}
+
+.mevzuat-tooltip:hover,
+.mevzuat-tooltip:focus-visible {
+  color: #d97706;
+  text-decoration-color: #d97706;
+}
+
+html.dark .mevzuat-tooltip:hover,
+html.dark .mevzuat-tooltip:focus-visible {
+  color: #fbbf24;
+  text-decoration-color: #fbbf24;
+}
+
+.mevzuat-tooltip .tooltip-badge {
+  display: inline-block;
+  font-size: 0.8em;
+  line-height: 1;
+  opacity: 0.9;
+  transition: transform 0.2s ease;
+}
+
+.mevzuat-tooltip:hover .tooltip-badge,
+.mevzuat-tooltip:focus-visible .tooltip-badge {
+  transform: scale(1.2);
+}
+
+.mevzuat-tooltip .tooltip-box {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  width: 300px;
+  max-width: 85vw;
+  padding: 0.85rem 1rem;
+  border-radius: 0.875rem;
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.45), 0 4px 8px -2px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  text-align: left;
+  font-weight: 400;
+  text-decoration: none !important;
+}
+
+/* Light Mode Tooltip Box */
+html:not(.dark) .mevzuat-tooltip .tooltip-box {
+  background: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #f59e0b;
+}
+
+/* Dark Mode Tooltip Box */
+html.dark .mevzuat-tooltip .tooltip-box {
+  background: #060e18;
+  color: #f1f5f9;
+  border: 1px solid #d97706;
+  box-shadow: 0 20px 40px -8px rgba(0, 0, 0, 0.8);
+}
+
+/* Tooltip Arrow */
+.mevzuat-tooltip .tooltip-box::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 7px;
+  border-style: solid;
+  border-color: #0f172a transparent transparent transparent;
+}
+
+html.dark .mevzuat-tooltip .tooltip-box::after {
+  border-color: #060e18 transparent transparent transparent;
+}
+
+/* Show Tooltip on Hover or Focus (including mobile tap) */
+.mevzuat-tooltip:hover .tooltip-box,
+.mevzuat-tooltip:focus .tooltip-box,
+.mevzuat-tooltip:focus-within .tooltip-box {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+.mevzuat-tooltip .tooltip-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.mevzuat-tooltip .tooltip-tag {
+  font-weight: 800;
+  font-size: 0.725rem;
+  color: #fbbf24;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mevzuat-tooltip .tooltip-date {
+  font-size: 0.675rem;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.mevzuat-tooltip .tooltip-desc {
+  display: block;
+  color: #cbd5e1;
+  font-size: 0.775rem;
+  line-height: 1.45;
+}
+
+.mevzuat-tooltip .tooltip-desc strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+
