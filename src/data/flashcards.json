@@ -130,5 +130,203 @@
     "question": "Bankacılık Kanunu ve BDDK düzenlemelerine göre yasal asgari SYSO ile hedef SYSO oranları kaçtır?",
     "answer": "Yasal asgari SYSO oranı %8'dir. BDDK tarafından bankalara uygulanan hedef (ihtiyari) sermaye yeterliliği oranı ise %12'dir.",
     "legalNote": "5411 sayılı Kanun Madde 45 ve Basel standartları çerçevesinde hesaplanan SYSO, özkaynakların risk ağırlıklı varlıklara bölünmesiyle bulunur."
+  },
+  {
+    "id": 13,
+    "slug": "masak-kimlik-tespiti-zorunlu-parasal-sinirlari",
+    "category": "MASAK Uyum",
+    "catSlug": "masak",
+    "tag": "Tedbirler Yön. Md. 5 & 2026 Eşikleri",
+    "title": "Kimlik Tespiti Zorunlu Parasal Sınırları",
+    "question": "MASAK mevzuatına göre bankalar ve finansal kuruluşlarda sürekli iş ilişkisi dışındaki tekil işlemlerde kimlik tespiti zorunluluğu parasal sınırı ne kadardır?",
+    "answer": "Sürekli iş ilişkisi haricindeki işlemlerde tutar veya birbirine bağlı birden fazla işlemin toplam tutarı 185.000 TL veya üzerinde olduğunda kimlik tespiti zorunludur. Kripto varlık hizmet sağlayıcılarında bu sınır 15.000 TL, elektronik transferlerde ise 30.000 TL'dir.",
+    "legalNote": "Tedbirler Yönetmeliği Madde 5 uyarınca güncellenen parasal sınırların altındaki işlemlerde dahi, aklama veya terörün finansmanı şüphesi bulunması halinde tutara bakılmaksızın kimlik tespiti zorunludur."
+  },
+  {
+    "id": 14,
+    "slug": "elektronik-transferlerde-seyahat-kurali-travel-rule",
+    "category": "MASAK Uyum",
+    "catSlug": "masak",
+    "tag": "MASAK Genel Tebliği Sıra No: 26",
+    "title": "Elektronik Transferlerde Seyahat Kuralı (Travel Rule)",
+    "question": "Kripto varlık ve fon transferlerinde 'Seyahat Kuralı' (Travel Rule) hangi tutarın üzerindeki transferlerde zorunlu bilgi iletimini gerektirir?",
+    "answer": "Tutar veya birbirine bağlı işlemler toplamı 30.000 TL (veya muadili döviz/kripto) ve üzerindeki elektronik transferlerde; gönderen ve alıcıya ait ad-soyad/unvan, hesap numarası ve TCKN/adres bilgilerinin karşı kuruma mesaj ekinde eşzamanlı iletilmesi zorunludur.",
+    "legalNote": "FATF 16. Tavsiye Kararı ve MASAK Tebliği uyarınca anonim transferler yasaklanmış olup eksik bilgi içeren transferler alıcı kuruluş tarafından kabul edilmeyerek iade edilir."
+  },
+  {
+    "id": 15,
+    "slug": "masak-islem-erteleme-askiya-alma-yetkisi-ve-suresi",
+    "category": "MASAK Uyum",
+    "catSlug": "masak",
+    "tag": "5549 Sayılı Kanun Md. 19/A",
+    "title": "MASAK İşlem Erteleme (Askıya Alma) Yetkisi",
+    "question": "MASAK Başkanlığı, aklama veya terörün finansmanı şüphesi duyulan işlemleri en fazla kaç iş günü askıya alabilir?",
+    "answer": "MASAK Başkanlığı, yükümlüler nezdinde gerçekleştirilen veya gerçekleştirilmeye teşebbüs edilen şüpheli işlemleri gerekçeli kararla EN FAZLA 7 İŞ GÜNÜ süreyle askıya alabilir (erteleyebilir).",
+    "legalNote": "5549 sayılı Kanun Madde 19/A uyarınca bu 7 iş günlük süre zarfında Hazine ve Maliye Bakanı onayıyla malvarlığı dondurma veya savcılıkça elkoyma kararı alınmazsa erteleme kendiliğinden hükümsüz kalır."
+  },
+  {
+    "id": 16,
+    "slug": "masak-belge-ve-kayit-saklama-suresi",
+    "category": "MASAK Uyum",
+    "catSlug": "masak",
+    "tag": "5549 Sayılı Kanun Md. 8",
+    "title": "MASAK Belge ve Kayıt Saklama Süresi",
+    "question": "5549 sayılı Suç Gelirlerinin Aklanmasının Önlenmesi Hakkında Kanun uyarınca yükümlülerin belge ve kayıt saklama yükümlülüğü kaç yıldır?",
+    "answer": "Yükümlüler, her türlü ortamdaki belgeleri düzenleme tarihinden; defter ve kayıtları son kayıt tarihinden; kimlik tespitine ilişkin belgeleri ise son işlem tarihinden itibaren EN AZ 8 YIL süreyle saklamak ve yetkililere ibraz etmek zorundadır.",
+    "legalNote": "TTK'daki 10 yıllık ve VUK'taki 5 yıllık zamanaşımı sürelerinden farklı olarak MASAK mevzuatında özel ve kesin saklama süresi 8 yıldır. Saklamama fiili adli para ve hapis cezasına tabidir."
+  },
+  {
+    "id": 17,
+    "slug": "piyasa-dolandiriciligi-manipulasyon-ve-cezasi",
+    "category": "SPL Lisanslama",
+    "catSlug": "spl",
+    "tag": "6362 Sayılı SPK Md. 107",
+    "title": "Piyasa Dolandırıcılığı (Manipülasyon) ve Cezası",
+    "question": "6362 sayılı Sermaye Piyasası Kanunu'na göre İşlem ve Bilgi Bazlı Piyasa Dolandırıcılığı suçunun cezası nedir?",
+    "answer": "Sermaye piyasası araçlarının fiyatlarını, arz ve talebini yapay olarak etkilemek veya yalan, yanlış, yanıltıcı bilgi yaymak suçtur. Cezası 3 YILDAN 5 YILA KADAR HAPİS ve beş bin günden on bin güne kadar adli para cezasıdır.",
+    "legalNote": "SPKn Md. 107/1 uyarınca işlem bazlı piyasa dolandırıcılığında etkin pişmanlık hükümleri geçerli olup soruşturma başlamadan menfaatin iki katı Hazineye ödenirse ceza verilmez; bilgi bazlı manipülasyonda ise etkin pişmanlık yoktur."
+  },
+  {
+    "id": 18,
+    "slug": "kredili-menkul-kiymet-asgari-ozkaynak-orani",
+    "category": "SPL Lisanslama",
+    "catSlug": "spl",
+    "tag": "SPK Seri: V No: 65 Tebliği",
+    "title": "Kredili Menkul Kıymet Asgari Özkaynak Oranları",
+    "question": "SPK mevzuatına göre kredili menkul kıymet alımı işlemlerinde müşterinin sağlaması gereken Asgari Özkaynak ve Özkaynak Sürdürme Oranları kaçtır?",
+    "answer": "Kredili işleme başlarken yatırılması gereken Asgari Özkaynak Oranı EN AZ %35'tir. Pozisyon devam ederken özkaynak tutarının kredi borcuna oranının ise EN AZ %20 (Özkaynak Sürdürme Oranı) düzeyinde korunması zorunludur.",
+    "legalNote": "Özkaynak oranı %20'nin altına indiğinde yatırım kuruluşu müşteriye 'Özsermaye Tamamlama Bildirimi' (Margin Call) yapar. Verilen sürede açık kapatılmazsa teminat menkul kıymetleri piyasa fiyatından resen satılır."
+  },
+  {
+    "id": 19,
+    "slug": "halka-arzda-satis-yontemleri-ve-konsorsiyum",
+    "category": "SPL Lisanslama",
+    "catSlug": "spl",
+    "tag": "SPK II-5.2 Halka Arz Tebliği",
+    "title": "Halka Arzda Temel Satış Yöntemleri",
+    "question": "Sermaye piyasasında payların ilk halka arzında (IPO) kullanılan 3 temel satış yöntemi hangileridir?",
+    "answer": "1) Talep Toplama Yöntemi (Sabit Fiyatla, Fiyat Teklifiyle veya Fiyat Aralığı Yoluyla)\n2) Borsada Satış Yöntemi (Borsa Birincil Piyasada Talep Toplama veya Sürekli Müzayede)\n3) Talep Toplanmaksızın Satış (Yalnızca Tahsisli Satış veya Nitelikli Yatırımcıya İhraç).",
+    "legalNote": "Borsada Satış yönteminde yatırımcılar doğrudan borsa işlem platformu üzerinden emir gönderirken, talep toplama yönteminde konsorsiyum üyeleri form toplayarak dağıtım listesi hazırlar."
+  },
+  {
+    "id": 20,
+    "slug": "uygunluk-testi-ile-yerindelik-testi-farki",
+    "category": "SPL Lisanslama",
+    "catSlug": "spl",
+    "tag": "SPK III-39.1 Yatırım Hizmetleri Tebliği",
+    "title": "Uygunluk Testi ile Yerindelik Testi Farkı",
+    "question": "SPK mevzuatında yatırımcı koruma mekanizması olan Uygunluk Testi (Suitability) ile Yerindelik Testi (Appropriateness) arasındaki fark nedir?",
+    "answer": "UYGUNLUK TESTİ: Genel alım-satım aracılığı ve emir iletiminde müşterinin tecrübe ve bilgi düzeyini ölçer.\nYERİNDELİK TESTİ: Portföy yöneticiliği ve yatırım danışmanlığında uygulanır; müşterinin gelir seviyesini, mali durumunu, kayıp toleransını ve yatırım hedeflerini derinlemesine inceler.",
+    "legalNote": "Yerindelik testi çok daha bağlayıcıdır. Yerindelik testine göre müşterinin profiline uygun olmayan finansal ürünler müşteriye tavsiye edilemez veya portföyüne re'sen dahil edilemez."
+  },
+  {
+    "id": 21,
+    "slug": "ic-denetim-tuzugu-internal-audit-charter",
+    "category": "CIA Part 1",
+    "catSlug": "cia",
+    "tag": "IIA Standart 1000",
+    "title": "İç Denetim Tüzüğü (Internal Audit Charter)",
+    "question": "İç Denetim Tüzüğü (Internal Audit Charter) nedir, kim tarafından hazırlanır ve kim tarafından onaylanır?",
+    "answer": "İç denetim faaliyetinin amacını, yetkisini, sorumluluğunu ve organizasyondaki konumunu belirleyen resmi belgedir. Baş Denetim Yöneticisi (CAE) tarafından hazırlanır, Üst Yönetim tarafından incelenir ve YÖNETİM KURULU / DENETİM KOMİTESİ tarafından onaylanır.",
+    "legalNote": "Tüzük iç denetçilere kurumun tüm bilgi, belge, varlık ve personeline sınırsız erişim yetkisi verir. Ancak tüzük iç denetçilere hiçbir operasyonel veya icrai sorumluluk yükleyemez."
+  },
+  {
+    "id": 22,
+    "slug": "guvence-hizmetleri-ile-danismanlik-hizmetleri-farki",
+    "category": "CIA Part 1",
+    "catSlug": "cia",
+    "tag": "IIA Küresel Standartları",
+    "title": "Güvence ve Danışmanlık Hizmetleri Ayrımı",
+    "question": "IIA Standartlarına göre İç Denetimin yürüttüğü Güvence Hizmetleri ile Danışmanlık Hizmetleri arasındaki temel fark nedir?",
+    "answer": "GÜVENCE HİZMETİ: 3 TARAFLIDIR (İç denetçi, süreç sahibi/denetlenen ve kullanıcı/Yönetim Kurulu). Sürecin kontrollerine ilişkin bağımsız ve objektif kanaat sunar.\nDANIŞMANLIK HİZMETİ: 2 TARAFLIDIR (İç denetçi ve danışmanlık talep eden birim). Kolaylaştırıcı, eğitici ve tavsiye niteliğindedir.",
+    "legalNote": "Danışmanlık hizmeti sunan iç denetçi asla yönetim adına icrai karar veremez veya yetki kullanamaz; aksi takdirde gelecekteki olası güvence denetimlerinde objektifliği sakatlanır."
+  },
+  {
+    "id": 23,
+    "slug": "kalite-guvence-ve-gelistirme-programi-qaip",
+    "category": "CIA Part 1",
+    "catSlug": "cia",
+    "tag": "IIA Standart 1312",
+    "title": "Kalite Güvence ve Geliştirme Programı (QAIP)",
+    "question": "IIA Standartları uyarınca İç Denetim Faaliyetinin Bağımsız Dış Kalite Değerlendirmesi en az kaç yılda bir yapılmalıdır?",
+    "answer": "İç denetim biriminin IIA Standartlarına ve Meslek Ahlak Kurallarına uygunluğu, kurum dışından bağımsız ve nitelikli bir değerlendirici tarafından EN AZ 5 YILDA BİR dış değerlendirmeye tabi tutulmalıdır.",
+    "legalNote": "QAIP iki bileşenden oluşur: İç değerlendirmeler (devam eden izleme ve yıllık öz değerlendirme) ile en az 5 yılda bir yapılan bağımsız dış değerlendirme. Sonuçlar doğrudan Denetim Komitesine raporlanır."
+  },
+  {
+    "id": 24,
+    "slug": "iia-meslek-ahlak-kurallari-dort-temel-ilke",
+    "category": "CIA Part 1",
+    "catSlug": "cia",
+    "tag": "IIA Meslek Ahlak Kuralları",
+    "title": "İç Denetimde 4 Temel Ahlaki İlke",
+    "question": "IIA Meslek Ahlak Kuralları'nda (Code of Ethics) yer alan 4 temel mesleki etik ilke nelerdir?",
+    "answer": "1) DÜRÜSTLÜK (Integrity): Doğruluk ve mesleğe güven sağlar.\n2) OBJEKTİFLİK (Objectivity): Tarafsız mesleki yargı oluşturur, çıkar çatışmalarından uzak durur.\n3) GİZLİLİK (Confidentiality): Edinilen bilgileri izinsiz ifşa etmez ve şahsi menfaatine kullanmaz.\n4) YETKİNLİK (Competency): Hizmet için gereken bilgi, beceri ve tecrübeye sahip olur.",
+    "legalNote": "Bu dört ilke yalnızca tavsiye değil, tüm CIA sertifika sahipleri ve IIA üyeleri için bağlayıcıdır. İhlali durumunda sertifikanın iptali ve meslekten ihraç yaptırımı uygulanır."
+  },
+  {
+    "id": 25,
+    "slug": "bankacilik-kanunu-kredi-sinirlari-ve-risk-grubu",
+    "category": "Banka Denetimi",
+    "catSlug": "banka",
+    "tag": "5411 Sayılı Kanun Md. 54",
+    "title": "Banka Kredi Sınırları ve Risk Grubu Kuralı",
+    "question": "5411 sayılı Bankacılık Kanunu'na göre bir bankanın bir gerçek veya tüzel kişiye ya da bir risk grubuna kullandırabileceği azami kredi sınırı nedir?",
+    "answer": "Bir banka tarafından bir gerçek veya tüzel kişiye ya da bir risk grubuna kullandırılabilecek kredilerin toplamı, banka ÖZKAYNAKLARININ %25'İNİ aşamaz. Bankanın kendi hâkim ortakları veya dâhil olduğu risk grubu için bu sınır AZAMİ %20'dir.",
+    "legalNote": "Bankacılık Kanununa göre özkaynakların %10'unu veya daha fazlasını oluşturan krediler 'Büyük Kredi' sayılır ve büyük kredilerin toplam tutarı banka özkaynaklarının 8 katını aşamaz."
+  },
+  {
+    "id": 26,
+    "slug": "bankalarda-denetim-komitesi-kurulmasi-ve-nitelikleri",
+    "category": "Banka Denetimi",
+    "catSlug": "banka",
+    "tag": "5411 Sayılı Kanun Md. 24",
+    "title": "Bankalarda Denetim Komitesi Yapısı",
+    "question": "Bankacılık Kanunu uyarınca Denetim Komitesi en az kaç üyeden oluşur ve üyelerin icrai görevi bulunabilir mi?",
+    "answer": "Denetim Komitesi, Yönetim Kurulu tarafından kendi üyeleri arasından seçilen EN AZ 2 ÜYEDEN oluşur. Komite üyelerinin hiçbir İCRAİ GÖREVİNİN BULUNMAMASI yasal zorunluluktur.",
+    "legalNote": "Denetim komitesi üyeleri, yönetim kurulu adına iç denetim, iç kontrol ve risk yönetimi birimlerinin etkinliğini, bağımsızlığını ve finansal raporlama süreçlerinin güvenilirliğini gözetir."
+  },
+  {
+    "id": 27,
+    "slug": "donuk-alacaklar-npl-ve-90-gun-gecikme-kurali",
+    "category": "Banka Denetimi",
+    "catSlug": "banka",
+    "tag": "BDDK Kredilerin Sınıflandırılması Yön.",
+    "title": "Donuk Alacaklar (NPL) ve 90 Gün Kuralı",
+    "question": "BDDK düzenlemelerine göre bir kredinin Donuk Alacak (Takipteki Kredi / NPL) sayılması için anapara veya faiz ödemesinde asgari kaç gün gecikme aranır?",
+    "answer": "Anapara veya faiz ödemelerinin vadesinden veya hesap devresinden itibaren 90 GÜNDEN FAZLA (91. gün ve sonrası) gecikmesi durumunda kredi donuk alacak (Tahsil İmkânı Sınırlı) niteliği kazanır.",
+    "legalNote": "Krediler 5 grupta sınıflandırılır: 1. Grup (Standart), 2. Grup (Yakın İzleme - 31-90 gün gecikme), 3. Grup (Tahsil İmkânı Sınırlı), 4. Grup (Tahsili Şüpheli), 5. Grup (Zarar Niteliğinde Krediler)."
+  },
+  {
+    "id": 28,
+    "slug": "tcmb-zorunlu-karsiliklar-mekanizmasi",
+    "category": "Banka Denetimi",
+    "catSlug": "banka",
+    "tag": "1211 Sayılı TCMB Kanunu Md. 40",
+    "title": "TCMB Zorunlu Karşılıklar Mekanizması",
+    "question": "Zorunlu Karşılık (Reserve Requirement) nedir ve bankacılık sisteminde hangi temel amaçlarla uygulanır?",
+    "answer": "Bankaların mevduat ve fon yükümlülüklerine karşılık Merkez Bankası nezdindeki bloke hesaplarda nakit tutmak zorunda oldukları yasal rezervdir. Temel amacı piyasa likiditesini yönetmek, kredi genişlemesini dengelemek ve bankacılık güvenliğini sağlamaktır.",
+    "legalNote": "TCMB; Türk Lirası ve yabancı para cinsi yükümlülükler ile vadelere göre farklı zorunlu karşılık oranları uygular ve gerektiğinde karşılıklara faiz/komisyon tahakkuk ettirir."
+  },
+  {
+    "id": 29,
+    "slug": "basel-iii-likidite-karsilama-orani-lko",
+    "category": "Banka Denetimi",
+    "catSlug": "banka",
+    "tag": "BDDK Likidite Tebliği & Basel III",
+    "title": "Basel III Likidite Karşılama Oranı (LKO / LCR)",
+    "question": "Basel III ve BDDK düzenlemeleri uyarınca Likidite Karşılama Oranı (LKO) nedir ve asgari standart oranlar kaçtır?",
+    "answer": "Bankanın 30 günlük ciddi bir likidite stres senaryosunda ortaya çıkacak net nakit çıkışlarını karşılayabilecek yüksek kaliteli likit varlık stoğunu ölçer. Yasal asgari oran TOPLAMDA EN AZ %100, YABANCI PARA BAZINDA İSE EN AZ %80'dir.",
+    "legalNote": "Formül: Yüksek Kaliteli Likit Varlıklar / Toplam Net Nakit Çıkışları >= %100. Bankaların ani sermaye kaçışı ve mevduat çekiliş krizlerine karşı dayanıklılığını temin eder."
+  },
+  {
+    "id": 30,
+    "slug": "ic-kontrol-sistemi-ile-ic-denetim-farki",
+    "category": "Banka Denetimi",
+    "catSlug": "banka",
+    "tag": "BDDK İç Sistemler Yönetmeliği",
+    "title": "İç Kontrol Sistemi ile İç Denetim Farkı",
+    "question": "Bankacılıkta İç Kontrol Sistemi (İkinci Hat) ile Teftiş Kurulu / İç Denetim (Üçüncü Hat) arasındaki temel fark nedir?",
+    "answer": "İÇ KONTROL: İşlemlerin yürütüldüğü anda veya hemen sonrasında riskleri eşzamanlı önleyen operasyonel kontrol fonksiyonudur (günlük limitler, çifte onay vb.).\nİÇ DENETİM (TEFTİŞ): İşlemler bittikten sonra tüm banka sisteminin, iç kontrolün ve risk yönetiminin yeterliliğini geriye dönük ve tarafsız olarak teftiş eden bağımsız güvence fonksiyonudur.",
+    "legalNote": "İç denetçilerin bağımsızlığını korumak adına hiçbir icrai veya iç kontrol operasyonunda yer almaları yasaktır; buna karşılık iç kontrol personeli iş süreçlerinin bizzat parçasıdır."
   }
 ]
