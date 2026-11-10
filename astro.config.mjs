@@ -5,6 +5,9 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   site: 'https://mufettis.org',
   trailingSlash: 'always',
+  build: {
+    inlineStylesheets: 'always'
+  },
   integrations: [
     sitemap({
       changefreq: 'weekly',
