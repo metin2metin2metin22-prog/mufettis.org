@@ -10,7 +10,7 @@ export async function getStaticPaths() {
   const seenSlugs = new Set();
 
   posts
-    .filter(post => post.slug !== 'iletisim' && post.slug !== 'hakkimizda')
+    .filter(post => post.slug !== 'iletisim' && post.slug !== 'hakkimizda' && post.slug !== 'privacy-policy')
     .forEach(post => {
       // 1. Original slug
       if (!seenSlugs.has(post.slug)) {
