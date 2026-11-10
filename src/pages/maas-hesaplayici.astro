@@ -18,10 +18,6 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- Header -->
     <header class="max-w-3xl mb-10">
-      <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/30 text-xs font-black uppercase tracking-wider mb-3 shadow-xs">
-        <svg class="w-3.5 h-3.5 text-amber-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <span>2026 Teftiş Kurulu Bordro ve Harcırah Skalası</span>
-      </div>
       <h1 class="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
         Banka Müfettişi & Uyum Maaş Hesaplayıcı
       </h1>
@@ -263,9 +259,6 @@ import Layout from '../layouts/Layout.astro';
         
         <!-- Header Total -->
         <div class="pb-6 border-b border-brand-800/80">
-          <span class="text-[11px] font-black uppercase tracking-wider text-amber-400 bg-amber-950/60 px-3 py-1 rounded-full border border-amber-800/60 inline-block mb-3">
-            Aylık Ortalama Net Ele Geçen (Take-Home Pay)
-          </span>
           <div class="flex items-baseline gap-2">
             <span id="result-total" class="text-4xl sm:text-5xl font-black text-amber-400 tracking-tight">142.100</span>
             <span class="text-xl font-bold text-slate-300">TL / Ay</span>
@@ -346,6 +339,9 @@ import Layout from '../layouts/Layout.astro';
           <a href="/2026-banka-mufettisi-maaslari-kamu-ve-ozel-bankalarda-net-rakamlar-kidem-ve-ikramiyeler/" class="block w-full py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-bold text-center transition-colors">
             2026 Maaş ve Harcırah Araştırma Raporunu Oku
           </a>
+          <p class="text-[10.5px] text-slate-400 text-center leading-tight pt-1">
+            * Hesaplanan tutarlar tahmini simülasyondur; resmi bordro taahhüdü içermez.
+          </p>
         </div>
 
       </div>
@@ -377,6 +373,14 @@ import Layout from '../layouts/Layout.astro';
             Kamu bankalarında YDS tazminatları sabit gösterge katsayılarıyla belirlenirken, büyük özel bankalarda YDS A / TOEFL seviyesi için bordroya 8.500 - 12.000 TL bandında sabit net dil tazminatı eklenir. CIA ve CISA sertifikaları ise unvana ek aylık mesleki uzmanlık primi sağlar.
           </p>
         </div>
+      </div>
+    </div>
+
+    <!-- Sorumluluk Reddi (Disclaimer) -->
+    <div class="mt-8 p-4 sm:p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 text-[11.5px] text-slate-500 dark:text-slate-400 leading-relaxed flex items-start gap-3 shadow-xs">
+      <svg class="w-4 h-4 text-amber-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      <div>
+        <span class="font-bold text-slate-700 dark:text-slate-300">Sorumluluk Reddi:</span> Bu sayfada yer alan hesaplamalar ve maaş simülasyonları; kamu ve özel banka teftiş kurullarındaki emsal bordro teamülleri ve ortalama piyasa göstergeleri dikkate alınarak hazırlanmış bilgilendirme amaçlı tahmini modellerdir. Fiili bordro ödemeleri; kurumların bireysel ücret politikalarına, dönemsel katsayı artışlarına, çalışanın kümülatif gelir vergisi matrahına, bireysel BES ve sendika kesintilerine göre farklılık gösterebilir. Burada sunulan sonuçlar resmi bir teklif, yasal hak veya bağlayıcı bordro taahhüdü niteliği taşımaz.
       </div>
     </div>
 
