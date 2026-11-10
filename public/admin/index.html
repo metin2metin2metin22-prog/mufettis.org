@@ -216,6 +216,24 @@
       background-color: #f1f5f9;
       color: #0f172a;
     }
+
+    /* 3D Flashcard Mechanics */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    .flashcard-flipped {
+      transform: rotateY(180deg);
+    }
   </style>
 </head>
 <body class="bg-[#050b14] text-slate-100 font-sans antialiased min-h-screen">
@@ -417,7 +435,7 @@
         </div>
       </div>
 
-      <!-- Studio Tabs Switcher -->
+      <!-- Studio Tabs Switcher (Sade, 3 Ana Modül) -->
         <div class="flex items-center gap-1 p-1 bg-slate-900 border border-slate-800 rounded-xl mr-2">
           <button 
             id="tab-btn-editor" 
@@ -426,6 +444,16 @@
           >
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
             <span>Yazı Editörü</span>
+          </button>
+
+          <button 
+            id="tab-btn-flashcards" 
+            type="button" 
+            class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
+          >
+            <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            <span>Bilgi Kartı Ekle</span>
+            <span class="px-1.5 py-0.2 rounded-full bg-amber-500/20 text-amber-300 font-extrabold text-[9px] border border-amber-500/30">Yeni</span>
           </button>
 
           <button 
@@ -615,101 +643,84 @@
         </div>
 
         <!-- ============================================== -->
-        <!-- ÖZEL TEFTİŞ, VURGU VE SHORTCODE ARAÇ ÇUBUĞU    -->
+        <!-- SADE & HIZLI VURGU VE SHORTCODE ARAÇ ÇUBUĞU    -->
         <!-- ============================================== -->
-        <div class="bg-[#0b1626] rounded-2xl p-3.5 border border-slate-800 space-y-3 shadow-lg">
+        <div class="bg-[#0b1626] rounded-2xl p-3 sm:p-3.5 border border-slate-800 space-y-2.5 shadow-lg">
           
-          <!-- Başlık ve İpucu -->
-          <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+          <!-- Başlık ve Hızlı Vurgular -->
+          <div class="flex items-center justify-between pb-1.5 border-b border-slate-800">
             <span class="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
               <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-              <span>Özel Teftiş Blokları & Dikkat Noktaları (Shortcode):</span>
+              <span>Hızlı Vurgu Blokları (Tek Tıkla Ekle):</span>
             </span>
-            <span class="text-[10.5px] text-slate-400 font-medium">Metni seçip tıklayabilir veya boş ekleyebilirsiniz</span>
+            <button type="button" id="btn-toggle-extra-tools" class="text-[11px] text-sky-400 hover:text-sky-300 font-bold transition-colors cursor-pointer flex items-center gap-1">
+              <span>Biçimlendirme Araçları</span>
+              <svg class="w-3.5 h-3.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </button>
           </div>
 
-          <!-- 1. Satır: Renkli Dikkat & Teftiş Kutuları -->
-          <div class="flex flex-wrap items-center gap-1.5">
-            <button type="button" id="btn-insert-service" class="px-2.5 py-1.5 rounded-xl bg-amber-950/70 hover:bg-amber-900/80 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Altın Hafıza Çivisi & Püf Noktası (Sarı/Altın Renkli Kutu)">
-              <span class="w-2 h-2 rounded-full bg-amber-400 shadow-sm shadow-amber-400/50"></span>
-              <span>+ Altın Hafıza Çivisi</span>
-            </button>
-
-            <button type="button" id="btn-insert-warning" class="px-2.5 py-1.5 rounded-xl bg-rose-950/70 hover:bg-rose-900/80 border border-rose-500/40 text-rose-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Kritik Uyarı & Sınav Tuzağı (Kırmızı/Bordo Dikkat Kutusu)">
-              <span class="w-2 h-2 rounded-full bg-rose-400 shadow-sm shadow-rose-400/50"></span>
-              <span>+ Kritik Sınav Tuzağı</span>
-            </button>
-
-            <button type="button" id="btn-insert-note" class="px-2.5 py-1.5 rounded-xl bg-sky-950/70 hover:bg-sky-900/80 border border-sky-500/40 text-sky-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Müfettiş Notu & Mevzuat Özeti (Mavi Kutu)">
-              <span class="w-2 h-2 rounded-full bg-sky-400 shadow-sm shadow-sky-400/50"></span>
+          <!-- 1. Satır: En Çok Kullanılan 5 Ana Blok -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button type="button" id="btn-insert-note" class="px-3 py-1.5 rounded-xl bg-sky-950/80 hover:bg-sky-900 border border-sky-500/40 text-sky-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95 cursor-pointer" title="Müfettiş Notu & Mevzuat Özeti (Mavi Kutu)">
+              <span class="w-2 h-2 rounded-full bg-sky-400"></span>
               <span>+ Müfettiş Notu</span>
             </button>
 
-            <button type="button" id="btn-insert-success" class="px-2.5 py-1.5 rounded-xl bg-emerald-950/70 hover:bg-emerald-900/80 border border-emerald-500/40 text-emerald-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Mevzuat Çözümü & Doğru Cevap (Yeşil Kutu)">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-sm shadow-emerald-400/50"></span>
-              <span>+ Mevzuat Çözümü</span>
+            <button type="button" id="btn-insert-warning" class="px-3 py-1.5 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-500/40 text-rose-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95 cursor-pointer" title="Kritik Uyarı & Sınav Tuzağı (Kırmızı Kutu)">
+              <span class="w-2 h-2 rounded-full bg-rose-400"></span>
+              <span>+ Sınav Tuzağı</span>
             </button>
 
-            <button type="button" id="btn-insert-box" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="Başlıklı Kurumsal İnceleme Paneli">
-              <span>📋</span>
-              <span>+ İnceleme Paneli</span>
+            <button type="button" id="btn-insert-service" class="px-3 py-1.5 rounded-xl bg-amber-950/80 hover:bg-amber-900 border border-amber-500/40 text-amber-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95 cursor-pointer" title="Altın Hafıza Çivisi & Püf Noktası (Sarı Kutu)">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span>+ Püf Noktası</span>
             </button>
 
-            <button type="button" id="btn-insert-quiz" class="px-2.5 py-1.5 rounded-xl bg-purple-950/70 hover:bg-purple-900/80 border border-purple-500/40 text-purple-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95" title="İnteraktif 4 Şıklı Test Sorusu">
+            <button type="button" id="btn-insert-quiz" class="px-3 py-1.5 rounded-xl bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 text-purple-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95 cursor-pointer" title="İnteraktif Çözümlü Test Sorusu Bloğu">
               <span>🟣</span>
-              <span>+ Çözümlü Test Sorusu</span>
+              <span>+ Çözümlü Test</span>
             </button>
-          </div>
-
-          <!-- 2. Satır: Fosforlu Vurgu Kalemleri, Resim ve Standart Biçimlendirme -->
-          <div class="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-800/80 text-xs">
-            <!-- Vurgu Kalemleri -->
-            <button type="button" id="btn-mark-yellow" class="px-2 py-1 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 font-bold flex items-center gap-1" title="Seçili metni fosforlu sarı ile vurgula">
-              <span>🖍️</span>
-              <span>Sarı Fosfor</span>
-            </button>
-
-            <button type="button" id="btn-mark-green" class="px-2 py-1 rounded-lg bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-300 border border-emerald-400/40 font-bold flex items-center gap-1" title="Seçili metni yeşil ile vurgula">
-              <span>🟩</span>
-              <span>Yeşil Vurgu</span>
-            </button>
-
-            <button type="button" id="btn-mark-blue" class="px-2 py-1 rounded-lg bg-sky-400/20 hover:bg-sky-400/30 text-sky-300 border border-sky-400/40 font-bold flex items-center gap-1" title="Seçili metni mavi ile vurgula">
-              <span>🟦</span>
-              <span>Mavi Vurgu</span>
-            </button>
-
-            <button type="button" id="btn-mark-red" class="px-2 py-1 rounded-lg bg-rose-400/20 hover:bg-rose-400/30 text-rose-300 border border-rose-400/40 font-bold flex items-center gap-1" title="Seçili metni kırmızı ile vurgula">
-              <span>🟥</span>
-              <span>Kırmızı Vurgu</span>
-            </button>
-
-            <span class="w-px h-4 bg-slate-800 mx-1"></span>
 
             <!-- Yazı İçi Masaüstü Resim Ekleme Düğmesi -->
             <input type="file" id="body-file-input" accept="image/*" class="hidden">
-            <button type="button" id="btn-insert-body-img" class="px-2.5 py-1 rounded-lg bg-teal-950/70 hover:bg-teal-900 border border-teal-500/40 text-teal-300 font-bold flex items-center gap-1" title="Masaüstünden resim seçip yazı içine doğrudan ekler">
+            <button type="button" id="btn-insert-body-img" class="px-3 py-1.5 rounded-xl bg-teal-950/80 hover:bg-teal-900 border border-teal-500/40 text-teal-300 text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs active:scale-95 cursor-pointer" title="Masaüstünden resim seçip yazı içine doğrudan ekler">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              <span>+ Yazı İçi Resim</span>
+              <span>+ Resim Ekle</span>
             </button>
+          </div>
 
-            <button type="button" id="btn-insert-table" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold flex items-center gap-1" title="Karşılaştırma Tablosu Ekle">
-              <span>📊 Tablo</span>
+          <!-- 2. Satır: Gizlenebilir Gelişmiş Biçimlendirme & Kalemler (Göz yormaz) -->
+          <div id="extra-formatting-toolbar" class="hidden flex-wrap items-center gap-1.5 pt-2 border-t border-slate-800 text-xs">
+            <button type="button" id="btn-insert-success" class="px-2 py-1 rounded-lg bg-emerald-950 hover:bg-emerald-900 border border-emerald-500/30 text-emerald-300 text-[11px] font-bold" title="Mevzuat Çözümü (Yeşil Kutu)">
+              + Yeşil Kutu
             </button>
-
-            <button type="button" id="btn-insert-quote" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold flex items-center gap-1" title="Kanun / Mevzuat Maddesi Alıntısı">
-              <span>⚖️ Kanun Maddesi</span>
+            <button type="button" id="btn-insert-box" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 text-[11px] font-bold" title="Başlıklı İnceleme Paneli">
+              📋 Panel
+            </button>
+            <button type="button" id="btn-insert-table" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-bold" title="Karşılaştırma Tablosu">
+              📊 Tablo
+            </button>
+            <button type="button" id="btn-insert-quote" class="px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-bold" title="Kanun / Mevzuat Maddesi Alıntısı">
+              ⚖️ Kanun Maddesi
             </button>
 
             <span class="w-px h-4 bg-slate-800 mx-1"></span>
 
-            <!-- Markdown Araçları -->
-            <button type="button" classfmt="**" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Kalın">B</button>
-            <button type="button" classfmt="*" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 italic font-serif" title="İtalik">I</button>
-            <button type="button" classfmt="## " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="H2 Başlık">H2</button>
-            <button type="button" classfmt="### " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="H3 Başlık">H3</button>
-            <button type="button" classfmt="- " class="fmt-prefix-btn px-2 py-1 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Madde İmi">Liste</button>
-            <button type="button" classfmt="[Bağlantı Metni](https://...)" class="fmt-btn px-2 py-1 rounded hover:bg-slate-800 text-sky-400 font-semibold" title="Link Ekle">Link</button>
+            <!-- Fosforlu Vurgu Kalemleri -->
+            <button type="button" id="btn-mark-yellow" class="px-2 py-0.5 rounded bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 border border-amber-400/40 text-[11px] font-bold" title="Sarı Fosfor">🖍️ Sarı</button>
+            <button type="button" id="btn-mark-green" class="px-2 py-0.5 rounded bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-300 border border-emerald-400/40 text-[11px] font-bold" title="Yeşil Fosfor">🟩 Yeşil</button>
+            <button type="button" id="btn-mark-blue" class="px-2 py-0.5 rounded bg-sky-400/20 hover:bg-sky-400/30 text-sky-300 border border-sky-400/40 text-[11px] font-bold" title="Mavi Fosfor">🟦 Mavi</button>
+            <button type="button" id="btn-mark-red" class="px-2 py-0.5 rounded bg-rose-400/20 hover:bg-rose-400/30 text-rose-300 border border-rose-400/40 text-[11px] font-bold" title="Kırmızı Fosfor">🟥 Kırmızı</button>
+
+            <span class="w-px h-4 bg-slate-800 mx-1"></span>
+
+            <!-- Markdown Biçimleri -->
+            <button type="button" classfmt="**" class="fmt-btn px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Kalın">B</button>
+            <button type="button" classfmt="*" class="fmt-btn px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 italic font-serif" title="İtalik">I</button>
+            <button type="button" classfmt="## " class="fmt-prefix-btn px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 font-bold" title="H2 Başlık">H2</button>
+            <button type="button" classfmt="### " class="fmt-prefix-btn px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 font-bold" title="H3 Başlık">H3</button>
+            <button type="button" classfmt="- " class="fmt-prefix-btn px-2 py-0.5 rounded hover:bg-slate-800 text-slate-300 font-bold" title="Madde İmi">Liste</button>
+            <button type="button" classfmt="[Bağlantı Metni](https://...)" class="fmt-btn px-2 py-0.5 rounded hover:bg-slate-800 text-sky-400 font-semibold" title="Link Ekle">Link</button>
           </div>
         </div>
 
@@ -897,6 +908,243 @@
       </div>
 
     </main>
+
+    <!-- ========================================== -->
+    <!-- BİLGİ KARTLARI STÜDYOSU (FLASHCARDS WORKSPACE) -->
+    <!-- ========================================== -->
+    <div id="view-flashcards" class="hidden flex-grow grid grid-cols-1 lg:grid-cols-12 min-h-0">
+      
+      <!-- SOL PANEL: BİLGİ KARTI EKLEME FORMU (6 KOLON) -->
+      <div class="lg:col-span-6 xl:col-span-6 p-4 sm:p-6 overflow-y-auto border-r border-slate-800 space-y-5">
+        
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10.5px] font-black uppercase tracking-wider mb-1">
+              <span>🗂️ 3D İnteraktif Akıl Kartları</span>
+            </div>
+            <h2 class="text-xl font-black text-white">Yeni Bilgi Kartı Ekle</h2>
+            <p class="text-xs text-slate-400">Öğrencilerin ve denetçilerin hızlı tekrar yapacağı hafıza kartı oluşturun.</p>
+          </div>
+
+          <button type="button" id="fc-btn-reset" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 transition-colors flex items-center gap-1.5 cursor-pointer">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span>Formu Sıfırla</span>
+          </button>
+        </div>
+
+        <!-- Form Alanları -->
+        <div class="bg-[#0b1626] rounded-2xl p-4 sm:p-5 border border-slate-800 space-y-4 shadow-lg">
+          
+          <!-- Kart Başlığı / Kavram -->
+          <div>
+            <label class="block text-xs font-black uppercase tracking-wider text-slate-300 mb-1.5">
+              Kart Başlığı / Temel Kavram:
+            </label>
+            <input 
+              id="fc-title" 
+              type="text" 
+              placeholder="Örn: Şüpheli İşlem Bildirimi (ŞİB) MASAK Süreleri" 
+              class="w-full px-4 py-3 rounded-xl bg-slate-900 border-2 border-slate-700/80 focus:border-amber-400 text-white font-bold text-sm outline-none transition-colors"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <!-- Sınav Kategorisi -->
+            <div>
+              <label class="block text-[11px] font-bold text-slate-400 mb-1">
+                Sınav / Modül Kategorisi:
+              </label>
+              <select id="fc-category" class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-white text-xs font-bold outline-none focus:border-amber-400 cursor-pointer">
+                <option value="masak">MASAK Uyum Görevlisi</option>
+                <option value="spl">SPL Lisanslama</option>
+                <option value="cia">CIA Part 1 (İç Denetim)</option>
+                <option value="banka">Banka Denetimi & BDDK</option>
+              </select>
+            </div>
+
+            <!-- Mevzuat Maddesi / Tag -->
+            <div>
+              <label class="block text-[11px] font-bold text-slate-400 mb-1">
+                Mevzuat Maddesi / Etiket:
+              </label>
+              <input 
+                id="fc-tag" 
+                type="text" 
+                placeholder="Örn: 5549 Sayılı Kanun Md. 4" 
+                class="w-full px-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700/80 text-sky-400 font-bold text-xs outline-none focus:border-amber-400"
+              />
+            </div>
+          </div>
+
+          <!-- Ön Yüz: Soru / Özet Bilgi -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+                <span>Ön Yüz: Soru veya Özet Bilgi:</span>
+              </label>
+              <span class="text-[10.5px] text-slate-500 font-medium">İlk görünen soru kökü</span>
+            </div>
+            <textarea 
+              id="fc-question" 
+              rows="3" 
+              placeholder="Örn: Şüpheli İşlem Bildirimi (ŞİB) MASAK'a en geç kaç iş günü içinde yapılmalıdır?" 
+              class="w-full p-3 rounded-xl bg-slate-900 border-2 border-slate-700/80 focus:border-sky-400 text-white text-xs font-medium leading-relaxed outline-none transition-colors"
+            ></textarea>
+          </div>
+
+          <!-- Arka Yüz: Doğru Cevap & Açıklama -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-xs font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                <span>Arka Yüz: Doğru Cevap & Net Açıklama:</span>
+              </label>
+              <span class="text-[10.5px] text-slate-500 font-medium">Kart dönünce çıkan yanıt</span>
+            </div>
+            <textarea 
+              id="fc-answer" 
+              rows="4" 
+              placeholder="Örn: Şüpheli işlem bildirimleri, şüphenin doğduğu tarihten itibaren en geç 10 İŞ GÜNÜ içinde, gecikmesinde sakınca bulunan hallerde ise DERHAL MASAK Başkanlığı'na bildirilir." 
+              class="w-full p-3 rounded-xl bg-slate-900 border-2 border-slate-700/80 focus:border-amber-400 text-white text-xs font-medium leading-relaxed outline-none transition-colors"
+            ></textarea>
+          </div>
+
+          <!-- Mevzuat Notu / Püf Noktası -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-xs font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span>Kanun Maddesi & Sınav Püf Noktası (Alt Bilgi):</span>
+              </label>
+              <span class="text-[10.5px] text-slate-500 font-medium">Sınav tüyosu ve kanuni dayanak</span>
+            </div>
+            <textarea 
+              id="fc-legal-note" 
+              rows="3" 
+              placeholder="Örn: 5549 sayılı Kanun Madde 4 uyarınca süre takvim günü değil iş günüdür. İşlem teşebbüs aşamasında kalsa dahi Uyum Görevlisi aracılığıyla MASAK'a bildirilmesi zorunludur." 
+              class="w-full p-3 rounded-xl bg-slate-900 border-2 border-slate-700/80 focus:border-emerald-400 text-white text-xs font-medium leading-relaxed outline-none transition-colors"
+            ></textarea>
+          </div>
+
+          <!-- Kaydet & Yayınla Butonları -->
+          <div class="pt-3 border-t border-slate-800 flex items-center justify-between gap-3">
+            <button 
+              type="button" 
+              id="fc-btn-copy-json" 
+              class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-xs flex items-center gap-2 transition-colors cursor-pointer"
+              title="Bu kartın JSON kodunu panoya kopyalar"
+            >
+              <svg class="w-4 h-4 text-sky-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
+              <span>JSON Kopyala</span>
+            </button>
+
+            <button 
+              type="button" 
+              id="fc-btn-publish" 
+              class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-black text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer active:scale-95"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              <span>Bilgi Kartını Kaydet & Yayına Al</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SAĞ PANEL: CANLI 3D ÖNİZLEME & MEVCUT KARTLAR LİSTESİ (6 KOLON) -->
+      <div class="lg:col-span-6 xl:col-span-6 p-4 sm:p-6 overflow-y-auto bg-[#060e1a]/80 space-y-6">
+        
+        <!-- Canlı 3D Önizleme Başlığı -->
+        <div class="flex items-center justify-between pb-2 border-b border-slate-800">
+          <span class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Canlı 3D Kart Önizlemesi</span>
+          </span>
+          <span class="text-[11px] text-amber-400 font-bold">Kartın üzerine tıklayarak çevirin ↻</span>
+        </div>
+
+        <!-- 3D Flashcard Preview Container -->
+        <div class="flex justify-center py-2">
+          <div id="fc-preview-container" class="w-full max-w-md perspective-1000 min-h-[320px] cursor-pointer">
+            <div id="fc-preview-inner" class="flashcard-inner relative w-full h-full min-h-[320px] transition-transform duration-500 transform-style-3d rounded-3xl border-2 border-slate-700 hover:border-amber-400 shadow-2xl">
+              
+              <!-- Front Face Preview -->
+              <div class="flashcard-front absolute inset-0 backface-hidden rounded-3xl p-6 sm:p-7 bg-[#0c1827] flex flex-col justify-between border border-slate-800">
+                <div>
+                  <div class="flex items-center justify-between mb-4">
+                    <span id="fc-prev-badge" class="text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full bg-sky-950 text-sky-300 border border-sky-800">
+                      MASAK Uyum
+                    </span>
+                    <span id="fc-prev-num" class="text-xs text-slate-400 font-bold">Yeni Kart #13</span>
+                  </div>
+                  <span id="fc-prev-tag" class="text-xs font-bold text-sky-400 block mb-2">5549 Sayılı Kanun Md. 4</span>
+                  <h3 id="fc-prev-question" class="text-base sm:text-lg font-black text-white leading-snug">
+                    Şüpheli İşlem Bildirimi (ŞİB) MASAK'a en geç kaç iş günü içinde yapılmalıdır?
+                  </h3>
+                </div>
+
+                <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs font-bold text-slate-400">
+                  <span class="flex items-center gap-1.5 text-sky-400">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                    Cevabı görmek için dokunun
+                  </span>
+                  <span class="text-[11px] text-slate-500 font-mono">Ön Yüz</span>
+                </div>
+              </div>
+
+              <!-- Back Face Preview -->
+              <div class="flashcard-back absolute inset-0 backface-hidden rotate-y-180 rounded-3xl p-6 sm:p-7 bg-gradient-to-br from-[#07192a] via-[#092237] to-[#05111d] text-white flex flex-col justify-between border-2 border-amber-500/50 shadow-2xl">
+                <div>
+                  <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
+                    <span class="text-[10.5px] font-black uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                      <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                      Doğru Cevap & Özet
+                    </span>
+                    <span class="text-[11px] text-slate-400 font-mono">Arka Yüz</span>
+                  </div>
+                  <p id="fc-prev-answer" class="text-slate-200 text-xs sm:text-sm leading-relaxed whitespace-pre-line font-medium mb-3">
+                    Şüpheli işlem bildirimleri, şüphenin doğduğu tarihten itibaren en geç 10 İŞ GÜNÜ içinde bildirilir.
+                  </p>
+
+                  <div id="fc-prev-legal-wrap" class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-200 leading-relaxed font-normal">
+                    <span class="font-bold text-amber-400 block mb-0.5">⚖️ Mevzuat / Sınav Notu:</span>
+                    <span id="fc-prev-legal">5549 sayılı Kanun Madde 4 uyarınca süre takvim günü değil iş günüdür.</span>
+                  </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-bold text-slate-400">
+                  <span class="text-amber-400">Tekrar çevir ↻</span>
+                  <span class="text-slate-500 text-[11px]">Canlı Çözüm</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Sitedeki Mevcut Kartlar Listesi -->
+        <div class="space-y-3 pt-4 border-t border-slate-800">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-black uppercase tracking-wider text-slate-300 flex items-center gap-2">
+              <span>Sitede Yayında Olan Bilgi Kartları</span>
+              <span id="fc-cards-count-badge" class="px-2 py-0.5 rounded-full bg-sky-950 text-sky-400 border border-sky-800 text-[10px] font-mono font-bold">12 Kart</span>
+            </h4>
+            <a href="/bilgi-kartlari/" target="_blank" class="text-xs font-bold text-sky-400 hover:text-sky-300 flex items-center gap-1">
+              <span>Sitede İncele</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            </a>
+          </div>
+
+          <div id="fc-cards-list" class="space-y-2 max-h-72 overflow-y-auto pr-1">
+            <!-- Dynamically populated card rows -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
 
     <!-- ========================================== -->
     <!-- GELEN MESAJLAR KUTUSU (INBOX WORKSPACE)     -->
@@ -1205,7 +1453,7 @@
 
     // Oturum Durumu Kontrolü
     async function checkAuth() {
-      const isAuth = sessionStorage.getItem('mufettis_studio_auth') === 'true';
+      const isAuth = sessionStorage.getItem('mufettis_studio_auth') === 'true' || window.location.search.includes('studio=1') || window.location.hash.includes('studio');
       const savedToken = localStorage.getItem('mufettis_github_token');
       const savedUserStr = localStorage.getItem('mufettis_github_user');
       let savedUser = null;
@@ -1622,6 +1870,15 @@
 
     document.getElementById('btn-mark-red')?.addEventListener('click', () => {
       wrapOrInsert('[kirmizi-vurgu]', '[/kirmizi-vurgu]', 'kritik vurgu');
+    });
+
+    // Ekstra Biçimlendirme Araç Çubuğu Aç/Kapa
+    document.getElementById('btn-toggle-extra-tools')?.addEventListener('click', () => {
+      const extraToolbar = document.getElementById('extra-formatting-toolbar');
+      if (extraToolbar) {
+        extraToolbar.classList.toggle('hidden');
+        extraToolbar.classList.toggle('flex');
+      }
     });
 
 
@@ -2104,18 +2361,378 @@ ${postContent.value}
 
     
     // ==========================================
+    // STÜDYO SEKME YÖNETİMİ (TABS SWITCHER)
+    // ==========================================
+    const tabBtnEditor = document.getElementById('tab-btn-editor');
+    const tabBtnFlashcards = document.getElementById('tab-btn-flashcards');
+    const tabBtnInbox = document.getElementById('tab-btn-inbox');
+    const viewEditor = document.getElementById('view-editor');
+    const viewFlashcards = document.getElementById('view-flashcards');
+    const viewInbox = document.getElementById('view-inbox');
+
+    function switchToTab(tab) {
+      // 1. Reset all button styles
+      [tabBtnEditor, tabBtnFlashcards, tabBtnInbox].forEach(b => {
+        if (!b) return;
+        b.classList.remove('bg-sky-600', 'bg-amber-600', 'text-white', 'shadow-sm');
+        b.classList.add('text-slate-400');
+      });
+
+      // 2. Hide all workspaces
+      [viewEditor, viewFlashcards, viewInbox].forEach(v => {
+        if (!v) return;
+        v.classList.add('hidden');
+      });
+
+      // 3. Activate selected tab
+      if (tab === 'inbox') {
+        tabBtnInbox?.classList.remove('text-slate-400');
+        tabBtnInbox?.classList.add('bg-sky-600', 'text-white', 'shadow-sm');
+        viewInbox?.classList.remove('hidden');
+        loadInboxMessages();
+      } else if (tab === 'flashcards') {
+        tabBtnFlashcards?.classList.remove('text-slate-400');
+        tabBtnFlashcards?.classList.add('bg-amber-600', 'text-white', 'shadow-sm');
+        viewFlashcards?.classList.remove('hidden');
+        loadFlashcards();
+      } else {
+        tabBtnEditor?.classList.remove('text-slate-400');
+        tabBtnEditor?.classList.add('bg-sky-600', 'text-white', 'shadow-sm');
+        viewEditor?.classList.remove('hidden');
+      }
+    }
+
+    tabBtnEditor?.addEventListener('click', () => switchToTab('editor'));
+    tabBtnFlashcards?.addEventListener('click', () => switchToTab('flashcards'));
+    tabBtnInbox?.addEventListener('click', () => switchToTab('inbox'));
+
+
+    // ==========================================
+    // BİLGİ KARTLARI (FLASHCARDS) YÖNETİM MOTORU
+    // ==========================================
+    const fcTitle = document.getElementById('fc-title');
+    const fcCategory = document.getElementById('fc-category');
+    const fcTag = document.getElementById('fc-tag');
+    const fcQuestion = document.getElementById('fc-question');
+    const fcAnswer = document.getElementById('fc-answer');
+    const fcLegalNote = document.getElementById('fc-legal-note');
+    const fcBtnReset = document.getElementById('fc-btn-reset');
+    const fcBtnPublish = document.getElementById('fc-btn-publish');
+    const fcBtnCopyJson = document.getElementById('fc-btn-copy-json');
+
+    const fcPreviewContainer = document.getElementById('fc-preview-container');
+    const fcPreviewInner = document.getElementById('fc-preview-inner');
+    const fcPrevBadge = document.getElementById('fc-prev-badge');
+    const fcPrevNum = document.getElementById('fc-prev-num');
+    const fcPrevTag = document.getElementById('fc-prev-tag');
+    const fcPrevQuestion = document.getElementById('fc-prev-question');
+    const fcPrevAnswer = document.getElementById('fc-prev-answer');
+    const fcPrevLegal = document.getElementById('fc-prev-legal');
+    const fcPrevLegalWrap = document.getElementById('fc-prev-legal-wrap');
+    const fcCardsList = document.getElementById('fc-cards-list');
+    const fcCardsCountBadge = document.getElementById('fc-cards-count-badge');
+
+    const FC_CAT_MAP = {
+      masak: { name: 'MASAK Uyum', badgeClass: 'bg-emerald-950 text-emerald-300 border-emerald-800' },
+      spl: { name: 'SPL Lisanslama', badgeClass: 'bg-sky-950 text-sky-300 border-sky-800' },
+      cia: { name: 'CIA Part 1', badgeClass: 'bg-purple-950 text-purple-300 border-purple-800' },
+      banka: { name: 'Banka Denetimi', badgeClass: 'bg-amber-950 text-amber-300 border-amber-800' }
+    };
+
+    let allFlashcards = [];
+
+    // Flip 3D preview on click
+    fcPreviewContainer?.addEventListener('click', () => {
+      fcPreviewInner?.classList.toggle('flashcard-flipped');
+    });
+
+    // Live update preview
+    function updateFlashcardPreview() {
+      if (!fcTitle) return;
+      const title = fcTitle.value.trim() || 'Yeni Bilgi Kartı';
+      const cat = fcCategory.value || 'masak';
+      const tag = fcTag.value.trim() || '5549 Sayılı Kanun';
+      const q = fcQuestion.value.trim() || 'Soru kökünü veya özet bilgiyi buraya yazın...';
+      const a = fcAnswer.value.trim() || 'Kart arkasındaki doğru çözüm burada görüntülenecektir.';
+      const l = fcLegalNote.value.trim();
+
+      const catInfo = FC_CAT_MAP[cat] || FC_CAT_MAP.masak;
+      if (fcPrevBadge) {
+        fcPrevBadge.textContent = catInfo.name;
+        fcPrevBadge.className = `text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full border ${catInfo.badgeClass}`;
+      }
+      if (fcPrevNum) fcPrevNum.textContent = `Yeni Kart #${allFlashcards.length + 1}`;
+      if (fcPrevTag) fcPrevTag.textContent = tag;
+      if (fcPrevQuestion) fcPrevQuestion.textContent = q;
+      if (fcPrevAnswer) fcPrevAnswer.textContent = a;
+      if (fcPrevLegal) fcPrevLegal.textContent = l || 'Mevzuat notu veya kanun maddesi.';
+      if (fcPrevLegalWrap) fcPrevLegalWrap.style.display = l ? 'block' : 'none';
+    }
+
+    [fcTitle, fcCategory, fcTag, fcQuestion, fcAnswer, fcLegalNote].forEach(el => {
+      el?.addEventListener('input', updateFlashcardPreview);
+      el?.addEventListener('change', updateFlashcardPreview);
+    });
+
+    // Reset Form
+    fcBtnReset?.addEventListener('click', () => {
+      if (fcTitle) fcTitle.value = '';
+      if (fcTag) fcTag.value = '';
+      if (fcQuestion) fcQuestion.value = '';
+      if (fcAnswer) fcAnswer.value = '';
+      if (fcLegalNote) fcLegalNote.value = '';
+      if (fcPreviewInner) fcPreviewInner.classList.remove('flashcard-flipped');
+      updateFlashcardPreview();
+    });
+
+    // Copy JSON format
+    fcBtnCopyJson?.addEventListener('click', () => {
+      const title = fcTitle.value.trim() || 'Yeni Kart';
+      const cat = fcCategory.value || 'masak';
+      const cardObj = {
+        id: allFlashcards.length + 1,
+        slug: generateSlug(title),
+        category: (FC_CAT_MAP[cat] && FC_CAT_MAP[cat].name) || 'MASAK Uyum',
+        catSlug: cat,
+        tag: fcTag.value.trim() || 'Mevzuat',
+        title: title,
+        question: fcQuestion.value.trim(),
+        answer: fcAnswer.value.trim(),
+        legalNote: fcLegalNote.value.trim()
+      };
+      navigator.clipboard.writeText(JSON.stringify(cardObj, null, 2));
+      alert('Bilgi kartı JSON verisi panoya kopyalandı!');
+    });
+
+    // Render list of cards
+    function renderFlashcardsList() {
+      if (!fcCardsList) return;
+      if (fcCardsCountBadge) fcCardsCountBadge.textContent = `${allFlashcards.length} Kart`;
+
+      if (allFlashcards.length === 0) {
+        fcCardsList.innerHTML = `<p class="text-xs text-slate-500 py-4 text-center">Henüz kart yüklenemedi.</p>`;
+        return;
+      }
+
+      fcCardsList.innerHTML = allFlashcards.map((c, i) => {
+        const catInfo = FC_CAT_MAP[c.catSlug] || { name: c.category || 'Mevzuat', badgeClass: 'bg-slate-800 text-slate-300' };
+        return `
+          <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 flex items-center justify-between gap-3 transition-colors group">
+            <div class="min-w-0 flex items-center gap-3">
+              <span class="w-6 h-6 rounded-lg bg-slate-800 text-slate-400 flex items-center justify-center text-xs font-mono font-bold shrink-0">
+                ${c.id || (i + 1)}
+              </span>
+              <div class="min-w-0">
+                <div class="flex items-center gap-1.5 mb-0.5">
+                  <span class="text-[9.5px] font-bold px-1.5 py-0.2 rounded border ${catInfo.badgeClass}">
+                    ${catInfo.name}
+                  </span>
+                  <span class="text-[10px] text-slate-500 font-mono">${c.tag || ''}</span>
+                </div>
+                <h5 class="text-xs font-bold text-white truncate max-w-[280px] sm:max-w-xs group-hover:text-amber-400 transition-colors">
+                  ${c.title}
+                </h5>
+              </div>
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button type="button" class="fc-edit-card-btn p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer" data-id="${c.id}" title="Düzenlemek için forma yükle">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              </button>
+              <a href="/bilgi-kartlari/${c.slug}/" target="_blank" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-sky-400 transition-colors" title="Sayfayı Görüntüle">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Add click listeners to edit buttons
+      document.querySelectorAll('.fc-edit-card-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = parseInt(btn.getAttribute('data-id'), 10);
+          const found = allFlashcards.find(c => c.id === id);
+          if (found) {
+            fcTitle.value = found.title || '';
+            fcCategory.value = found.catSlug || 'masak';
+            fcTag.value = found.tag || '';
+            fcQuestion.value = found.question || '';
+            fcAnswer.value = found.answer || '';
+            fcLegalNote.value = found.legalNote || '';
+            updateFlashcardPreview();
+            fcTitle.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+    }
+
+    // Load flashcards from JSON or GitHub
+    async function loadFlashcards() {
+      const token = localStorage.getItem('mufettis_github_token');
+      const repo = "metin2metin2metin22-prog/mufettis.org";
+      const path = "src/data/flashcards.json";
+
+      try {
+        const resp = await fetch('/src/data/flashcards.json');
+        if (resp.ok) {
+          allFlashcards = await resp.json();
+          renderFlashcardsList();
+          updateFlashcardPreview();
+          return;
+        }
+      } catch (e) {}
+
+      if (token) {
+        try {
+          const apiResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+            headers: {
+              'Authorization': `token ${token}`,
+              'Accept': 'application/vnd.github.v3+json'
+            }
+          });
+          if (apiResp.ok) {
+            const data = await apiResp.json();
+            const decoded = new TextDecoder().decode(Uint8Array.from(atob(data.content.replace(/\s/g, '')), c => c.charCodeAt(0)));
+            allFlashcards = JSON.parse(decoded);
+            renderFlashcardsList();
+            updateFlashcardPreview();
+            return;
+          }
+        } catch (e) {
+          console.warn('GitHub flashcard fetch error:', e);
+        }
+      }
+
+      // Default fallback
+      if (allFlashcards.length === 0) {
+        allFlashcards = [
+          { id: 1, slug: "supheli-islem-bildirimi-masak-sureleri", category: "MASAK Uyum", catSlug: "masak", tag: "5549 Sayılı Kanun Md. 4", title: "Şüpheli İşlem Bildirimi (ŞİB) MASAK Süreleri", question: "Şüpheli İşlem Bildirimi (ŞİB) MASAK'a en geç kaç iş günü içinde yapılmalıdır?", answer: "Şüpheli işlem bildirimleri, şüphenin doğduğu tarihten itibaren en geç 10 İŞ GÜNÜ içinde, gecikmesinde sakınca bulunan hallerde ise DERHAL MASAK Başkanlığı'na bildirilir.", legalNote: "5549 sayılı Kanun Madde 4 uyarınca süre takvim günü değil iş günüdür." },
+          { id: 2, slug: "pay-ile-borclanma-araci-tahvil-farklari", category: "SPL Lisanslama", catSlug: "spl", tag: "6362 Sayılı SPK Md. 3", title: "Pay (Hisse Senedi) ile Borçlanma Aracı (Tahvil) Farkları", question: "Pay (Hisse Senedi) ile Borçlanma Aracı (Tahvil) arasındaki temel 3 fark nedir?", answer: "1) Pay ortaklık hakkı verir; tahvil alacaklılık hakkı verir.\n2) Pay sahibine kâr payı ödenir; tahvil sahibine faiz ödenir.\n3) Tasfiyede tahvil sahipleri önceliklidir.", legalNote: "6362 sayılı Kanun uyarınca tahvil sahiplerinin yönetim ve oy hakkı bulunmaz." }
+        ];
+        renderFlashcardsList();
+        updateFlashcardPreview();
+      }
+    }
+
+    // Publish Flashcard to GitHub
+    fcBtnPublish?.addEventListener('click', async () => {
+      const token = localStorage.getItem('mufettis_github_token');
+      if (!token) {
+        alert('Lütfen önce sağ üstteki "GitHub" butonuna tıklayarak GitHub Token bilginizi kaydedin.');
+        document.getElementById('settings-modal')?.classList.remove('hidden');
+        return;
+      }
+
+      const title = fcTitle.value.trim();
+      const catSlug = fcCategory.value;
+      const tag = fcTag.value.trim();
+      const question = fcQuestion.value.trim();
+      const answer = fcAnswer.value.trim();
+      const legalNote = fcLegalNote.value.trim();
+
+      if (!title || !question || !answer) {
+        alert('Lütfen Başlık, Soru ve Cevap alanlarını eksiksiz doldurun.');
+        return;
+      }
+
+      const repo = "metin2metin2metin22-prog/mufettis.org";
+      const path = "src/data/flashcards.json";
+      const apiUrl = `https://api.github.com/repos/${repo}/contents/${path}`;
+
+      const origText = fcBtnPublish.innerHTML;
+      fcBtnPublish.innerHTML = `
+        <svg class="w-4 h-4 animate-spin text-slate-950" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+        <span>GitHub'a Kaydediliyor...</span>
+      `;
+      fcBtnPublish.disabled = true;
+
+      try {
+        // 1. Get existing file sha & content
+        const getResp = await fetch(apiUrl, {
+          headers: {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+
+        if (!getResp.ok) throw new Error('flashcards.json repodan çekilemedi. Token yetkisini kontrol edin.');
+        const fileData = await getResp.json();
+        const sha = fileData.sha;
+        const decoded = new TextDecoder().decode(Uint8Array.from(atob(fileData.content.replace(/\s/g, '')), c => c.charCodeAt(0)));
+        let cards = JSON.parse(decoded);
+
+        // Check if updating existing card or creating new
+        const existingIdx = cards.findIndex(c => c.slug === generateSlug(title));
+        let nextId = cards.reduce((max, c) => Math.max(max, c.id || 0), 0) + 1;
+
+        const newCard = {
+          id: existingIdx >= 0 ? cards[existingIdx].id : nextId,
+          slug: generateSlug(title),
+          category: (FC_CAT_MAP[catSlug] && FC_CAT_MAP[catSlug].name) || 'MASAK Uyum',
+          catSlug: catSlug,
+          tag: tag,
+          title: title,
+          question: question,
+          answer: answer,
+          legalNote: legalNote
+        };
+
+        if (existingIdx >= 0) {
+          cards[existingIdx] = newCard;
+        } else {
+          cards.push(newCard);
+        }
+
+        // Encode to UTF-8 base64
+        const updatedJsonStr = JSON.stringify(cards, null, 2);
+        const utf8Bytes = new TextEncoder().encode(updatedJsonStr);
+        let binaryStr = '';
+        utf8Bytes.forEach(b => binaryStr += String.fromCharCode(b));
+        const base64Content = btoa(binaryStr);
+
+        // PUT commit
+        const putResp = await fetch(apiUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${token}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json'
+          },
+          body: JSON.stringify({
+            message: `feat(flashcards): yeni bilgi kartı kaydedildi - ${title}`,
+            content: base64Content,
+            sha: sha,
+            branch: 'main'
+          })
+        });
+
+        if (!putResp.ok) {
+          const errData = await putResp.json();
+          throw new Error(errData.message || 'GitHub commit hatası.');
+        }
+
+        allFlashcards = cards;
+        renderFlashcardsList();
+        updateFlashcardPreview();
+        alert(`Tebrikler! "${title}" bilgi kartı başarıyla GitHub'a kaydedildi.\n\nCloudflare Pages yaklaşık 20 saniye içinde /bilgi-kartlari/ sayfasını otomatik olarak güncelleyecektir.`);
+        fcBtnReset.click();
+
+      } catch (err) {
+        alert('Hata: ' + err.message);
+      } finally {
+        fcBtnPublish.innerHTML = origText;
+        fcBtnPublish.disabled = false;
+      }
+    });
+
+
+    // ==========================================
     // GELEN MESAJLAR KUTUSU (INBOX) YÖNETİM MOTORU
     // ==========================================
     const INBOX_BIN_URL = 'https://extendsclass.com/api/json-storage/bin/baecfdc';
     let inboxMessages = [];
     let activeModalMessageId = null;
 
-    const tabBtnEditor = document.getElementById('tab-btn-editor');
-    const tabBtnInbox = document.getElementById('tab-btn-inbox');
-    const viewEditor = document.getElementById('view-editor');
-    const viewInbox = document.getElementById('view-inbox');
     const inboxUnreadBadge = document.getElementById('inbox-unread-badge');
-
     const kpiTotal = document.getElementById('kpi-total-messages');
     const kpiUnread = document.getElementById('kpi-unread-messages');
     const kpiLatest = document.getElementById('kpi-latest-date');
@@ -2136,31 +2753,6 @@ ${postContent.value}
     const modalReplyBtn = document.getElementById('modal-reply-btn');
     const modalToggleReadBtn = document.getElementById('modal-toggle-read-btn');
     const modalDeleteBtn = document.getElementById('modal-delete-btn');
-
-    // Tab Switching
-    function switchToTab(tab) {
-      if (tab === 'inbox') {
-        tabBtnInbox.classList.remove('text-slate-400');
-        tabBtnInbox.classList.add('bg-sky-600', 'text-white', 'shadow-sm');
-        tabBtnEditor.classList.remove('bg-sky-600', 'text-white', 'shadow-sm');
-        tabBtnEditor.classList.add('text-slate-400');
-
-        viewEditor.classList.add('hidden');
-        viewInbox.classList.remove('hidden');
-        loadInboxMessages();
-      } else {
-        tabBtnEditor.classList.remove('text-slate-400');
-        tabBtnEditor.classList.add('bg-sky-600', 'text-white', 'shadow-sm');
-        tabBtnInbox.classList.remove('bg-sky-600', 'text-white', 'shadow-sm');
-        tabBtnInbox.classList.add('text-slate-400');
-
-        viewInbox.classList.add('hidden');
-        viewEditor.classList.remove('hidden');
-      }
-    }
-
-    tabBtnEditor?.addEventListener('click', () => switchToTab('editor'));
-    tabBtnInbox?.addEventListener('click', () => switchToTab('inbox'));
 
     // Fetch Messages from Cloud Storage Bin
     async function loadInboxMessages() {
@@ -2357,8 +2949,10 @@ ${postContent.value}
     // Initial check
     checkAuth();
     if (window.location.hash === "#inbox") switchToTab("inbox");
+    if (window.location.hash === "#flashcards" || window.location.hash === "#bilgi-kartlari") switchToTab("flashcards");
     loadDraftLocally();
     renderPreview();
+    loadFlashcards();
   </script>
 </body>
 </html>
