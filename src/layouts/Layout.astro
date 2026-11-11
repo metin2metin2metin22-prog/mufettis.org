@@ -1638,72 +1638,80 @@ const isFlashcards = currentPath.startsWith('/bilgi-kartlari/');
       (window as any).openSavedDrawer = openSavedDrawer;
       (window as any).closeSavedDrawer = closeSavedDrawer;
 
-      updateSavedBadge();
+      function initDeferredFeatures() {
+        updateSavedBadge();
 
-      // 5. Back to Top Button Logic
-      const backToTopBtn = document.getElementById('back-to-top-btn');
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 350) {
-          backToTopBtn?.classList.remove('hidden');
-        } else {
-          backToTopBtn?.classList.add('hidden');
-        }
-      });
-      backToTopBtn?.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      // 6. Mobile Drawer Link Closure
-      const drawerLinks = mobileDrawer?.querySelectorAll('a');
-      drawerLinks?.forEach(link => {
-        link.addEventListener('click', closeMobileDrawer);
-      });
-
-      // 7. Footer Interactive Handlers (Newsletter & Triggers)
-      const newsletterForm = document.getElementById('newsletter-form');
-      const newsletterEmail = document.getElementById('newsletter-email') as HTMLInputElement | null;
-      const newsletterStatus = document.getElementById('newsletter-status');
-      const newsletterSubmitBtn = document.getElementById('newsletter-submit-btn');
-
-      newsletterForm?.addEventListener('submit', (e) => {
-        e.preventDefault();
-        if (newsletterEmail && newsletterEmail.value) {
-          try {
-            const raw = localStorage.getItem('mufettis_newsletter_subscribers');
-            const list = raw ? JSON.parse(raw) : [];
-            list.push({ email: newsletterEmail.value, date: new Date().toISOString() });
-            localStorage.setItem('mufettis_newsletter_subscribers', JSON.stringify(list));
-          } catch(err) {}
-
-          if (newsletterStatus) {
-            newsletterStatus.innerHTML = `<span class="text-emerald-400 font-bold flex items-center gap-1.5"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Kaydınız başarıyla oluşturuldu! İlk e-bülteniniz Pazartesi günü iletilecektir.</span>`;
+        // 5. Back to Top Button Logic
+        const backToTopBtn = document.getElementById('back-to-top-btn');
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 350) {
+            backToTopBtn?.classList.remove('hidden');
+          } else {
+            backToTopBtn?.classList.add('hidden');
           }
-          newsletterEmail.disabled = true;
-          if (newsletterSubmitBtn) {
-            (newsletterSubmitBtn as HTMLButtonElement).disabled = true;
-            newsletterSubmitBtn.classList.add('opacity-75', 'cursor-default');
-            newsletterSubmitBtn.innerHTML = `<span class="flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Kaydedildi</span>`;
-          }
-        }
-      });
-
-      document.getElementById('footer-back-to-top')?.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      document.querySelectorAll('.footer-search-trigger').forEach(b => {
-        b.addEventListener('click', () => {
-          document.getElementById('search-trigger')?.click();
+        }, { passive: true });
+        backToTopBtn?.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         });
-      });
 
-      document.querySelectorAll('.footer-saved-trigger').forEach(b => {
-        b.addEventListener('click', openSavedDrawer);
-      });
+        // 6. Mobile Drawer Link Closure
+        const drawerLinks = mobileDrawer?.querySelectorAll('a');
+        drawerLinks?.forEach(link => {
+          link.addEventListener('click', closeMobileDrawer);
+        });
 
-      // 8. Mobile Bottom Dock Triggers
-      document.getElementById('bottom-dock-menu')?.addEventListener('click', openMobileDrawer);
-      document.getElementById('bottom-dock-search')?.addEventListener('click', openSearch);
+        // 7. Footer Interactive Handlers (Newsletter & Triggers)
+        const newsletterForm = document.getElementById('newsletter-form');
+        const newsletterEmail = document.getElementById('newsletter-email') as HTMLInputElement | null;
+        const newsletterStatus = document.getElementById('newsletter-status');
+        const newsletterSubmitBtn = document.getElementById('newsletter-submit-btn');
+
+        newsletterForm?.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if (newsletterEmail && newsletterEmail.value) {
+            try {
+              const raw = localStorage.getItem('mufettis_newsletter_subscribers');
+              const list = raw ? JSON.parse(raw) : [];
+              list.push({ email: newsletterEmail.value, date: new Date().toISOString() });
+              localStorage.setItem('mufettis_newsletter_subscribers', JSON.stringify(list));
+            } catch(err) {}
+
+            if (newsletterStatus) {
+              newsletterStatus.innerHTML = `<span class="text-emerald-400 font-bold flex items-center gap-1.5"><svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Kaydınız başarıyla oluşturuldu! İlk e-bülteniniz Pazartesi günü iletilecektir.</span>`;
+            }
+            newsletterEmail.disabled = true;
+            if (newsletterSubmitBtn) {
+              (newsletterSubmitBtn as HTMLButtonElement).disabled = true;
+              newsletterSubmitBtn.classList.add('opacity-75', 'cursor-default');
+              newsletterSubmitBtn.innerHTML = `<span class="flex items-center gap-1.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg> Kaydedildi</span>`;
+            }
+          }
+        });
+
+        document.getElementById('footer-back-to-top')?.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.querySelectorAll('.footer-search-trigger').forEach(b => {
+          b.addEventListener('click', () => {
+            document.getElementById('search-trigger')?.click();
+          });
+        });
+
+        document.querySelectorAll('.footer-saved-trigger').forEach(b => {
+          b.addEventListener('click', openSavedDrawer);
+        });
+
+        // 8. Mobile Bottom Dock Triggers
+        document.getElementById('bottom-dock-menu')?.addEventListener('click', openMobileDrawer);
+        document.getElementById('bottom-dock-search')?.addEventListener('click', openSearch);
+      }
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(initDeferredFeatures, { timeout: 1500 });
+      } else {
+        setTimeout(initDeferredFeatures, 50);
+      }
     </script>
     
     <!-- Floating Back to Top Button (Positioned safely above bottom dock on mobile) -->
