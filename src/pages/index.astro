@@ -82,12 +82,12 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
               </div>
               <div class="min-w-0">
                 <span class="block text-xs sm:text-sm text-slate-800 dark:text-slate-100 font-semibold truncate">Mevzuat maddesi, kanun no, tebliğ veya ders notu arayın...</span>
-                <span class="text-[11px] text-slate-400 font-normal hidden sm:block">Örn: "5549 Sayılı Kanun", "Takas T+2", "Üç Hat Modeli", "2026 Maaş"</span>
+                <span class="text-[11px] text-slate-600 dark:text-slate-400 font-medium hidden sm:block">Örn: "5549 Sayılı Kanun", "Takas T+2", "Üç Hat Modeli", "2026 Maaş"</span>
               </div>
             </div>
 
             <div class="flex items-center gap-2 shrink-0">
-              <span class="hidden sm:inline-flex items-center text-[10.5px] font-mono text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
+              <span class="hidden sm:inline-flex items-center text-[10.5px] font-mono text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
                 Ctrl + K
               </span>
               <span class="px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs sm:text-sm shadow-xs transition-colors flex items-center gap-1.5">
@@ -101,7 +101,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
 
       <!-- Hızlı Mevzuat & Modül Bağlantıları (Genişletilmiş Düzen) -->
       <div class="mt-4 max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-2 text-xs">
-        <span class="text-[11px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider shrink-0 mr-1">Hızlı Erişim:</span>
+        <span class="text-[11px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider shrink-0 mr-1">Hızlı Erişim:</span>
         
         <a href="/category/spl-ders-notlari/" class="px-3 py-1.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 text-xs font-semibold shadow-2xs hover:border-brand-500 dark:hover:border-sky-500 transition-all">
           SPL Lisanslama Notları
@@ -183,7 +183,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
           <div class="p-5 sm:p-7 flex flex-col justify-between flex-grow">
             <div>
               <div class="flex items-center gap-2 mb-3">
-                <span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 dark:text-emerald-400 font-bold bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/60">
+                <span class="inline-flex items-center gap-1 text-[11px] text-emerald-700 dark:text-emerald-300 font-bold bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800/60">
                   <svg class="w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                   <span>2026 Resmî Veriler</span>
                 </span>
@@ -205,7 +205,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
                 <span>Kapsamlı Raporu İncele</span>
                 <span>→</span>
               </span>
-              <span class="text-[11px] text-slate-400 dark:text-slate-500 font-medium">mufettis.org Özel Analiz</span>
+              <span class="text-[11px] text-slate-600 dark:text-slate-400 font-medium">mufettis.org Özel Analiz</span>
             </div>
           </div>
         </a>
@@ -244,14 +244,14 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
               
               <!-- Editoryal Başlık Bloğu -->
               <div class="p-4 flex flex-col justify-between flex-grow">
-                <h4 class="text-xs sm:text-[13.5px] font-bold text-slate-900 dark:text-white leading-snug group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors line-clamp-2">
+                <h3 class="text-xs sm:text-[13.5px] font-bold text-slate-900 dark:text-white leading-snug group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2">
                   {sub.title}
-                </h4>
+                </h3>
                 <div class="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
                   <span class="text-[11px] font-bold text-brand-600 dark:text-sky-400 group-hover:text-amber-500 dark:group-hover:text-amber-400 transition-colors flex items-center gap-0.5">
                     İncele →
                   </span>
-                  <span class="text-[9.5px] text-slate-400 dark:text-slate-500 font-bold">2026</span>
+                  <span class="text-[9.5px] text-slate-600 dark:text-slate-400 font-bold">2026</span>
                 </div>
               </div>
             </a>
@@ -313,7 +313,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
           </div>
         </div>
 
-        <a href="/maas-hesaplayici/" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs text-center transition-colors shadow-sm flex items-center justify-center gap-1.5">
+        <a href="/maas-hesaplayici/" class="w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-bold text-xs text-center transition-colors shadow-sm flex items-center justify-center gap-1.5">
           <span>Maaş Skalasını Hesapla</span>
           <span>→</span>
         </a>
@@ -354,7 +354,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
           </div>
         </div>
 
-        <a href="/bilgi-kartlari/" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs text-center transition-colors shadow-sm flex items-center justify-center gap-1.5">
+        <a href="/bilgi-kartlari/" class="w-full py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 text-white font-bold text-xs text-center transition-colors shadow-sm flex items-center justify-center gap-1.5">
           <span>Bilgi Kartlarını İncele</span>
           <span>→</span>
         </a>
@@ -439,7 +439,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
             
             <div class="absolute top-3 left-3">
-              <span class="px-3 py-1 rounded-xl bg-sky-500 text-white font-black text-[10.5px] uppercase tracking-wider shadow-md flex items-center gap-1.5">
+              <span class="px-3 py-1 rounded-xl bg-sky-700 text-white font-black text-[10.5px] uppercase tracking-wider shadow-md flex items-center gap-1.5">
                 <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                 <span>SPL Lisanslama</span>
               </span>
@@ -452,7 +452,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
           </a>
 
           <div class="p-6">
-            <span class="text-[10px] font-black uppercase tracking-wider text-sky-600 dark:text-sky-400 block mb-1">
+            <span class="text-[10px] font-black uppercase tracking-wider text-sky-700 dark:text-sky-400 block mb-1">
               Sermaye Piyasası Araçları & Borsa
             </span>
             <a href="/category/spl-ders-notlari/">
@@ -472,19 +472,19 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
 
             <div class="space-y-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3.5 mb-5">
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-normal">Müfredat Notu:</span>
+                <span class="text-slate-600 dark:text-slate-400 font-normal">Müfredat Notu:</span>
                 <span class="font-bold">5 Kapsamlı Not</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-normal">Çözümlü Soru:</span>
-                <span class="text-amber-500 font-bold">80 Soru Çözümlü</span>
+                <span class="text-slate-600 dark:text-slate-400 font-normal">Çözümlü Soru:</span>
+                <span class="text-amber-700 dark:text-amber-400 font-bold">80 Soru Çözümlü</span>
               </div>
             </div>
           </div>
         </div>
 
         <div class="p-6 pt-0 space-y-2">
-          <a href="/category/spl-ders-notlari/" class="block w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-black text-xs text-center transition-colors shadow-sm">
+          <a href="/category/spl-ders-notlari/" class="block w-full py-2.5 rounded-xl bg-sky-700 hover:bg-sky-600 text-white font-black text-xs text-center transition-colors shadow-sm">
             Tüm SPL Notlarını İncele →
           </a>
           <a href="/spl-sermaye-piyasasi-araclari-1-deneme-sinavi/" class="flex items-center justify-center gap-1.5 w-full py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[11px] text-center transition-colors">
@@ -510,7 +510,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent"></div>
             
             <div class="absolute top-3 left-3">
-              <span class="px-3 py-1 rounded-xl bg-emerald-600 text-white font-black text-[10.5px] uppercase tracking-wider shadow-md flex items-center gap-1.5">
+              <span class="px-3 py-1 rounded-xl bg-emerald-700 text-white font-black text-[10.5px] uppercase tracking-wider shadow-md flex items-center gap-1.5">
                 <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                 <span>MASAK Uyum</span>
               </span>
@@ -523,7 +523,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
           </a>
 
           <div class="p-6">
-            <span class="text-[10px] font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block mb-1">
+            <span class="text-[10px] font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 block mb-1">
               Mali Suçlar ve Aklama ile Mücadele
             </span>
             <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/">
@@ -543,19 +543,19 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
 
             <div class="space-y-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3.5 mb-5">
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-normal">Müfredat Notu:</span>
+                <span class="text-slate-600 dark:text-slate-400 font-normal">Müfredat Notu:</span>
                 <span class="font-bold">6 Modül & Özet</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-normal">Çözümlü Sınav:</span>
-                <span class="text-amber-500 font-bold">2 Tam Deneme Seti</span>
+                <span class="text-slate-600 dark:text-slate-400 font-normal">Çözümlü Sınav:</span>
+                <span class="text-amber-700 dark:text-amber-400 font-bold">2 Tam Deneme Seti</span>
               </div>
             </div>
           </div>
         </div>
 
         <div class="p-6 pt-0 space-y-2">
-          <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="block w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs text-center transition-colors shadow-sm">
+          <a href="/category/masak-uyum-gorevlisi-yetkilendirme-ders-notlari/" class="block w-full py-2.5 rounded-xl bg-emerald-700 hover:bg-emerald-600 text-white font-black text-xs text-center transition-colors shadow-sm">
             MASAK Notlarını Gör →
           </a>
           <a href="/masak-uyum-gorevlisi-yetkilendirme-deneme-sinavi-modul-1/" class="flex items-center justify-center gap-1.5 w-full py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[11px] text-center transition-colors">
@@ -594,7 +594,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
           </a>
 
           <div class="p-6">
-            <span class="text-[10px] font-black uppercase tracking-wider text-purple-600 dark:text-purple-400 block mb-1">
+            <span class="text-[10px] font-black uppercase tracking-wider text-purple-700 dark:text-purple-400 block mb-1">
               Uluslararası İç Denetim Standartları
             </span>
             <a href="/category/cia-ders-notlari/">
@@ -614,19 +614,19 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
 
             <div class="space-y-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3.5 mb-5">
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-normal">Müfredat Notu:</span>
+                <span class="text-slate-600 dark:text-slate-400 font-normal">Müfredat Notu:</span>
                 <span class="font-bold">14 Kapsamlı Konu</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-normal">Çözümlü Soru:</span>
-                <span class="text-amber-500 font-bold">60 Soru Çözümlü</span>
+                <span class="text-slate-600 dark:text-slate-400 font-normal">Çözümlü Soru:</span>
+                <span class="text-amber-700 dark:text-amber-400 font-bold">60 Soru Çözümlü</span>
               </div>
             </div>
           </div>
         </div>
 
         <div class="p-6 pt-0 space-y-2">
-          <a href="/category/cia-ders-notlari/" class="block w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs text-center transition-colors shadow-sm">
+          <a href="/category/cia-ders-notlari/" class="block w-full py-2.5 rounded-xl bg-purple-700 hover:bg-purple-600 text-white font-black text-xs text-center transition-colors shadow-sm">
             CIA Konu Notlarını Gör →
           </a>
           <a href="/cia-part-1-deneme-sorulari-20-soru-cozumlu-ve-aciklamali-test/" class="flex items-center justify-center gap-1.5 w-full py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-[11px] text-center transition-colors">
@@ -665,7 +665,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
           </a>
 
           <div class="p-6">
-            <span class="text-[10px] font-black uppercase tracking-wider text-amber-600 dark:text-amber-400 block mb-1">
+            <span class="text-[10px] font-black uppercase tracking-wider text-amber-800 dark:text-amber-400 block mb-1">
               Banka Müfettişliği & Denetim
             </span>
             <a href="/category/denetim-kutuphanesi/">
@@ -685,12 +685,12 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
 
             <div class="space-y-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 border-t border-slate-100 dark:border-slate-800/80 pt-3.5 mb-5">
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-normal">Rehber & Dosya:</span>
+                <span class="text-slate-600 dark:text-slate-400 font-normal">Rehber & Dosya:</span>
                 <span class="font-bold">8 Detaylı Rehber</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-slate-400 font-normal">Maaş & Mülakat:</span>
-                <span class="text-emerald-500 font-bold">2026 Güncel</span>
+                <span class="text-slate-600 dark:text-slate-400 font-normal">Maaş & Mülakat:</span>
+                <span class="text-emerald-700 dark:text-emerald-400 font-bold">2026 Güncel</span>
               </div>
             </div>
           </div>
@@ -811,7 +811,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-sky-50 to-sky-100/60 dark:from-sky-500/15 dark:to-sky-950/30 border border-sky-200/80 dark:border-sky-500/20 p-2 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300 shadow-2xs">
               <img src="/assets/icons/3d-shield.webp" alt="Resmî Kanun & Tebliğler" class="w-full h-full object-contain drop-shadow-sm" width="48" height="48" loading="lazy" decoding="async" />
             </div>
-            <h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">Resmî Kanun & Tebliğler</h4>
+            <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">Resmî Kanun & Tebliğler</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               5411, 6362, 5549 sayılı kanunlar ve BDDK/SPK/MASAK tebliğlerine birebir uyumlu kaynak metinler.
             </p>
@@ -823,7 +823,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/60 dark:from-blue-500/15 dark:to-blue-950/30 border border-blue-200/80 dark:border-blue-500/20 p-2 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300 shadow-2xs">
               <img src="/assets/icons/3d-notebook.webp" alt="Müfettiş Çözüm Analizi" class="w-full h-full object-contain drop-shadow-sm" width="48" height="48" loading="lazy" decoding="async" />
             </div>
-            <h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Müfettiş Çözüm Analizi</h4>
+            <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">Müfettiş Çözüm Analizi</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Her test sorusunun altında sadece doğru cevap değil, fıkra ve tebliğ gerekçeleri madde madde açıklanır.
             </p>
@@ -835,7 +835,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100/60 dark:from-amber-500/15 dark:to-amber-950/30 border border-amber-200/80 dark:border-amber-500/20 p-2 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300 shadow-2xs">
               <img src="/assets/icons/3d-bookmark-star.webp" alt="Akıllı Hata Defteri" class="w-full h-full object-contain drop-shadow-sm" width="48" height="48" loading="lazy" decoding="async" />
             </div>
-            <h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Akıllı Hata Defteri</h4>
+            <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">Akıllı Hata Defteri</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Yanlış çözülen veya kaydedilen sorular tarayıcınızda saklanır; sınav sabahı tek tuşla tekrar edebilirsiniz.
             </p>
@@ -847,7 +847,7 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
             <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/60 dark:from-purple-500/15 dark:to-purple-950/30 border border-purple-200/80 dark:border-purple-500/20 p-2 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform duration-300 shadow-2xs">
               <img src="/assets/icons/3d-flash.webp" alt="Tarafsız & %100 Ücretsiz" class="w-full h-full object-contain drop-shadow-sm" width="48" height="48" loading="lazy" decoding="async" />
             </div>
-            <h4 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Tarafsız & %100 Ücretsiz</h4>
+            <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white mb-1.5 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">Tarafsız & %100 Ücretsiz</h3>
             <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
               Reklamsız, abonelik ve ödeme duvarı barındırmayan, kamu yararı gözeten bağımsız eğitim vizyonu.
             </p>
@@ -894,9 +894,9 @@ const latestNews = blogPosts.filter(p => !p.is_quiz && p.slug !== leadStory.slug
                 {item.title}
               </h3>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 font-semibold">
+            <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400 font-semibold">
               <span class="inline-flex items-center gap-1">
-                <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <svg class="w-3 h-3 text-slate-500 dark:text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span>{item.reading_time} dk okuma</span>
               </span>
               <span class="group-hover:translate-x-1 transition-transform">→</span>
