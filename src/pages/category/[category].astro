@@ -76,12 +76,14 @@ const getCategoryTheme = (slug = '') => {
 const theme = getCategoryTheme(category.slug);
 const quizCount = categoryPosts.filter(p => p.is_quiz).length;
 const lectureCount = categoryPosts.filter(p => !p.is_quiz).length;
+const isCategoryEmpty = categoryPosts.length === 0;
 ---
 
 <Layout 
   title={`${category.name} Sınav Notları ve Çözümlü Sorular`}
-  description={`${category.name} alanında kapsamlı sınav hazırlık notları, mevzuat özetleri ve çözümlü deneme soruları.`}
+  description={theme.metaDesc || `${category.name} alanında kapsamlı sınav hazırlık notları, mevzuat özetleri ve çözümlü deneme soruları.`}
   canonical={`https://mufettis.org/category/${category.slug}/`}
+  noindex={isCategoryEmpty}
 >
   <!-- Hero Category Header -->
   <section class={`relative bg-gradient-to-b ${theme.gradient} text-white pt-14 pb-20 px-4 border-b border-slate-800 overflow-hidden`}>
@@ -138,99 +140,126 @@ const lectureCount = categoryPosts.filter(p => !p.is_quiz).length;
   <!-- Content Grid Section with Filter Tabs -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-24">
     
-    <!-- Filter Tabs (Tümü / Konu Anlatımı / Denemeler) -->
-    <div class="flex items-center justify-between pb-6 mb-8 border-b-2 border-slate-200 dark:border-slate-800 flex-wrap gap-4">
-      <div class="flex items-center gap-2 flex-wrap">
-        <button type="button" class="category-tab-btn active px-4 py-2 rounded-xl bg-brand-600 text-white font-bold text-xs transition-colors cursor-pointer" data-tab="all">
-          Tüm İçerikler ({categoryPosts.length})
-        </button>
-        <button type="button" class="category-tab-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer inline-flex items-center gap-1.5" data-tab="lecture">
-          <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-          <span>Konu Anlatımları ({lectureCount})</span>
-        </button>
-        <button type="button" class="category-tab-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer inline-flex items-center gap-1.5" data-tab="quiz">
-          <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-          <span>Çözümlü Testler ({quizCount})</span>
-        </button>
+    {isCategoryEmpty ? (
+      <div class="py-16 text-center max-w-xl mx-auto space-y-5 bg-slate-50 dark:bg-slate-900/60 rounded-3xl p-8 sm:p-10 border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="w-16 h-16 rounded-3xl bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto border border-amber-500/20">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white">İçerikler 2026 Müfredatına Göre Güncelleniyor</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mt-2">
+            {category.name} alanındaki vaka incelemeleri, denetim raporları ve ders notları güncel bankacılık ve denetim mevzuatına göre hazırlanmaktadır.
+          </p>
+        </div>
+        <div class="pt-2 flex flex-wrap items-center justify-center gap-3">
+          <a href="/category/denetim-kutuphanesi/" class="px-5 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs transition-colors">
+            Denetim Kütüphanesi
+          </a>
+          <a href="/category/spl-ders-notlari/" class="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition-colors">
+            SPL Ders Notları
+          </a>
+          <a href="/deneme-sinavlari/" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition-colors">
+            Çözümlü Sınavlar
+          </a>
+        </div>
       </div>
+    ) : (
+      <>
+        <!-- Filter Tabs (Tümü / Konu Anlatımı / Denemeler) -->
+        <div class="flex items-center justify-between pb-6 mb-8 border-b-2 border-slate-200 dark:border-slate-800 flex-wrap gap-4">
+          <div class="flex items-center gap-2 flex-wrap">
+            <button type="button" class="category-tab-btn active px-4 py-2 rounded-xl bg-brand-600 text-white font-bold text-xs transition-colors cursor-pointer" data-tab="all">
+              Tüm İçerikler ({categoryPosts.length})
+            </button>
+            <button type="button" class="category-tab-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer inline-flex items-center gap-1.5" data-tab="lecture">
+              <svg class="w-3.5 h-3.5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+              <span>Konu Anlatımları ({lectureCount})</span>
+            </button>
+            <button type="button" class="category-tab-btn px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 font-bold text-xs transition-colors cursor-pointer inline-flex items-center gap-1.5" data-tab="quiz">
+              <svg class="w-3.5 h-3.5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+              <span>Çözümlü Testler ({quizCount})</span>
+            </button>
+          </div>
 
-      <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
-        Kategori: <strong class="text-slate-900 dark:text-white font-bold">{category.name}</strong>
-      </span>
-    </div>
+          <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+            Kategori: <strong class="text-slate-900 dark:text-white font-bold">{category.name}</strong>
+          </span>
+        </div>
 
-    <!-- Cards Grid -->
-    <div id="category-posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {categoryPosts.map(post => {
-        const isQuiz = post.is_quiz;
-        return (
-          <article 
-            class={`category-post-card group bg-white dark:bg-[#0c1827] rounded-3xl border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between hover:${theme.accentBorder}`}
-            data-is-quiz={isQuiz ? "true" : "false"}
-          >
-            <!-- Card Image -->
-            <a href={post.url} class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
-              {post.featured_image ? (
-                <img 
-                  src={post.featured_image} 
-                  alt={post.title} 
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
-                  loading="lazy"
-                />
-              ) : (
-                <div class="w-full h-full flex items-center justify-center bg-slate-900 text-slate-600 font-bold">
-                  mufettis.org
-                </div>
-              )}
-              <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-              
-              <!-- Badges -->
-              <div class="absolute top-3 left-3">
-                {isQuiz ? (
-                  <span class="px-3 py-1 rounded-xl bg-amber-500 text-slate-950 font-black text-[10px] uppercase shadow-md flex items-center gap-1.5">
-                    <svg class="w-3 h-3 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    <span>20 Soru Çözümlü Test</span>
-                  </span>
-                ) : (
-                  <span class="px-3 py-1 rounded-xl bg-sky-600 text-white font-black text-[10px] uppercase shadow-md flex items-center gap-1.5">
-                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    <span>Konu Anlatımı</span>
-                  </span>
-                )}
-              </div>
+        <!-- Cards Grid -->
+        <div id="category-posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {categoryPosts.map(post => {
+            const isQuiz = post.is_quiz;
+            return (
+              <article 
+                class={`category-post-card group bg-white dark:bg-[#0c1827] rounded-3xl border-2 border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between hover:${theme.accentBorder}`}
+                data-is-quiz={isQuiz ? "true" : "false"}
+              >
+                <!-- Card Image -->
+                <a href={post.url} class="block relative aspect-[16/10] overflow-hidden bg-slate-950">
+                  {post.featured_image ? (
+                    <img 
+                      src={post.featured_image} 
+                      alt={post.title} 
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="w-full h-full flex items-center justify-center bg-slate-900 text-slate-600 font-bold">
+                      mufettis.org
+                    </div>
+                  )}
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                  
+                  <!-- Badges -->
+                  <div class="absolute top-3 left-3">
+                    {isQuiz ? (
+                      <span class="px-3 py-1 rounded-xl bg-amber-500 text-slate-950 font-black text-[10px] uppercase shadow-md flex items-center gap-1.5">
+                        <svg class="w-3 h-3 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <span>20 Soru Çözümlü Test</span>
+                      </span>
+                    ) : (
+                      <span class="px-3 py-1 rounded-xl bg-sky-600 text-white font-black text-[10px] uppercase shadow-md flex items-center gap-1.5">
+                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        <span>Konu Anlatımı</span>
+                      </span>
+                    )}
+                  </div>
 
-              <div class="absolute bottom-3 right-3">
-                <span class="px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-sm text-white text-[11px] font-bold flex items-center gap-1">
-                  <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"></circle><polyline points="12 6 12 12 16 14" stroke-width="2"></polyline></svg>
-                  <span>{post.reading_time} dk</span>
-                </span>
-              </div>
-            </a>
-
-            <!-- Card Content -->
-            <div class="p-6 flex-grow flex flex-col justify-between">
-              <div>
-                <a href={post.url}>
-                  <h2 class={`font-black text-slate-900 dark:text-white text-base sm:text-lg leading-snug group-hover:${theme.accentText} transition-colors line-clamp-2 mb-3`}>
-                    {post.title}
-                  </h2>
+                  <div class="absolute bottom-3 right-3">
+                    <span class="px-2.5 py-1 rounded-lg bg-black/70 backdrop-blur-sm text-white text-[11px] font-bold flex items-center gap-1">
+                      <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke-width="2"></circle><polyline points="12 6 12 12 16 14" stroke-width="2"></polyline></svg>
+                      <span>{post.reading_time} dk</span>
+                    </span>
+                  </div>
                 </a>
-                <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-[13px] line-clamp-3 leading-relaxed mb-4">
-                  {post.excerpt}
-                </p>
-              </div>
 
-              <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-black">
-                <span class={isQuiz ? "text-amber-500" : theme.accentText}>
-                  {isQuiz ? "Testi Hemen Çöz" : "Ders Notunu Oku"}
-                </span>
-                <span class="transform group-hover:translate-x-1.5 transition-transform">→</span>
-              </div>
-            </div>
-          </article>
-        );
-      })}
-    </div>
+                <!-- Card Content -->
+                <div class="p-6 flex-grow flex flex-col justify-between">
+                  <div>
+                    <a href={post.url}>
+                      <h2 class={`font-black text-slate-900 dark:text-white text-base sm:text-lg leading-snug group-hover:${theme.accentText} transition-colors line-clamp-2 mb-3`}>
+                        {post.title}
+                      </h2>
+                    </a>
+                    <p class="text-slate-600 dark:text-slate-400 text-xs sm:text-[13px] line-clamp-3 leading-relaxed mb-4">
+                      {post.excerpt}
+                    </p>
+                  </div>
+
+                  <div class="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-black">
+                    <span class={isQuiz ? "text-amber-500" : theme.accentText}>
+                      {isQuiz ? "Testi Hemen Çöz" : "Ders Notunu Oku"}
+                    </span>
+                    <span class="transform group-hover:translate-x-1.5 transition-transform">→</span>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </>
+    )}
 
   </section>
 
